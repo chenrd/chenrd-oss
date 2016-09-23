@@ -13,6 +13,6 @@
   	<module>../chenrd-oss-service</module>
   	<module>../chenrd-oss-shiro</module>
   	<module>../chenrd-oss-web</module>
-  	<module>chenrd-oss-power</module>
+  	<module>../chenrd-oss-power</module>
   </modules>
 </project>
