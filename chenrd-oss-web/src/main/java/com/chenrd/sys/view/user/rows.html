@@ -1,0 +1,109 @@
+<div class="widget">
+	<div class="widget-header ">
+        <span class="widget-caption"></span>
+        <div class="widget-buttons">
+            <a href="#" data-toggle="maximize"><i class="fa fa-expand"></i></a>
+            <a href="#" data-toggle="collapse"><i class="fa fa-minus"></i></a>
+            <a href="#" data-toggle="dispose"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+	<div class="widget-body">
+		<div class="table-toolbar">
+			<div class="form-group">
+				<div class="col-lg-3 search">
+					<label class="col-lg-3 search-label">用户名</label>
+					<div class="input-group col-lg-9 search">
+	                    <input type="text" placeholder="用户名" class="form-control" name="username"/>
+                	</div>
+				</div>
+				<div class="col-lg-3 search">
+					<label class="col-lg-3 search-label">电话</label>
+					<div class="input-group col-lg-9 search">
+	                    <input type="text" placeholder="电话" class="form-control" name="phone"/>
+                	</div>
+				</div>
+				
+				<a class="btn btn-primary search-btn" href="javascript:void(0);"><i class="fa fa-search"></i> 查询</a>
+	        	<@func aClass="btn btn-default purple right create-btn" url="/user/create" iClass="fa fa-plus" name="添加用户"/>
+	        </div>
+	    </div>
+	    <table class="table table-striped table-hover table-bordered" style="width: 100% !important;">
+	              <thead>
+	                  <tr role="row">
+	                  <th style="display: none;">ck</th>
+	                  <th width="60">序号</th>
+	                  <th>类型</th>
+                      <th>姓名</th>
+                      <th>用户名</th>
+                      <th>性别</th>
+                      <th>创建日期</th>
+                      <th>启用</th>
+                      <th width="150">操作</th>
+	                  </tr>
+	              </thead>
+	    </table>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    var search = {}, iStart = 1, myPannel = tab.current;
+    InitiateWidgets(myPannel.center);
+    var oTable = myPannel.center.find('.table').dataTable($.extend(oTableOpts, {
+        "sAjaxSource": "<@url value='user/find'/>",
+        "fnServerData": function(sSource, aoData, fnCallback) {
+        	iStart = aoData.iDisplayStart +　1;
+        	Home.datatableAjax(sSource, aoData, fnCallback, search);
+        },
+        "fnRowCallback": function(target, n) {
+        	$(target).find('.edit').click(function() {
+        		Home.loadCenter('user-edit-body', '<@url value="/user/edit/' + n.id + '"/>', '用户编辑', true, myPannel);
+        	})
+        	$(target).find('.delete').click(function() {
+        		Home.deleteReloadCurrent('<@url value="/user/delete/' + n.id + '"/>', '操作无法被恢复，请确认该操作？', myPannel.callback);
+        	})
+        	$(target).find('.publish').click(function() {
+        		Home.ajaxGetReq('<@url value="/user/publish/' + n.id + '"/>', myPannel.callback);
+        	})
+        	$(target).find('.allot').click(function() {
+        		Home.loadCenter('user-allot-body', '<@url value="/user/allot/' + n.id + '"/>', '用户权限分配', true, myPannel);
+        	})
+        	$(target).find('.restPassword').click(function() {
+        		Home.ajaxGetReq('<@url value="/user/resetPassword/' + n.id + '"/>', myPannel.callback);
+        	})
+        },
+        "language": language,
+        "aoColumns": [
+		  { "mDataProp": "id", "sClass": "hide", "bSortable": false},
+		  { "mDataProp": "serial", "bSortable": false, "mRender" : function ( data, type ) {return iStart++;} },
+		  { "mDataProp": "type", "bSortable": false, "mRender" : function ( data, type ) {return (data == 1 ? '管理员' : '用户');} },
+          { "mDataProp": "name", "bSortable": false},
+          { "mDataProp": "username", "bSortable": false },
+          { "mDataProp": "sex", "bSortable": false, "mRender" : function (data, type) {return data == 0 ? '男' : '女';} },
+          { "mDataProp": "createDate", "bSortable": false },
+          { "mDataProp": "status", "bSortable": false, 'sClass': 'center', "mRender" : function ( data, type ) {return data == 1 ? '<a href="#" class="prop-a publish"><i class="fa fa-check"></i></a>' : '<a href="#" class="prop-b publish"><i class="fa fa-times"></i></a>';} },
+          { "mDataProp": "id", "bSortable": false, "mRender" : function ( data, type ) {
+        	  	return  ' <@func aClass="btn btn-primary btn-xs times btn-circle allot" url="/user/allot/*" iClass="fa fa-cog"/>'
+        	  	+ ' <@func aClass="btn btn-success btn-xs times btn-circle restPassword" url="/user/resetPassword/*" iClass="fa fa-mail-reply"/>'
+        	  	+ ' <@func aClass="btn btn-info btn-xs times btn-circle edit" url="/user/edit/*" iClass="fa fa-edit" title="编辑"/>'
+        		+ ' <@func aClass="btn btn-danger btn-xs times btn-circle delete" url="/user/delete/*" iClass="fa fa-trash-o" title="删除"/>';
+        	  } 
+          }
+        ]
+    }));
+    
+    myPannel.center.find('.create-btn').click(function() {
+    	Home.loadCenter('user-edit-body', '<@url value="/user/create"/>', '用户编辑', true, myPannel);
+    })
+    
+    myPannel.center.find('.search-btn').click(function() {
+    	myPannel.callback();
+    })
+    
+    myPannel.callback = function() {
+    	$.extend(search, {username: myPannel.center.find('input[name="username"]').val(), phone: myPannel.center.find('input[name="phone"]').val()});
+    	var oSettings = oTable.fnSettings();
+    	oTable.fnDraw(oSettings);
+    }
+})
+</script>

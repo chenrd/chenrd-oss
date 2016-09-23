@@ -1,0 +1,104 @@
+<div class="widget">
+	<div class="widget-header ">
+        <span class="widget-caption"></span>
+        <div class="widget-buttons">
+            <a href="#" data-toggle="maximize">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a href="#" data-toggle="collapse">
+                <i class="fa fa-minus"></i>
+            </a>
+            <a href="#" data-toggle="dispose">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+	<div class="widget-body">
+	    <div class="table-toolbar">
+	        <a id="menu_new" href="javascript:void(0);" class="btn btn-default">添加菜单</a>
+	    </div>
+	    <table class="table table-striped table-hover table-bordered" id="menulist" style="width: 100% !important;">
+	              <thead>
+	                  <tr role="row">
+	                  	  <th width="60">序号</th>
+	                      <th width="120">名称</th>
+	                      <th width="120">编号</th>
+	                      <th width="100">部门领导</th>
+	                      <th width="100">联系电话</th>
+	                      <th width="200">备注</th>
+	                      <th width="60">启用</th>
+	                      <th>操作</th>
+	                  </tr>
+	              </thead>
+	    </table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$(function(){
+    //Datatable Initiating
+    var search = {}, iStart = 1;
+    var oTable = $('#menulist').dataTable({
+        "aLengthMenu": [
+            [10, 20, 50, 100, -1],
+            [10, 20, 50, 100, "All"]
+        ],
+        "sEcho": "1",
+        "bFilter" : false,// 搜索栏
+        "bLengthChange" : false,// 每行显示记录数
+        "iDisplayLength": 10,
+        "bServerSide": true,
+        "bPaginate": true,
+        "bProcessing": true,
+        "bDestroy":false,
+        "sAjaxDataProp": "rows",
+        "sAjaxSource": "<@url value="/org/find/${id}"/>",
+        "sPaginationType": "bootstrap",
+        "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+        "oTableTools": {
+            "aButtons": []
+        },
+        "fnServerData": function(sSource, aoData, fnCallback) {
+        	iStart = aoData.iDisplayStart +　1;
+        	Home.datatableAjax(sSource, aoData, fnCallback, search);
+        },
+        "language": language,
+        "fnRowCallback": function(target, n) {
+        	$(target).find('.edit').click(function() {
+        		$('#func_content').load('<@url value="/org/edit?id=' + n.id + '&applyId=${applyId}&parentKey=${parentKey}"/>');
+        	})
+        	$(target).find('.delete').click(function() {
+        		$.ajax({url: '<@url value="/org/delete?id=' + n.id + '"/>', type: 'get', error: errorCallback, success: function(r) {
+        			var oSettings = oTable.fnSettings();
+        	        oTable.fnDraw(oSettings);
+        		}});
+        	})
+        	$(target).find('.publish').click(function() {
+        		$.ajax({url: '<@url value="/org/publish?id=' + n.id + '"/>', type: 'get', error: errorCallback, success: function(r) {
+        			var oSettings = oTable.fnSettings();
+        	        oTable.fnDraw(oSettings);
+        		}});
+        	})
+        },
+        "aoColumns": [
+		  { "mDataProp": "serial", "bSortable": false, "mRender" : function ( data, type ) {return iStart++;} },
+          { "mDataProp": "name", "bSortable": false },
+          { "mDataProp": "key", "bSortable": false },
+          { "mDataProp": "leaderName", "bSortable": false },
+          { "mDataProp": "contact", "bSortable": false },
+          { "mDataProp": "remark", "bSortable": false },
+          { "mDataProp": "status", "bSortable": false, 'sClass': 'center', "mRender" : function ( data, type ) {return data == 1 ? '<a href="#" class="prop-a publish"><i class="fa fa-check"></i></a>' : '<a href="#" class="prop-b publish"><i class="fa fa-times"></i></a>';} },
+          { "mDataProp": "id", "bSortable": false, "mRender": function ( data, type ) {
+        			return '<a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>编辑</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i>删除</a>';
+        		} 
+          }
+        ]
+    });
+    
+    $('#menu_new').click(function() {
+    	$('#func_content').load('<@url value="/org/edit?id=${id}"/>');
+    })
+    
+})
+</script>

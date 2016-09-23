@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlrewrite>
+	<!-- 访问jsp及jspx将不rewrite url,其它.js,.css,.gif等将重写,如 /foo.gif => /static/foo.gif -->
+	<rule>
+		<condition operator="notequal" next="and" type="request-uri">.*.org</condition>
+		<condition operator="notequal" next="and" type="request-uri">.*.html</condition>
+		<from>(.*)^(/.*\..*)$</from>
+		<to>$1/static$2</to>
+	</rule>
+</urlrewrite>

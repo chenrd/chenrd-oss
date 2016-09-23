@@ -1,0 +1,96 @@
+<div class="widget">
+    <div class="widget-body">
+        <form action="<@url value='/menu/saveOrUpdate'/>" method="post" class="form-horizontal" data-bv-message="This value is not valid" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+              data-bv-feedbackicons-invalid="glyphicon glyphicon-remove" data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+            <div class="form-title">基本信息</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">所属应用</label>
+                <div class="col-lg-4">${apply.name}
+                	<input type="hidden" name="applyId" value="${apply.id}"/>
+                </div>
+                <label class="col-lg-2 control-label">上级菜单</label>
+                <div class="col-lg-4">
+                	<#if menus??>
+                			<select name="parentKey" style="width: 100%">
+                					<option value="">&nbsp;</option>
+                				<#list menus as m>
+                					<option value="${m.key}" <#if menu?? && m.id == menu.id>selected</#if>>${m.fullName}</option>
+                				</#list>
+                			</select>
+                		<#elseif menu??>
+	                		${menu.name}
+	                		<input type="hidden" name="parentKey" value="${menu.key}"/>
+                	</#if>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">菜单名称</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="name" value="<#if bean??>${bean.name}</#if>"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+                <label class="col-lg-2 control-label">菜单标识</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="key" value="<#if bean??>${bean.key?replace(bean.parentKey, '')}</#if>"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-lg-2 control-label">访问路径</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="url" value="<#if bean??>${bean.url?replace('', '')}</#if>"/>
+                </div>
+                <label class="col-lg-2 control-label">图标样式</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="icon" value="<#if bean??>${bean.icon}</#if>"/>
+                </div>
+            </div>
+            <hr class="wide" />
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button type="button" id="add_func" class="btn btn-danger btn-sm">添加功能</button>
+                </div>
+            </div>
+            <#list childs as child>
+            <div class="form-group">
+            	<label class="col-lg-2 control-label">功能名称</label>
+            	<div class="col-lg-4">
+            		<input type="hidden" name="funcIds" value="${child.id}"/>
+            		<input type="text" class="form-control" readonly="readonly" value="${child.name}" name="funcNames" />
+            	</div>
+            	<label class="col-lg-2 control-label">访问路径</label>
+            	<div class="col-lg-4"><input type="text" class="form-control" name="funcUrls" value="<#if bean??>${child.url?replace(bean.url, '')}</#if>" /></div>
+            </div>
+            </#list>
+            
+            <hr class="wide" id="func_location"/>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="hidden" value="<#if bean??>${bean.id}</#if>" name="id"/>
+                    <button type="submit" class="btn btn-danger"> 提交 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Page Related Scripts-->
+
+<script type="text/javascript">
+$(function() {
+	var myPannel = tab.current;
+	myPannel.center.find("form").bootstrapValidator({submitHandler: submitHandler})
+	
+	$('#add_func').click(function() {
+		var $_d = $('<div class="form-group"></div>').insertBefore($('#func_location'));
+		$_d.append('<label class="col-lg-2 control-label">功能名称</label>');
+		$_d.append('<div class="col-lg-4"><input type="text" class="form-control" name="funcNames" /></div>');
+		$_d.append('<label class="col-lg-2 control-label">访问路径</label>');
+		$_d.append('<div class="col-lg-4"><input type="text" class="form-control" name="funcUrls" /></div>');
+	})
+});
+
+</script>

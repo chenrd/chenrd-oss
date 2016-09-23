@@ -1,0 +1,74 @@
+<div class="widget">
+	<div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">菜单添加/编辑</span>
+    </div>
+    <div class="widget-body">
+        <form action="<@url value='/func/saveOrUpdate'/>" method="post" class="form-horizontal"
+              data-bv-message="This value is not valid"
+              data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+              data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+              data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+            <div class="form-title">基本信息</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">所属应用</label>
+                <div class="col-lg-<#if menu??>4<#else>10</#if>">${apply.name}
+                	<input type="hidden" name="applyId" value="${apply.id}"/>
+                </div>
+                <#if menu??>
+                <label class="col-lg-2 control-label">上级菜单</label>
+                <div class="col-lg-4">${menu.name}
+                	<input type="hidden" name="parentKey" value="${menu.key}"/>
+                </div>
+                </#if>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">功能名称</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="name" value="<#if bean??>${bean.name}</#if>"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+                <label class="col-lg-2 control-label">标识</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="key" value="<#if bean??>${bean.key?replace(bean.parentKey, '')}</#if>"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-lg-2 control-label">访问路径</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="url" value="<#if bean??>${bean.url?replace('', '')}</#if>" 
+                    	data-bv-message="访问路径不能为空"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="访问路径不能为空"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^/[a-zA-Z0-9_\.]+"
+                           data-bv-regexp-message="访问路径格式不正确，例：/manager"
+                           />
+                </div>
+                <label class="col-lg-2 control-label">图标样式</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" name="icon" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                	<input type="hidden" value="<#if bean??>${bean.id}</#if>" name="id"/>
+                    <button type="submit" class="btn btn-blue"> 提交 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Page Related Scripts-->
+
+<script type="text/javascript">
+$(function() {
+	var myPannel = tab.current;
+	myPannel.center.find("form").bootstrapValidator({submitHandler: submitHandler})
+});
+</script>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+<#include "/common/html/common.html"/>
+<style type="text/css" >
+<!--
+.hide{display: none;}
+.right{float: right !important;margin-left: 5px;}
+.prop-a:hover,.prop-a:focus{color: #4efa0a !important;}
+.prop-a{color: #94fc6f !important;}
+.prop-b:hover,.prop-b:focus{color: #ff0000 !important;}
+.prop-b{color: #fa7373 !important;}
+.center{text-align: center;}
+.search-btn{margin-left: 10px;}
+.search-label{padding-left: 0px !important;padding-right: 3px !important;padding-top: 7px;text-align: right;}
+.search{padding-left: 0px !important;padding-right: 0px !important;}
+.vessel{
+	max-height: 100%;
+	background-color: white;
+	border-collapse: separate;
+	border: 1px solid rgb(204, 204, 204);
+	padding: 4px;
+	box-sizing: content-box;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+	box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+	border-top-right-radius: 3;
+	border-bottom-right-radius: 3;
+	border-bottom-left-radius: 3;
+	border-top-left-radius: 3;
+	overflow-y: auto;
+	outline: none;
+	display: block;
+	word-wrap: break-word;
+	-webkit-line-break: after-white-space;
+}
+.hlep_page{
+border: 1px solid #999;top: 0px;;width: 200px;height: 100px;
+-webkit-box-shadow: 3px 3px 3px #999;-moz-box-shadow: 3px 3px 3px #999;box-shadow: 3px 3px 3px #999;background: white;position: absolute;z-index: 9999999999
+}
+.hlep_page li{list-style-type:none;padding-bottom: 5px;font-family: '宋体';font-size: 13px;color: #000;padding-left: 20px;vertical-align: middle;padding-top: 2px;}
+.hlep_page li:hover{background: blue;color: white;cursor: default;}
+.hlep_page ul{margin: 0px 0px;padding-left: 0px !important;}
+.check-val{
+	line-height: 25px;font-weight: bold;
+}
+-->
+</style>
+</head>
+<body>
+    <#include "/common/html/head.html"/>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+    <div class="page-container">
+            <!-- Page Sidebar -->
+        <#include "/common/html/left.html"/>
+		<div class="page-content">
+			<div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">首页</a>
+                    </li>
+                    <li class="active">应用管理</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+            <!-- Page Header -->
+            <div class="page-header position-relative">
+                <div class="header-title">
+                    <h1 id="title"></h1>
+                </div>
+                <div class="header-buttons">
+                	<!-- 全拼显示 -->
+                    <a class="sidebar-toggler" href="#"><i class="fa fa-arrows-h"></i></a>
+                    <!-- 刷新 -->
+                    <a class="refresh" id="refresh-toggler" href=""><i class="glyphicon glyphicon-refresh"></i></a>
+                    <!-- 两边隐藏 -->
+                    <a class="fullscreen" id="fullscreen-toggler" href="#"><i class="glyphicon glyphicon-fullscreen"></i></a>
+                </div>
+                <!--Header Buttons End-->
+            </div>
+            
+			<div class="page-body">
+		        <div class="row">
+		        	<!-- 内容部门全部加载到该DIV里面 -->
+		        	<div class="widget-main ">
+                        <div class="tabbable" id="head-tab" >
+                            <ul class="nav nav-tabs tabs-flat"></ul>
+                            <div class="tab-content tabs-flat"></div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+	<!-- 全文错误提示框模板 -->
+	<div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;z-index: 999999" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-fire"></i>
+                </div>
+                <div class="modal-title">Error</div>
+
+                <div class="modal-body">You'vd done bad!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!-- 全文成功提示款模板 -->
+    <div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-check"></i>
+                </div>
+                <div class="modal-title">Success</div>
+
+                <div class="modal-body">You have done great!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!-- 全文提示框模板 -->
+    <div id="modal-info" class="modal modal-message modal-info fade" style="display: none;" aria-hidden="true">
+    	<div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-envelope"></i>
+                </div>
+                <div class="modal-title">Alert</div>
+
+                <div class="modal-body" style="text-align: left !important;padding-left: 20px;">You'vd got mail!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">查看</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- 修改密码 -->
+    <div id="update-password-html" style="display:none;">
+        <div class="row">
+            <div class="col-md-12">
+	            <form action="<@url value='updatePassword'/>" method="post" >
+	                <div class="form-group">
+	                    <input type="password" class="form-control" placeholder="原密码" id="oldPassword" name="oldPassword">
+	                </div>
+	                <div class="form-group">
+	                    <input type="password" class="form-control" placeholder="新密码" id="newPassword" name="newPassword">
+	                </div>
+	                <div class="form-group">
+	                    <input type="password" class="form-control" name="confirmPassword" placeholder="确认密码">
+	                </div>
+	            </form>
+            </div>
+        </div>
+    </div>
+    <div style="display: none;">
+		<button class="btn btn-danger" id="modal-danger-btn" data-toggle="modal" data-target="#modal-danger">Danger</button>
+		<button class="btn btn-success" id="modal-success-btn" data-toggle="modal" data-target="#modal-success">Success</button>
+		<button class="btn btn-info" id="modal-info-btn" data-toggle="modal" data-target="#modal-info">Info</button>
+		<button class="btn btn-default" id="bs-example-modal-lg-btn" data-toggle="modal" data-target="#bs-example-modal-lg">Large modal</button>
+	</div>
+	<div class="loading-container" id="mask-container" style="opacity:0.1;-moz-opacity:0.1;filter:alpha(opacity=10);"></div>
+	<div id="mask" style="display: none;position: fixed;left: 0px;right: 0px;top: 0px;bottom: 0px;">
+		<div style="width: 200px;height: 40px;border: 2px solid #0088cc;background: white;vertical-align: middle;position: absolute;top:50%;left: 45%;padding: 8px 0px;">
+			<div style="background: url('assets/img/pagination_loading.gif') no-repeat;width: 16px;height: 16px;float: left;margin: 0px 10px;"></div>
+			<div>正在加载，请稍后。。。</div>
+		</div>
+	</div>
+	
+	<div class="hlep_page" id="hlep_page" data-target="" style="display: none;" oncontextmenu="return false">
+		<ul>
+			<li class="curr">关闭当前标签页</li>
+			<li class="other">关闭其他标签页</li>
+			<li class="all">关闭所有标签页</li>
+			<li class="rig">关闭右侧标签页</li>
+		</ul>
+	</div>
+	<!--Basic Scripts-->
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.min.js"></script>
+	<!--Page Related Scripts-->
+    <script src="assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    
+    <script src="assets/js/validation/bootstrapValidator.js" type="text/javascript"></script>
+    <script src="assets/js/fuelux/treeview/tree-custom.min.js"></script>
+    <script src="assets/js/bootbox/bootbox.js"></script>
+    <script type="text/javascript" src="jquery.form.js"></script>
+    <script src="assets/js/select2/select2.js"></script>
+    <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
+    
+    <script type="text/javascript" src="assets/js/fuelux/wizard/wizard-custom.js"></script>
+	<script type="text/javascript" src="assets/js/toastr/toastr.js"></script>
+    <script>
+    (function() {
+    	var Tab, Pannel,
+    	_slice = [].slice,
+        __hasProp = {}.hasOwnProperty,//对象是否有制定名称的属性
+        __extends = function(child, parent) { 
+    		for (var key in parent) { 
+    			if (__hasProp.call(parent, key)) 
+    				child[key] = parent[key]; 
+    		} 
+    		function ctor() { 
+    			this.constructor = child; 
+    		}
+    		ctor.prototype = parent.prototype; 
+    		child.prototype = new ctor(); 
+    		child.__super__ = parent.prototype; 
+    		return child; 
+    	};
+
+        Tab = (function(){
+			Tab.prototype.pannels = new Array();
+        	
+        	Tab.prototype.current = undefined;
+        	
+        	Tab.prototype.opts = {};
+        	
+        	function Tab(opts) {
+        		this.opts = $.extend({}, this.opts, opts);
+        	}
+        	
+        	Tab.prototype.tab = function(methodName, param) {
+        		if (typeof methodName == 'string' && (methodName == 'add' || methodName == 'show')) {
+        			var _this = this;
+        			if (this.current != undefined && this.current.isLock() && this.current.opts.id != param.id) {
+        				bootbox.confirm('请确定是否放弃当前操作？', function (result) {
+                            if (result) {
+                            	_this.tab('remove', _this.current.opts.id);
+                            	_this.tab('addOrShow', param);
+                            }
+                        });
+        			} else {
+        				this.tab('addOrShow', param);
+        			}
+        		}
+        		
+        		if (methodName == 'addOrShow') {
+        			var pannel = null;
+        			for (var i = 0; i < this.pannels.length; i++) {
+        				if (this.pannels[i].opts.id == param.id) {
+        					pannel = this.pannels[i];
+        					break;
+        				}
+        			}
+        			if (pannel == null) {pannel = new Pannel(param, this);this.pannels.push(pannel);}
+        			if (this.current != undefined) this.current.hide();
+        			this.current = pannel;
+        			pannel.show();
+        		}
+        		
+        		if (methodName == 'remove') {
+       				var pannel = null, index = 0, parent = this.current.opts.parent;
+           			for (var i = 0; i < this.pannels.length; i++) {
+           				if (this.pannels[i].opts.id == (typeof param == 'string' ? param : param.id)) {pannel = this.pannels[i];index = i;break;}
+           			}
+        			if (pannel != null) {
+        				this.pannels.splice(index, 1);
+        				pannel.head.remove();
+        				pannel.center.remove();
+        			}
+        			
+        			if (this.current != undefined && this.current.opts.id == pannel.opts.id) this.current = undefined;
+        			if (this.current != undefined) return;
+        			
+        			if (parent != undefined) {
+        				this.tab('addOrShow', parent.opts);
+        				return;
+        			}
+        			if (this.pannels.length > 0) this.tab('addOrShow', this.pannels[0].opts);
+        		}
+        	}
+        	
+        	return Tab;
+        })();
+        Pannel = (function(){
+        	
+        	Pannel.prototype.opts = {
+        			liStr: '<li class="active" ><a href="javascript:void(0);" style="border-left:none;"></a></li>',
+        			centerStr: '<div class="tab-pane in active"></div>',
+        			id: '',
+        			headName: '新建标签页',
+        			headClass: 'nav-tabs',
+        			centerClass: 'tab-content',
+        			lock: false
+        	}
+        	
+        	Pannel.prototype.refreshType = 0;
+        	
+        	Pannel.prototype.nTr = {};
+        	
+        	Pannel.prototype.callback = undefined;
+        	
+        	Pannel.prototype.head = {};
+        	
+        	Pannel.prototype.center = {};
+        	
+        	function Pannel(opts, _super) {
+        		this.opts = $.extend({}, this.opts, opts);
+        		
+        		var _this = this;
+        		
+        		if (__hasProp.call(this.opts, 'headClass')) {
+        			this.head = $(this.opts.liStr).appendTo($('#' + this.opts.optId + ' .' + this.opts.headClass));
+        			this.head.attr('data-target', this.opts.id);
+        			this.head.find('a').text(this.opts.headName);
+        		}
+        		if (__hasProp.call(this.opts, 'centerClass')) {
+        			this.center = $(this.opts.centerStr).appendTo($('#' + this.opts.optId + ' .' + this.opts.centerClass));
+        			this.center.attr('id', this.opts.id);
+        			Home.startLoadingContainer();
+        			this.center.load(this.opts.url, function(responseText, textStatus, XMLHttpRequest) {
+        				if (textStatus == "error") {
+        					document.location.reload();
+        				}
+        				Home.stopLoadingContainer();
+        			});
+        		}
+        		
+        		this.head.click(function() {
+        			_super.tab('show', _this.opts);
+        		}).bind("mouseup",function(evt) {
+        			if (evt.button == 2) {
+            			$('#hlep_page').css({left: evt.pageX, top: evt.pageY});
+            			$('#hlep_page').show();
+            			$(this).parent().find('.selected').removeClass('selected');
+            			$(this).addClass('selected');
+            			
+            			$(document).bind('mousedown', function(){
+            				$('#hlep_page').hide();
+            				$(document).unbind('mousedown');
+            			})
+        			}
+        		}).dblclick(function() {
+        			this.head.remove();
+        			this.center.remove();
+        		})
+        	}
+        	
+        	Pannel.prototype.isLock = function() {
+				return this.opts.lock;
+			}
+			
+			Pannel.prototype.show = function() {
+				this.head.addClass('active');
+        		this.center.addClass('in');
+        		this.center.addClass('active');
+			}
+			
+			Pannel.prototype.hide = function() {
+				this.head.removeClass('active');
+        		this.center.removeClass('in');
+        		this.center.removeClass('active');
+			}
+        	
+        	return Pannel;
+        })();
+        
+        window.Tab = Tab;
+        
+        window.Pannel = Pannel;
+    }).call(this);
+    
+    var tab = {};
+    var Home = {
+    	current_show_tab: null,
+    	loadCenter: function(id, url, title, lock, parent) {
+    		if (url == '') {
+    			return false;
+    		}
+    		tab.tab('add', {headClass: tab.opts.headClass, contentClass: tab.opts.contentClass, optId: tab.opts.id, id: id, url: url, headName: title, lock: lock, parent: parent});
+    	},
+    	startLoadingContainer: function() {
+    		/* $(".loading-container").removeClass("loading-inactive"); */
+    		$('#mask').show();
+    		$('#mask-container').show();
+    	},
+    	stopLoadingContainer: function() {
+    		/* $(".loading-container").addClass("loading-inactive"); */
+    		$('#mask').hide();
+    		$('#mask-container').hide();
+    	},
+    	datatableAjax: function(sSource, aoData, fnCallback, search) {
+    		Home.startLoadingContainer();
+    		$.ajax({ type: 'post', url: sSource, dataType: 'json', data: $.extend({}, {sEcho: aoData.sEcho, iDisplayLength: aoData.iDisplayLength, iDisplayStart: aoData.iDisplayStart}, search),
+        		success: function(resp) { 
+        			fnCallback(resp); 
+        			Home.stopLoadingContainer();
+        		}
+    			,
+    			error: function(resp) {
+    				Home.stopLoadingContainer();
+    			}
+        	})
+    	},
+    	ajaxGetReq: function(url, func) {
+    		$.get(url, function(res) {
+    			if (res != undefined && res != null && res != '') {
+    				res = eval('('+res+')');
+					if (res.statusCode != undefined && res.statusCode == 300) {
+						Home.stopLoadingContainer();
+						Home.errorCallback(res.message);
+						return;
+					}
+				}
+    			func();
+    		})
+    	},
+    	deleteReloadCurrent: function(url, content, func) {
+    		bootbox.confirm(content, function (result) {
+                if (result) {
+                    Home.reqReloadCurrent(url, func);
+                }
+            });
+    	},
+    	reqReloadCurrent: function(url, data, func) {
+    		Home.startLoadingContainer();
+    		$.get(url, (typeof data == 'object' ? data : {}), function(res) {
+    			if (res != undefined && res != null && res != '') {
+    				res = eval('('+res+')');
+					if (res.statusCode != undefined && res.statusCode == 300) {
+						Home.stopLoadingContainer();
+						Home.errorCallback(res.message);
+						return;
+					}
+				}
+    			if (typeof data == 'function') {
+    				data();
+    			} else {
+    				func();
+    			}
+    		})
+    	},
+    	errorCallback: function(message) {
+    		$('#modal-danger .modal-body').html(message);
+       		$('#modal-danger-btn').click();
+    	},
+    	callback: function(data)
+    	{
+    		if (data != undefined && data != null && data != '') {
+				data = eval('('+data+')');
+				if (data.statusCode != undefined && data.statusCode == 300) {
+					Home.errorCallback(data.message);
+					return;
+				}
+			}
+    		
+   			tab.tab('remove', tab.current.opts.id);
+    		
+    		if (tab.current != undefined && tab.current.callback != undefined) {
+    			tab.current.callback();
+    		}
+    	}
+    }
+    
+    var language = { "search": "", "sSearch" : "搜索", "sUrl" : "", "sProcessing" : "正在加载数据...", "sLengthMenu" : "显示_MENU_条 ", "sZeroRecords" : "没有您要搜索的内容",
+            "sInfo" : "从_START_ 到 _END_ 条记录——总记录数为 _TOTAL_ 条", "sInfoEmpty" : "记录数为0", "sInfoFiltered" : "(全部记录数 _MAX_  条)", "sInfoPostFix" : "",
+            "oPaginate": { "sFirst" : "第一页", "sPrevious" : " 上一页 ", "sNext" : " 下一页 ", "sLast" : " 最后一页 " }
+        	};
+    
+    var oTableOpts = {
+    		"sEcho": "1",
+            "bFilter" : false,// 搜索栏
+            "bLengthChange" : false,// 每行显示记录数
+            "iDisplayLength": 20,
+            "bServerSide": true,
+            "bPaginate": true,
+            "sAjaxDataProp": "rows",
+            "sPaginationType": "bootstrap",
+            "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+            "oTableTools": {
+                "aButtons": []
+            },
+            language: { "search": "", "sSearch" : "搜索", "sUrl" : "", "sProcessing" : "正在加载数据...", "sLengthMenu" : "显示_MENU_条 ", "sZeroRecords" : "没有您要搜索的内容",
+                "sInfo" : "从_START_ 到 _END_ 条记录——总记录数为 _TOTAL_ 条", "sInfoEmpty" : "记录数为0", "sInfoFiltered" : "(全部记录数 _MAX_  条)", "sInfoPostFix" : "",
+                "oPaginate": { "sFirst" : "第一页", "sPrevious" : " 上一页 ", "sNext" : " 下一页 ", "sLast" : " 最后一页 " }
+            	}
+            ,
+            "bProcessing": true,
+            "bDestroy":false
+    }
+    
+    function errorCallback(message) {
+   		$('#modal-danger .modal-body').html(message);
+   		$('#modal-danger-btn').click();
+    }
+    
+    function modalInfo(message, width) {
+    	$('#modal-info .modal-dialog').width(width != undefined ? width : 300);
+    	$('#modal-info .modal-body').html('<textarea style="margin-left: 20px;width:' + ($('#modal-info .modal-dialog').width() - 30) + 'px;height:400px;background: white;border: none;" readonly="readonly">' + message + '</textarea>');
+   		$('#modal-info-btn').click();
+    }
+    
+    var parseParam=function(param, key){
+        var paramStr="";
+       	for (var p in param) {
+       		paramStr+="&"+p+"="+encodeURIComponent(param[p]);
+       	}
+        return paramStr.substr(1);
+    };
+    
+    function submitHandler(validator, form, submitButton) {
+    	Home.startLoadingContainer();
+		$(form[0]).ajaxSubmit({
+			success: function(data) {
+				Home.callback(data);
+				Home.stopLoadingContainer();
+			}
+		});
+	}
+    
+    function examplelg(url) {
+		Home.startLoadingContainer();
+		$('#bs-example-modal-lg .modal-body').load(url, function() {
+			$('#bs-example-modal-lg-btn').click();
+			Home.stopLoadingContainer();
+		});
+	}
+    
+    
+    $(function(){
+    	//修改密码
+    	$('#updatePassword').click(function() {
+    		bootbox.dialog({
+                message: $("#update-password-html").html(),
+                title: "修改密码",
+                className: "modal-darkorange",
+                buttons: {
+                    success: {
+                        label: "修改",
+                        className: "btn-blue",
+                        callback: function () {
+                        	$(".modal-body form").ajaxSubmit({
+                        		beforeSubmit: function() {
+                        			if ($.trim($('.modal-body input[name="oldPassword"]').val()) == '') {
+                        				alert('请出入旧密码');
+                        				return false;
+                        			}
+                        			if ($.trim($('.modal-body input[name="newPassword"]').val()) == '' || $.trim($('.modal-body input[name="newPassword"]').val()).length < 6) {
+                        				alert('新密码不能为空，且必须大于等于6个字符');
+                        				return false;
+                        			}
+                        			if ($('.modal-body input[name="newPassword"]').val() != $('.modal-body input[name="confirmPassword"]').val()) {
+                        				alert('两次输入密码不一致');
+                        				return false;
+                        			}
+                        		},
+                        		success: function(data) {
+                        			if (data != undefined && data != null && data != '') {
+                						data = eval('('+data+')');
+                						if (data.statusCode != undefined && data.statusCode == 300) {
+                							Home.errorCallback(data.message);
+                							return;
+                						}
+                					}
+                        			$('.modal-header .bootbox-close-button').click();
+                        			Home.successCallback('修改密码成功');
+                        		}
+                        	});
+                        	return false;
+                        }
+                    },
+                    "取消": {
+                        className: "btn-danger",
+                        callback: function () { }
+                    }
+                }
+            });
+    	});
+    	
+    	
+    	$('#hlep_page li').on('click', function(){
+    		var _this = $('#head-tab .nav-tabs .selected').attr('data-target');
+			if ($(this).attr('class') == 'curr') {
+				tab.tab('remove', _this);
+			}
+			else {
+				var isT = false, _class = $(this).attr('class');
+				$('#head-tab .nav-tabs li').each(function(i, n) {
+					if (!isT) isT = _this == $(n).attr('data-target');
+					if (_class == 'all') tab.tab('remove', $(n).attr('data-target'));
+					else if (_class == 'other' && $(n).attr('data-target') != _this) tab.tab('remove', $(n).attr('data-target'));
+					else if (isT && $(n).attr('data-target') != _this) tab.tab('remove', $(n).attr('data-target'));
+				})
+			}
+			$('#hlep_page').hide();
+		}).mouseenter(function(){
+			$(document).unbind('mousedown');
+		}).mouseleave(function(){
+			$(document).bind('mousedown', function(){
+				$('#hlep_page').hide();
+				$(document).unbind('mousedown');
+			})
+		})
+		
+		tab = new Tab({id: 'head-tab', headClass: 'nav-tabs', centerClass: 'tab-content'});
+		
+		$('.sidebar-menu a:eq(0)').click();
+    });
+    </script>
+</body>
+</html>

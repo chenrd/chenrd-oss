@@ -1,0 +1,194 @@
+<style type="text/css">
+.vessel{border-bottom: 1px dashed #DCEBFF;}
+</style>
+
+<div class="widget">
+    <div class="widget-body">
+    	<form role="form" method="post">
+    		<div id="simplewizardinwidget" class="wizard" data-target="#simplewizardinwidget-steps">
+                <ul class="steps">
+                	<li data-target="#simplewizardinwidgetstep0" class="active"><span class="step">1</span>快捷链接<span class="chevron"></span></li>
+                    <li data-target="#simplewizardinwidgetstep1"><span class="step">1</span>角色分配<span class="chevron"></span></li>
+                    <li data-target="#simplewizardinwidgetstep2"><span class="step">2</span>菜单权限<span class="chevron"></span></li>
+                    <li data-target="#simplewizardinwidgetstep3"><span class="step">3</span>功能权限<span class="chevron"></span></li>
+                </ul>
+                <div class="actions" id="simplewizardinwidget-actions">
+                    <button type="button" class="btn btn-default btn-sm shiny btn-prev"> <i class="fa fa-angle-left"></i>上一步</button>
+                    <button type="button" class="btn btn-default btn-sm shiny btn-next" data-last="Finish">下一步<i class="fa fa-angle-right"></i></button>
+                </div>
+            </div>
+            <div class="step-content" id="simplewizardinwidget-steps">
+            	<div class="step-pane active" id="simplewizardinwidgetstep0">
+            		<div class="form-title"></div>
+            		<div class="form-group" style="height: 300px;">
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
+					    	<ul class="select2-results" result-target="apply_result" data-target="apply_vessel2" id="apply_vessel1" style="min-height: 300px;max-height: 300px;">
+					    		<#list applys as apply>
+						    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${apply.id}" index="${apply_index}">
+						    			<div class="select2-result-label">
+						    			<span class="select2-match"></span>${apply.name}
+	                                	</div>
+	                            	</li>
+                            	</#list>
+                            </ul>
+				    	</div>
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
+				    		<ul class="select2-results vessel" data-target="apply_vessel1" id="apply_vessel2" style="min-height: 300px;max-height: 300px;">
+				    			
+				    		</ul>
+				    	</div>
+				    	<div style="width: 80px;margin: 0px auto;height: 300px;vertical-align: middle;padding-top: 120px;">
+				    		<a class="btn btn-default purple" data-target="role_vessel1" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-right"></i> 全选</a>
+				    		<a class="btn btn-default purple" data-target="role_vessel2" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-left"></i> 全不选</a>
+				    	</div>
+				    </div>
+            	</div>
+                <div class="step-pane" id="simplewizardinwidgetstep1">
+                	<div class="form-title"></div>
+                	<div class="form-group" style="height: 300px;">
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
+					    	<ul class="select2-results" result-target="role_result" data-target="role_vessel2" id="role_vessel1" style="min-height: 300px;max-height: 300px;">
+					    		<#list roles as role>
+						    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${role.id}" index="${role_index}">
+						    			<div class="select2-result-label">
+						    			<span class="select2-match"></span>${role.name}
+	                                	</div>
+	                            	</li>
+                            	</#list>
+                            </ul>
+				    	</div>
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
+				    		<ul class="select2-results vessel" data-target="role_vessel1" id="role_vessel2" style="min-height: 300px;max-height: 300px;">
+				    			
+				    		</ul>
+				    	</div>
+				    	<div style="width: 80px;margin: 0px auto;height: 300px;vertical-align: middle;padding-top: 120px;">
+				    		<a class="btn btn-default purple" data-target="role_vessel1" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-right"></i> 全选</a>
+				    		<a class="btn btn-default purple" data-target="role_vessel2" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-left"></i> 全不选</a>
+				    	</div>
+				    </div>
+                </div>
+                <div class="step-pane" id="simplewizardinwidgetstep2">
+                	<div class="form-title"></div>
+                	<div class="form-group" style="height: 300px;">
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
+					    	<ul class="select2-results" result-target="power_result" data-target="vessel2" id="vessel1" style="min-height: 300px;max-height: 300px;">
+					    		<#list menus as menu>
+						    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${menu.id}" index="${menu_index}">
+						    			<div class="select2-result-label">
+						    			<span class="select2-match"></span>${menu.fullName}
+	                                	</div>
+	                            	</li>
+                            	</#list>
+                            </ul>
+				    	</div>
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
+				    		<ul class="select2-results vessel" data-target="vessel1" id="vessel2" style="min-height: 300px;max-height: 300px;">
+				    			
+				    		</ul>
+				    	</div>
+				    	<div style="width: 80px;margin: 0px auto;height: 300px;vertical-align: middle;padding-top: 120px;">
+				    		<a class="btn btn-default purple" data-target="vessel1" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-right"></i> 全选</a>
+				    		<a class="btn btn-default purple" data-target="vessel2" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-left"></i> 全不选</a>
+				    	</div>
+				    </div>
+               	</div>
+               	<div class="step-pane" id="simplewizardinwidgetstep3">
+                	<div class="form-title"></div>
+                	<div class="form-group" style="height: 300px;">
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
+					    	<ul class="select2-results" result-target="power_result" data-target="vessel4" id="vessel3" style="min-height: 300px;max-height: 300px;">
+					    		<#list funcs as menu>
+						    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${menu.id}" index="${menu_index}">
+						    			<div class="select2-result-label">
+						    			<span class="select2-match"></span>${menu.fullName}
+	                                	</div>
+	                            	</li>
+                            	</#list>
+                            </ul>
+				    	</div>
+				    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
+				    		<ul class="select2-results vessel" data-target="vessel3" id="vessel4" style="min-height: 300px;max-height: 300px;">
+				    			
+				    		</ul>
+				    	</div>
+				    	<div style="width: 80px;margin: 0px auto;height: 300px;vertical-align: middle;padding-top: 120px;">
+				    		<a class="btn btn-default purple" data-target="vessel3" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-right"></i> 全选</a>
+				    		<a class="btn btn-default purple" data-target="vessel4" href="javascript:void(0);" style="width: 100%"><i class="fa fa-angle-double-left"></i> 全不选</a>
+				    	</div>
+				    </div>
+               	</div>
+               	<span id="power_result" data-name="powers"></span>
+               	<span id="role_result" data-name="roles"></span>
+               	<span id="apply_result" data-name="applys"></span>
+            </form>
+           </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		var myPannel = tab.current;
+		$('#simplewizardinwidget').wizard().on('finished', function (e) {
+			Home.startLoadingContainer();
+			$.ajax({
+				url: "<@url value='user/allot/${bean.id}'/>",
+				type: 'post',
+				data: myPannel.center.find('form input,form textarea').serialize(),
+				success: function(data) {
+					Home.callback(data);
+					Home.stopLoadingContainer();
+				}
+			}) 
+		});
+		
+		$('.select2-results li').mousemove(function() {
+			$(this).addClass('select2-highlighted');
+		}).mouseout(function(){
+			$(this).removeClass('select2-highlighted');
+		}).click(function(){
+			var _this = $(this), _to = $('#' + $(this).parent().attr('data-target'));
+			var resultId = _this.parent().attr('result-target')
+			var isT = false;
+			for (var i = 0; i < _to.find('li').length; i++) {
+				var n = _to.find('li')[i];
+				if (parseInt(_this.attr('index')) < parseInt($(n).attr('index'))) {
+					$(n).before(_this);
+					isT = true;
+					break;
+				}
+			}
+			if (!isT) {
+				_to.append(_this);
+			}
+			
+			if (resultId != undefined) {
+				$('#' + resultId).append('<input type="hidden" name="' + $('#' + resultId).attr('data-name') +'" value="' + _this.val() + '"/>');
+			} else {
+				$('input[value="' + _this.val() + '"]').remove();
+			}
+		})
+		
+		$('.purple').click(function(){
+			$('#' + $(this).attr('data-target') + ' li').each(function(i, n){
+				n.click();
+			})
+		})
+		
+		
+		var powers = '<#if bean??>${bean.powerstrs}</#if>';
+		$.each(powers.split(','), function(i, n) {
+			$('#simplewizardinwidgetstep2 .select2-results li[value="' + n + '"],#simplewizardinwidgetstep3 .select2-results li[value="' + n + '"]').click();
+		})
+		
+		var roles = '<#if bean??>${bean.rolestrs}</#if>'; 
+		$.each(roles.split(','), function(i, n) {
+			$('#simplewizardinwidgetstep1 .select2-results li[value="' + n + '"]').click();
+		})
+		
+		var applys = '<#if bean??>${bean.applystrs}</#if>';
+		$.each(applys.split(','), function(i, n) {
+			$('#simplewizardinwidgetstep0 .select2-results li[value="' + n + '"]').click();
+		})
+	})
+</script>
+

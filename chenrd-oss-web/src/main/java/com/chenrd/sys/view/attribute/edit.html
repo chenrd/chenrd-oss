@@ -1,0 +1,24 @@
+<div class="widget">
+    <div class="widget-body">
+        <form id="config-form" action="<@url value='/config/saveOrUpdate'/>" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+            <div class="form-group" style="height: 300px;">
+		    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
+			    	<ul class="select2-results" result-target="power_result" data-target="vessel2" id="vessel1" style="min-height: 300px;max-height: 300px;">
+			    		<#list menus as menu>
+				    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${menu.id}" index="${menu_index}">
+				    			<div class="select2-result-label">
+				    			<span class="select2-match"></span>${menu.fullName}
+                               	</div>
+                           	</li>
+                          	</#list>
+                     </ul>
+		    	</div>
+		    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
+		    		<ul class="select2-results vessel" data-target="vessel1" id="vessel2" style="min-height: 300px;max-height: 300px;">
+		    			
+		    		</ul>
+		    	</div>
+		    </div>
+        </form>
+    </div>
+</div>

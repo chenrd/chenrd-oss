@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:noNamespaceSchemaLocation="classpath:/com/chenrd/shiro/ehcache/ehcache.xsd">
+    <diskStore path="/ehcache/diskStore" />
+
+<defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            overflowToDisk="true"/>
+            
+        
+        <cache name="authorizationCache"
+      maxElementsInMemory="1000"
+      eternal="false"
+      timeToIdleSeconds="1800"
+      timeToLiveSeconds="0"
+      overflowToDisk="false"
+      diskPersistent="false"  memoryStoreEvictionPolicy="LFU"/>
+	
+	<!-- 
+		timeToIdleSeconds 对象在cache中的最大闲置时间，就是 在一直不访问这个对象的前提下，这个对象可以在cache中的存活时间
+		timeToLiveSeconds 对象在cache中的最大存活时间，就是 无论对象访问或是不访问(闲置),这个对象在cache中的存活时间
+	 -->
+    <cache name="authenticationCache"
+      maxElementsInMemory="1000"
+      eternal="false"
+      timeToIdleSeconds="1800"
+      timeToLiveSeconds="0"
+      overflowToDisk="false"
+      diskPersistent="false" 
+      memoryStoreEvictionPolicy="LFU"/>
+        
+    <cache name="shiro-activeSessionCache"
+           eternal="false" 
+    	maxElementsInMemory="1000" 
+    	overflowToDisk="false" 
+    	diskPersistent="false" 
+    	timeToIdleSeconds="1800"  
+        timeToLiveSeconds="0" memoryStoreEvictionPolicy="LFU"/>
+        
+        <!-- 单位是秒key-shiroSessionId,val=UserInfo -->
+     <cache name="userCache"   
+        maxElementsInMemory="1000"   
+        eternal="false"  
+        timeToIdleSeconds="3600"  
+        timeToLiveSeconds="0"  
+        overflowToDisk="false"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"/>
+        
+        <!-- key=sessionId,val=ShiroSessionId -->
+     <cache name="login-subject"
+       	eternal="false" 
+    	maxElementsInMemory="1000" 
+    	overflowToDisk="false" 
+    	diskPersistent="false" 
+    	timeToIdleSeconds="1800"  
+        timeToLiveSeconds="0" memoryStoreEvictionPolicy="LFU"/>
+</ehcache>

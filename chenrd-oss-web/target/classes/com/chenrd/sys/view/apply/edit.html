@@ -1,0 +1,65 @@
+<div class="widget">
+    <div class="widget-body">
+        <form action="<@url value='/apply/saveOrUpdate'/>" method="post" class="form-horizontal"
+              data-bv-message="This value is not valid"
+              data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+              data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+              data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+            <div class="form-title">基本信息</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">应用名称</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" value="<#if bean??>${bean.name}</#if>" name="name"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-lg-2 control-label">应用标识</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" value="<#if bean??>${bean.key}</#if>" name="key"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="应用名称不能为空" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">访问路径</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" value="<#if bean??>${bean.address}</#if>" name="address"
+                           data-bv-message="访问路径不能为空"
+                           data-bv-notempty="true"
+                           data-bv-notempty-message="访问路径不能为空"
+                           data-bv-regexp="true"
+                           data-bv-regexp-regexp="^http://[a-zA-Z0-9_\.]+"
+                           data-bv-regexp-message="访问路径格式不正确，例：http://address:800/apply"
+                           />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">图标样式</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="icon" value="<#if bean??>${bean.icon}</#if>" type="text"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                	<input type="hidden" value="<#if bean??>${bean.id}</#if>" name="id"/>
+                    <button type="submit" class="btn btn-blue"> 提交 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Page Related Scripts-->
+
+<script type="text/javascript">
+$(function() {
+	var myPannel = tab.current;
+	myPannel.center.find("form").bootstrapValidator({submitHandler: submitHandler})
+});
+
+</script>
