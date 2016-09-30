@@ -104,6 +104,7 @@
 	<task:annotation-driven executor="executor" scheduler="scheduler" />
 	
 	<bean id="powerScan" class="com.chenrd.oss.power.cache.PowerScan">
+		<property name="applyKey" value="${apply.key}"/>
 		<property name="sessionFactorys">
 			<list>
 				<ref bean="sessionFactory"/>

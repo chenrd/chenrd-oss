@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 
 import com.chenrd.oss.power.ann.DefClassPower;
 import com.chenrd.oss.power.ann.DefFieldPower;
+import com.chenrd.sys.service.PowerEnum;
 
 /**
  * 
@@ -26,8 +27,6 @@ import com.chenrd.oss.power.ann.DefFieldPower;
  */
 public class DefPowerMetadata
 {
-    
-    private static final String fix = "_";
     
     Class<?> father;
     
@@ -53,9 +52,9 @@ public class DefPowerMetadata
         this.fieldPower = fieldPower;
     }
     
-    public static String formKeyName(String className, String fieldName)
+    public static String formKeyName(String applyKey, String classKey, String fieldKey)
     {
-        return className + fix + fieldName;
+        return applyKey.concat("/").concat(PowerEnum.FILED.getKey() + "/").concat(classKey).concat("/").concat(fieldKey);
     }
     
 }

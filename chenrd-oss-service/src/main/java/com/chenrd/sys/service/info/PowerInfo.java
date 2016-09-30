@@ -113,6 +113,17 @@ public class PowerInfo extends VO
     }
 
     /**
+     * @param name
+     * @param value
+     */
+    public PowerInfo(String name, String value)
+    {
+        super();
+        this.name = name;
+        this.value = value;
+    }
+
+    /**
      * 
      */
     public PowerInfo()

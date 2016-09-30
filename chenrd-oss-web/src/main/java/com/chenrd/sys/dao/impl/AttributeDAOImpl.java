@@ -18,7 +18,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.chenrd.common.Paging;
-import com.chenrd.dao.abs.QueryParamsBaseDAO;
+import com.chenrd.dao.abs.AbstractBaseDAO;
 import com.chenrd.sys.dao.AttributeDAO;
 import com.chenrd.sys.entity.Attribute;
 import com.chenrd.sys.service.Status;
@@ -32,7 +32,7 @@ import com.chenrd.sys.service.Status;
  */
 @SuppressWarnings("unchecked")
 @Repository("attributeDAO")
-public class AttributeDAOImpl extends QueryParamsBaseDAO<Attribute> implements AttributeDAO
+public class AttributeDAOImpl extends AbstractBaseDAO<Attribute> implements AttributeDAO
 {
 
     @Override
@@ -54,11 +54,4 @@ public class AttributeDAOImpl extends QueryParamsBaseDAO<Attribute> implements A
         params.put("status", Status.OFF);
         return (List<Attribute>) super.findPaging(hql.toString(), "select count(*) " + hql.toString(), params, paging);
     }
-
-    @Override
-    public Class<Attribute> getDomClass()
-    {
-        return Attribute.class;
-    }
-    
 }

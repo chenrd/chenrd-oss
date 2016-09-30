@@ -49,6 +49,8 @@ public class PowerScan
     
     private Map<String, DefPowerMetadata> classMetadata = new HashMap<String, DefPowerMetadata>();
     
+    private String applyKey;
+    
     
     
     /**
@@ -77,7 +79,7 @@ public class PowerScan
                 LimitClassPower limitClassPower = clazz.getAnnotation(LimitClassPower.class);
                 
                 if (limitClassPower != null)
-                    entityQuery = PowerEntityQueryBuilder.newEntityQueryBuilder();
+                    entityQuery = PowerEntityQueryBuilder.newEntityQueryBuilder(classMetadata);
                 else 
                     entityQuery = SimpleEntityQueryBuilder.newEntityQueryBuilder();
                 
@@ -98,9 +100,9 @@ public class PowerScan
         {
             if (Modifier.isStatic(field.getModifiers())) continue;
             if (entityQuery instanceof PowerEntityQueryBuilder) {
-                LimitFieldPower limitFieldPower = clazz.getAnnotation(LimitFieldPower.class);
-                if (limitFieldPower == null) continue;
-                ((PowerEntityQueryBuilder) entityQuery).with(new LimitPowerMetadata(clazz.getName(), field.getName(), limitClassPower, limitFieldPower, classMetadata.get(DefPowerMetadata.formKeyName(limitFieldPower.defClassName(), limitFieldPower.defFieldName()))));
+                LimitFieldPower limitFieldPower = field.getAnnotation(LimitFieldPower.class);
+                if (limitFieldPower != null)
+                    ((PowerEntityQueryBuilder) entityQuery).with(new LimitPowerMetadata(clazz.getName(), field.getName(), limitClassPower, limitFieldPower, DefPowerMetadata.formKeyName(applyKey, limitFieldPower.value()[0], limitFieldPower.value()[1])));
             } 
             
             QueryParams params = field.getAnnotation(QueryParams.class);
@@ -136,7 +138,7 @@ public class PowerScan
                 if (defFieldPower == null)
                     continue;
                 classPowerMetadata = new DefPowerMetadata(clazz, field, classPower, defFieldPower);
-                classMetadata.put(DefPowerMetadata.formKeyName(classPower.value(), defFieldPower.value()), classPowerMetadata);
+                classMetadata.put(DefPowerMetadata.formKeyName(applyKey, classPower.value()[1], defFieldPower.value()[1]), classPowerMetadata);
             }
         }
         if (clazz.getGenericSuperclass() != null)
@@ -153,14 +155,20 @@ public class PowerScan
         return sessionFactorys;
     }
 
-
-
     /**
      * @param sessionFactorys The sessionFactorys to set.
      */
     public void setSessionFactorys(List<SessionFactory> sessionFactorys)
     {
         this.sessionFactorys = sessionFactorys;
+    }
+
+    /**
+     * @param applyKey The applyKey to set.
+     */
+    public void setApplyKey(String applyKey)
+    {
+        this.applyKey = applyKey;
     }
 
 }

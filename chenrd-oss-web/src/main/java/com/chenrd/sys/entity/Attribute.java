@@ -13,6 +13,7 @@ package com.chenrd.sys.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import com.chenrd.sys.service.PowerType;
 
@@ -40,12 +41,40 @@ public class Attribute extends Power
     private String value;
     
     /**
+     * 查询用的，属性权限目前只有三层机制，可以理解为
+     * 1：class层
+     * 2：属性层
+     * 3：值
+     */
+    @Column(name = "ATTR_TYPE", length = 1)
+    private int attrType;
+    
+    @Transient
+    private String applyName;
+    
+    /**
      * 
      */
     public Attribute()
     {
         super();
         super.setType(PowerType.FIELD_POWER);
+    }
+
+    /**
+     * @return Returns the applyName.
+     */
+    public String getApplyName()
+    {
+        return getApply().getName();
+    }
+
+    /**
+     * @param applyName The applyName to set.
+     */
+    public void setApplyName(String applyName)
+    {
+        this.applyName = applyName;
     }
 
     /**
@@ -71,7 +100,22 @@ public class Attribute extends Power
     {
         return serialVersionUID;
     }
-    
+
+    /**
+     * @return Returns the attrType.
+     */
+    public int getAttrType()
+    {
+        return attrType;
+    }
+
+    /**
+     * @param attrType The attrType to set.
+     */
+    public void setAttrType(int attrType)
+    {
+        this.attrType = attrType;
+    }
     
 
 }

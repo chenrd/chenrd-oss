@@ -36,7 +36,7 @@ import com.chenrd.sys.service.Status;
  */
 @SuppressWarnings("unchecked")
 @Repository("powerDAO")
-public class PowerDAOImpl extends AbstractBaseDAO implements PowerDAO
+public class PowerDAOImpl extends AbstractBaseDAO<Power> implements PowerDAO
 {
 
     @Override
@@ -118,14 +118,13 @@ public class PowerDAOImpl extends AbstractBaseDAO implements PowerDAO
     }
 
     @Override
-    public List<Power> findNotMenuByPower(String username, String applyKey)
+    public List<Power> findUserFuncPower(String username, String applyKey)
     {
         StringBuilder hql = new StringBuilder("select distinct po from ").append(User.class.getSimpleName())
-            .append(" as user inner join user.powers as po with po.key like :applyKey and po.status=:status and (po.type = :type1 or po.type = :type2)")
+            .append(" as user inner join user.powers as po with po.key like :applyKey and po.status=:status and po.type=:type")
             .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("type1", PowerType.FIELD_POWER);
-        params.put("type2", PowerType.FUNC_POWER);
+        params.put("type", PowerType.FUNC_POWER);
         params.put("applyKey", applyKey + "%");
         params.put("status", Status.NO);
         params.put("username", username);
@@ -133,19 +132,34 @@ public class PowerDAOImpl extends AbstractBaseDAO implements PowerDAO
     }
 
     @Override
-    public List<Power> findNotMenuByRole(String username, String applyKey)
+    public List<Power> findRoleFuncPower(String username, String applyKey)
     {
         StringBuilder hql = new StringBuilder("select distinct po from ").append(User.class.getSimpleName()).append(" as user")
-            .append(" inner join user.roles as role with role.status=:status inner join role.powers as po with po.status=:status and (po.type = :type1 or po.type = :type2) and po.key like :applyKey")
+            .append(" inner join user.roles as role with role.status=:status inner join role.powers as po with po.status=:status and po.type =:type and po.key like :applyKey")
             .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("type1", PowerType.FIELD_POWER);
-        params.put("type2", PowerType.FUNC_POWER);
+        params.put("type", PowerType.FUNC_POWER);
         params.put("applyKey", applyKey + "%");
         params.put("status", Status.NO);
         params.put("username", username);
         return (List<Power>) super.find(hql.toString(), params);
     }
+    
+    @Override
+    public List<Power> findUserFieldPower(String username, String applyKey)
+    {
+        StringBuilder hql = new StringBuilder("select distinct po from ").append(User.class.getSimpleName()).append(" as user")
+            .append(" inner join user.powers as po with po.key like :applyKey and po.status=:status and po.type=:type and po.attrType=:attrType")
+            .append(" where user.status=:status and user.username=:username");
+        Map<String, Serializable> params = new HashMap<String, Serializable>();
+        params.put("type", PowerType.FIELD_POWER);
+        params.put("applyKey", applyKey + "%");
+        params.put("status", Status.NO);
+        params.put("attrType", 3);
+        params.put("username", username);
+        return (List<Power>) super.find(hql.toString(), params);
+    }
+
 
     @Override
     public List<Power> findByApplyKeyUsername(String applyKey, String username, int powerType)
@@ -185,6 +199,20 @@ public class PowerDAOImpl extends AbstractBaseDAO implements PowerDAO
         params.put("status", Status.NO);
         params.put("username", username);
         return (List<Power>) super.find(hql.toString(), params);
+    }
+
+    @Override
+    public List<Attribute> findUserFieldPower(String username)
+    {
+        StringBuilder hql = new StringBuilder("select distinct po from ").append(User.class.getSimpleName()).append(" as user")
+            .append(" inner join user.powers as po with po.status=:status and po.type=:type and po.attrType=:attrType")
+            .append(" where user.status=:status and user.username=:username order by po.key");
+        Map<String, Serializable> params = new HashMap<String, Serializable>();
+        params.put("type", PowerType.FIELD_POWER);
+        params.put("status", Status.NO);
+        params.put("attrType", 3);
+        params.put("username", username);
+        return (List<Attribute>) super.find(hql.toString(), params);
     }
 
 }

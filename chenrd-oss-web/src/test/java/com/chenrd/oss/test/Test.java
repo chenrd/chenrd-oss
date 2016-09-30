@@ -12,16 +12,18 @@
 package com.chenrd.oss.test;
 
 
-import java.util.Map;
-import java.util.Map.Entry;
+
+import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.metadata.ClassMetadata;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.chenrd.sys.service.PowerService;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,14 +33,12 @@ public class Test
     @Autowired
     private SessionFactory sessionFactory;
     
+    @Resource(name = "powerService")
+    private PowerService powerService;
+    
+    @Rollback(false)
     @org.junit.Test
     public void test() throws Exception
     {
-        Map<String, ClassMetadata> metadatas = sessionFactory.getAllClassMetadata();
-        for (Entry<String, ClassMetadata> metadata : metadatas.entrySet())
-        {
-            System.out.println(metadata.getKey());
-        }
-        System.out.println(1);
     }
 }

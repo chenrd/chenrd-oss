@@ -28,4 +28,5 @@ public interface EntityQueryBuilder extends Serializable
     EntityQueryBuilder with(String fieldName, QueryOrder order);
     
     StringBuilder builder(QueryInfo info, Map<String, Serializable> params);
+    
 }

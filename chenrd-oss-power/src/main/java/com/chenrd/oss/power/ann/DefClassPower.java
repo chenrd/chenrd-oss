@@ -31,5 +31,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DefClassPower
 {
-    String value() default "";
+    /**
+     * value[0] name, value[1] key
+     * 
+     * @return 
+     * @see
+     */
+    String[] value() default "";
 }

@@ -13,6 +13,7 @@ package com.chenrd.sys.business;
 import java.util.List;
 
 import com.chenrd.common.Paging;
+import com.chenrd.oss.power.PowerBusiness;
 import com.chenrd.sys.vo.MenuVO;
 
 /**
@@ -23,7 +24,7 @@ import com.chenrd.sys.vo.MenuVO;
  * @see MenuManager
  * @since
  */
-public interface MenuManager
+public interface MenuManager extends PowerBusiness
 {
 
     

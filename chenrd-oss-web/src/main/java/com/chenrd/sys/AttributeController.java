@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chenrd.common.FreemakerController;
+import com.chenrd.example.Status;
 import com.chenrd.sys.business.AttributeManager;
 import com.chenrd.sys.vo.AttributeVO;
 
@@ -82,17 +83,16 @@ public class AttributeController extends FreemakerController
     }
     
     /**
-     * 导入权限
      * 
-     * @param applyId
+     * @param parentKey
      * @return 
      * @see
      */
-    @RequestMapping(value = "import/{applyId}", method = RequestMethod.GET)
-    public String importPower(@PathVariable Long applyId)
+    @RequestMapping(value = "findSelect/{parentKey}")
+    @ResponseBody
+    public List<AttributeVO> findSelect(@PathVariable String parentKey)
     {
-        
-        return null;
+        return attributeManager.find("findChilds", AttributeVO.class, new AttributeVO(parentKey.replace("-", "/"), Status.ON));
     }
     
     /**

@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chenrd.common.Paging;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.BeanUtil;
-import com.chenrd.dao.QueryParamDAO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.AttributeManager;
 import com.chenrd.sys.dao.AttributeDAO;
@@ -50,7 +50,7 @@ public class AttributeManagerImpl extends AbstractPowerBusiness implements Attri
     @Override
     public List<AttributeVO> findChilds(String key)
     {
-        return super.find("findChilds", Attribute.class, AttributeVO.class, new AttributeVO(key));
+        return super.find("findChilds", AttributeVO.class, new AttributeVO(key));
     }
     
     @Override
@@ -82,7 +82,7 @@ public class AttributeManagerImpl extends AbstractPowerBusiness implements Attri
     }
 
     @Override
-    public QueryParamDAO getQueryParamsBaseDAO()
+    public BaseDAO getDAO()
     {
         return attributeDAO;
     }

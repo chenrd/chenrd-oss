@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">字段分配</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body no-padding">
+            	<form method="post" action="<@url value='user/allotField/${id}'/>">
+                <table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
+                        <tr role="row">
+                        	<th width="80">序号</th>
+                            <th>后台</th>
+                            <th>字段类型</th>
+                            <th>字段名称</th>
+                            <th width="100">值</th>
+                            <th>键</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th rowspan="1" colspan="1" width="80">&nbsp;</th>
+                            <th rowspan="1" colspan="1" width="16%"><input type="text" id="applyId" data-bv-field-event="change" placeholder="必选" style="width:100%"></th>
+                            <th rowspan="1" colspan="1" width="16%"><input type="text" id="first" data-bv-field-event="change" placeholder="必选" style="width:100%"></th>
+                            <th rowspan="1" colspan="1" width="16%"><input type="text" id="second" data-bv-field-event="change" placeholder="必选" style="width:100%"></th>
+                            <th rowspan="1" colspan="2" width="26%"><input type="text" id="third" name="fieldId" data-bv-field-event="change" placeholder="必选" style="width:100%"></th>
+                        	<th rowspan="1" colspan="1">
+                        		<@func aClass="btn btn-info btn-xs" id="allotField-btn" url="/user/allotField/*" iClass="fa fa-save"/>
+                        	</th>
+                        </tr>
+                    </tfoot>
+                    
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	var myPannel = tab.current, iStart = 0, search = new Object();
+	InitiateWidgets(myPannel.center);
+	
+	myPannel.center.find('#applyId').select2({ajax: {url: '<@url value="apply/findSelect"/>', type: 'get', cache: true, dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'key', 'name', empty)};}}})
+	myPannel.center.find('#first').select2({ajax: {url: function(){ return '<@url value="attribute/findSelect/' + myPannel.center.find('#applyId').val().replace(new RegExp('/', 'g'), '-') + '"/>'; }, type: 'get', cache: true, dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'key', 'name', empty)};}}})
+	myPannel.center.find('#second').select2({ajax: {url: function(){ return '<@url value="attribute/findSelect/' + myPannel.center.find('#first').val().replace(new RegExp('/', 'g'), '-') + '"/>'; }, type: 'get', cache: true, dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'key', 'name', empty)};}}})
+	myPannel.center.find('#third').select2({ajax: {url: function(){ return '<@url value="attribute/findSelect/' + myPannel.center.find('#second').val().replace(new RegExp('/', 'g'), '-') + '"/>'; }, type: 'get', cache: true, dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'id', 'fullName', empty)};}}})
+	
+	var oTable = myPannel.center.find('#searchable').dataTable($.extend(oTableOpts, {
+		"bPaginate": false,
+		"sAjaxSource": '<@url value="user/findUserFieldPower/${username}"/>',
+		"fnServerData": function(sSource, aoData, fnCallback) {
+			iStart = aoData.iDisplayStart +　1;
+        	Home.datatableAjax(sSource, aoData, fnCallback, search);
+        },
+        "fnRowCallback": function(target, n) {
+        	$(target).find('.delete').click(function() {
+        		Home.deleteReloadCurrent('<@url value="/user/deleteField/${id}/' + n.id + '"/>', '操作无法被恢复，请确认该操作？', myPannel.callback);
+        	});
+        },
+        "aoColumns": [
+			{ "mData": "serial", "bSortable": false, "mRender" : function ( data, type ) {return iStart++;} },          
+			{ "mData": "applyName", "bSortable": false},
+			{ "mData": "fullName", "bSortable": false, "mRender" : function ( data, type ) {return data.split('-')[1];}},
+			{ "mData": "fullName", "bSortable": false, "mRender" : function ( data, type ) {return data.split('-')[2];}},
+			{ "mData": "value", "bSortable": false},
+			{ "mData": "key", "bSortable": false},
+			{ "mData": "id", "bSortable": false, "mRender" : function ( data, type ) {
+					return '<@func aClass="btn btn-danger btn-xs times btn-circle delete" url="/user/deleteField/*" iClass="fa fa-trash-o" title="删除"/>';
+				}
+			}
+         ]
+	}));
+	
+	myPannel.center.find('#allotField-btn').click(function() {
+		var options = {
+            beforeSubmit: function(a, f, o) {
+				if (myPannel.center.find('#third').val() == '') {
+					modalInfo('请选择属性值之后再操作');
+					return false;
+				}
+            },
+            success: function (data) {
+            	myPannel.reload();
+            }
+        };
+        myPannel.center.find('form').ajaxSubmit(options);
+	})
+	
+	myPannel.callback = function() {
+		myPannel.reload();
+	}
+})
+</script>

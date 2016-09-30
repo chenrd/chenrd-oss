@@ -19,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.chenrd.common.Paging;
-import com.chenrd.dao.abs.QueryParamsBaseDAO;
+import com.chenrd.dao.abs.AbstractBaseDAO;
 import com.chenrd.sys.dao.UserDAO;
 import com.chenrd.sys.entity.User;
 import com.chenrd.sys.service.Status;
@@ -35,7 +35,7 @@ import com.chenrd.sys.service.Status;
  */
 @SuppressWarnings("unchecked")
 @Repository("userDAO")
-public class UserDAOImpl extends QueryParamsBaseDAO<User> implements UserDAO
+public class UserDAOImpl extends AbstractBaseDAO<User> implements UserDAO
 {
 
     
@@ -89,10 +89,4 @@ public class UserDAOImpl extends QueryParamsBaseDAO<User> implements UserDAO
         return super.count(hql.toString(), params);
     }
 
-    @Override
-    public Class<User> getDomClass()
-    {
-        return User.class;
-    }
-    
 }

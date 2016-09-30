@@ -10,7 +10,8 @@
 
 package com.chenrd.sys.vo;
 
-import com.chenrd.example.Domain;
+import com.chenrd.dao.annotation.FindConstructor;
+import com.chenrd.example.VO;
 
 
 /**
@@ -20,7 +21,7 @@ import com.chenrd.example.Domain;
  * @see MenuVO
  * @since
  */
-public class MenuVO extends Domain
+public class MenuVO extends VO
 {
 
     /**
@@ -110,6 +111,23 @@ public class MenuVO extends Domain
     
     private Long[] funcIds;
     
+    
+    /**
+     * @param id
+     * @param name
+     * @param key
+     * @param parentKey
+     */
+    @FindConstructor(name = "findSelect", value = "select new com.chenrd.sys.vo.FuncVO(po.id, po.name, po.key, po.parentKey, po.fullName) ")
+    public MenuVO(Long id, String name, String key, String parentKey, String fullName)
+    {
+        super();
+        this.id = id;
+        this.name = name;
+        this.key = key;
+        this.parentKey = parentKey;
+        this.fullName = fullName;
+    }
 
     /**
      * @param id

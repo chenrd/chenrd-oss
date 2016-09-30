@@ -11,15 +11,20 @@
 
 package com.chenrd.oss.power.cache;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+
+
 
 import com.chenrd.dao.annotation.QueryParams;
 import com.chenrd.dao.em.Nexus;
 import com.chenrd.dao.info.HqlAttribute;
 import com.chenrd.dao.info.QueryInfo;
-import com.chenrd.sys.service.info.UserInfo;
 
 public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
 {
@@ -29,13 +34,29 @@ public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
      */
     private static final long serialVersionUID = 5066237890580810743L;
     
-    private List<LimitPowerMetadata> limits;
+    private Map<String, LimitPowerMetadata> limits;
     
+    private Map<String, DefPowerMetadata> classMetadata;
+    
+    public StringBuilder builder(QueryInfo info, Map<String, Serializable> params, Map<String, List<String>> attrs)
+    {
+        for (Entry<String, LimitPowerMetadata> entry : limits.entrySet())
+        {
+            if (entry.getValue().defPowerMetadata == null) {
+                entry.getValue().defPowerMetadata = classMetadata.get(entry.getValue().key);
+            }
+            if (attrs.containsKey(entry.getKey())) {
+                if (attrs.get(entry.getKey()) != null) params.put(entry.getValue().fieldName, attrs.get(entry.getKey()).toArray(new String[] {}));
+            }
+        }
+        return super.builder(info, params);
+    }
+
     public EntityQueryBuilder with(LimitPowerMetadata metadata)
     {
-        if (limits == null) limits = new ArrayList<LimitPowerMetadata>();
+        if (limits == null) limits = new HashMap<String, LimitPowerMetadata>();
         if (metadata != null) {
-            limits.add(metadata);
+            limits.put(metadata.key, metadata);
             super.with(new HqlAttribute(metadata.fieldName, new QueryParams()
             {
                 @Override
@@ -78,23 +99,13 @@ public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
         return this;
     }
     
-    public void configQueryInfo(QueryInfo queryInfo, UserInfo userInfo)
+    public static EntityQueryBuilder newEntityQueryBuilder(Map<String, DefPowerMetadata> classMetadata)
     {
-        for (LimitPowerMetadata metadata : limits)
-        {
-            String key = DefPowerMetadata.formKeyName(metadata.limitFieldPower.defClassName(), metadata.limitFieldPower.defFieldName());
-            if (userInfo.attributesContainsKey(key)) continue;
-            
-        }
+        return new PowerEntityQueryBuilder(classMetadata);
     }
     
-    public static EntityQueryBuilder newEntityQueryBuilder()
+    private PowerEntityQueryBuilder(Map<String, DefPowerMetadata> classMetadata)
     {
-        return new PowerEntityQueryBuilder();
-    }
-    
-    private PowerEntityQueryBuilder()
-    {
-        
+        this.classMetadata = classMetadata;
     }
 }

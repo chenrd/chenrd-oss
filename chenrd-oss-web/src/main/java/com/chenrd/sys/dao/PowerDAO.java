@@ -47,15 +47,36 @@ public interface PowerDAO extends BaseDAO
     
     /**
      * 获取功能及属性权限Status=Status.NO
+     * 用户功能权限
      * @param username 用户名
      * @param applyKey 应用KEY
      * @return List<Power>
      * @see
      */
-    List<Power> findNotMenuByPower(String username, String applyKey);
+    List<Power> findUserFuncPower(String username, String applyKey);
     
     /**
-     * 功能
+     * 获取功能及属性权限Status=Status.NO
+     * 角色功能权限
+     * @param username 用户名
+     * @param applyKey 应用KEY
+     * @return List<Power>
+     * @see
+     */
+    List<Power> findRoleFuncPower(String username, String applyKey);
+    
+    /**
+     * 获取用户的字段权限
+     * 
+     * @param username
+     * @param applyKey
+     * @return 
+     * @see
+     */
+    List<Power> findUserFieldPower(String username, String applyKey);
+    
+    /**
+     * 普通用户分配自己的功能权限
      * 
      * @param username
      * @return 
@@ -64,7 +85,7 @@ public interface PowerDAO extends BaseDAO
     List<Power> findRoleFuncByUsername(String username);
     
     /**
-     * 功能
+     * 普通用户分配自己的功能权限
      * 
      * @param username
      * @return 
@@ -72,14 +93,17 @@ public interface PowerDAO extends BaseDAO
      */
     List<Power> findUserFuncByUsername(String username);
     
+    
     /**
-     * 获取功能及属性权限Status=Status.NO
-     * @param username 用户名
-     * @param applyKey 应用KEY
-     * @return List<Power>
+     * 获取用户的所有的字段权限
+     * 
+     * @param username
+     * @param applyKey
+     * @return 
      * @see
      */
-    List<Power> findNotMenuByRole(String username, String applyKey);
+    List<Attribute> findUserFieldPower(String username);
+    
     
     /**
      * 

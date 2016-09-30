@@ -12,6 +12,7 @@ package com.chenrd.sys.service;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -24,6 +25,8 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,7 @@ import com.chenrd.sys.dao.PowerDAO;
 import com.chenrd.sys.dao.RoleDAO;
 import com.chenrd.sys.dao.UserDAO;
 import com.chenrd.sys.entity.Apply;
+import com.chenrd.sys.entity.Attribute;
 import com.chenrd.sys.entity.Menu;
 import com.chenrd.sys.entity.Power;
 import com.chenrd.sys.entity.Role;
@@ -57,6 +61,8 @@ import com.chenrd.sys.service.info.UserInfo;
 @Service("userService")
 public class UserServiceImpl extends UserManagerImpl implements UserService
 {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
     
     /**
      * 
@@ -92,6 +98,7 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
     @Override
     public UserInfo findPowerByUsername(String username, String applyKey)
     {
+        LOG.debug("inio findPowerByUsername method time=[{}]", Calendar.getInstance().getTime().getTime());
         User user = userDAO.getByProperties(User.class, new String[]{"username", "status"}, new Object[]{username, Status.NO});
         if (user == null)
         {
@@ -123,8 +130,8 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
         info.setMenusSet(BeanUtil.returnList(menus, MenuInfo.class));
         
         //添加功能权限及属性权限
-        List<Power> powers = powerDAO.findNotMenuByPower(username, applyKey);
-        List<Power> ps = powerDAO.findNotMenuByRole(username, applyKey);
+        List<Power> powers = powerDAO.findUserFuncPower(username, applyKey);
+        List<Power> ps = powerDAO.findRoleFuncPower(username, applyKey);
         if (powers == null)
         {
             powers = new ArrayList<Power>();
@@ -141,6 +148,21 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
         }
         info.setPowers(map);
         
+        //用户字段权限获取
+        List<Power> fields = powerDAO.findUserFieldPower(username, applyKey);
+        if (fields != null) 
+        {
+            Map<String, List<String>> attrs = new HashMap<String, List<String>>();
+            for (Power power : fields) {
+                if (attrs.get(power.getParentKey()) == null)
+                    attrs.put(power.getParentKey(), new ArrayList<String>());
+                
+                attrs.get(power.getParentKey()).add(((Attribute) power).getValue());
+            }
+            info.setAttributes(attrs);
+        }
+        
+        //用户快捷链接获取
         if (user.getApplys() != null)
         {
             Set<ApplyInfo> infos = new HashSet<ApplyInfo>();
@@ -152,6 +174,7 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
             }
             info.setApplys(infos);
         }
+        LOG.debug("end findPowerByUsername method time=[{}]", Calendar.getInstance().getTime().getTime());
         return info;
     }
     

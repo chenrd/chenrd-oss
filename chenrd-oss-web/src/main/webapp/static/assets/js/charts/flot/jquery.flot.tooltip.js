@@ -106,6 +106,7 @@
             var seriesPattern = /%s/;
             var xPattern = /%x\.{0,1}(\d{0,})/;
             var yPattern = /%y\.{0,1}(\d{0,})/;
+            var xLabelPattern = /.*%lx.*/;
 
             //percent match
             if (typeof (item.series.percent) !== 'undefined') {
@@ -122,9 +123,14 @@
             else if (typeof item.series.data[item.dataIndex][0] === 'number') {
                 content = adjustValPrecision(xPattern, content, item.series.data[item.dataIndex][0]);
             }
+            
             // yVal match
             if (typeof item.series.data[item.dataIndex][1] === 'number') {
                 content = adjustValPrecision(yPattern, content, item.series.data[item.dataIndex][1]);
+            }
+            
+            if (content.match(xLabelPattern) != 'null') {
+            	content = content.replace(/%lx/, item.series.data[item.dataIndex][2]);
             }
 
             return content;

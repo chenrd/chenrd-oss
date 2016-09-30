@@ -38,7 +38,7 @@
                       <th>性别</th>
                       <th>创建日期</th>
                       <th>启用</th>
-                      <th width="150">操作</th>
+                      <th width="180">操作</th>
 	                  </tr>
 	              </thead>
 	    </table>
@@ -68,6 +68,9 @@ $(function(){
         	$(target).find('.allot').click(function() {
         		Home.loadCenter('user-allot-body', '<@url value="/user/allot/' + n.id + '"/>', '用户权限分配', true, myPannel);
         	})
+        	$(target).find('.allotField').click(function() {
+        		Home.loadCenter('user-allotField-body', '<@url value="/user/allotField/' + n.id + '/' + n.username + '"/>', '用户字段分配', true, myPannel);
+        	})
         	$(target).find('.restPassword').click(function() {
         		Home.ajaxGetReq('<@url value="/user/resetPassword/' + n.id + '"/>', myPannel.callback);
         	})
@@ -84,6 +87,7 @@ $(function(){
           { "mDataProp": "status", "bSortable": false, 'sClass': 'center', "mRender" : function ( data, type ) {return data == 1 ? '<a href="#" class="prop-a publish"><i class="fa fa-check"></i></a>' : '<a href="#" class="prop-b publish"><i class="fa fa-times"></i></a>';} },
           { "mDataProp": "id", "bSortable": false, "mRender" : function ( data, type ) {
         	  	return  ' <@func aClass="btn btn-primary btn-xs times btn-circle allot" url="/user/allot/*" iClass="fa fa-cog"/>'
+        	  	+ ' <@func aClass="btn btn-azure btn-xs times btn-circle allotField" url="/user/allotField/*" iClass="fa fa-cog"/>'
         	  	+ ' <@func aClass="btn btn-success btn-xs times btn-circle restPassword" url="/user/resetPassword/*" iClass="fa fa-mail-reply"/>'
         	  	+ ' <@func aClass="btn btn-info btn-xs times btn-circle edit" url="/user/edit/*" iClass="fa fa-edit" title="编辑"/>'
         		+ ' <@func aClass="btn btn-danger btn-xs times btn-circle delete" url="/user/delete/*" iClass="fa fa-trash-o" title="删除"/>';

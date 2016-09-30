@@ -13,7 +13,7 @@ package com.chenrd.sys.dao;
 import java.util.List;
 
 import com.chenrd.common.Paging;
-import com.chenrd.dao.QueryParamDAO;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.sys.entity.User;
 
 /**
@@ -23,7 +23,7 @@ import com.chenrd.sys.entity.User;
  * @see UserDAO
  * @since
  */
-public interface UserDAO extends QueryParamDAO
+public interface UserDAO extends BaseDAO
 {
     
     /**

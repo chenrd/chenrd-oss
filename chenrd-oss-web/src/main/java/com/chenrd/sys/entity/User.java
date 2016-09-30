@@ -35,6 +35,8 @@ import com.chenrd.dao.em.Nexus;
 import com.chenrd.example.Domain;
 import com.chenrd.oss.power.ann.DefClassPower;
 import com.chenrd.oss.power.ann.DefFieldPower;
+import com.chenrd.oss.power.ann.LimitClassPower;
+import com.chenrd.oss.power.ann.LimitFieldPower;
 
 
 /**
@@ -44,7 +46,8 @@ import com.chenrd.oss.power.ann.DefFieldPower;
  * @see User
  * @since
  */
-@DefClassPower(value = "用户")
+@LimitClassPower
+@DefClassPower({"用户", "100"})
 @Table(name = "OSS_USER")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -91,7 +94,21 @@ public class User extends Domain
      */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
-    private Set<Power> powers;
+    private Set<Menu> menus;
+    
+    /**
+     * 
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
+    private Set<Func> funcs;
+    
+    /**
+     * 
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
+    private Set<Attribute> attrs;
     
     /**
      * 曾用名
@@ -104,7 +121,7 @@ public class User extends Domain
      */
     @QueryOrder(value = "asc", index = 2)
     @QueryParams
-    @DefFieldPower("创建用户")
+    @DefFieldPower({"创建用户", "100"})
     @Column(name = "USER_NAME", length = 30, unique = true)
     private String username;
     
@@ -155,6 +172,8 @@ public class User extends Domain
     /**
      * 
      */
+    @QueryParams
+    @LimitFieldPower({"100", "100"})
     @Column(name = "CREATE_USER", length = 50)
     private String createUser;
     
@@ -437,22 +456,6 @@ public class User extends Domain
     }
 
     /**
-     * @return Returns the powers.
-     */
-    public Set<Power> getPowers()
-    {
-        return powers;
-    }
-
-    /**
-     * @param powers The powers to set.
-     */
-    public void setPowers(Set<Power> powers)
-    {
-        this.powers = powers;
-    }
-
-    /**
      * @return Returns the status.
      */
     public int getStatus()
@@ -563,6 +566,53 @@ public class User extends Domain
     {
         this.applyKey = applyKey;
     }
-    
+
+    /**
+     * @return Returns the menus.
+     */
+    public Set<Menu> getMenus()
+    {
+        return menus;
+    }
+
+    /**
+     * @param menus The menus to set.
+     */
+    public void setMenus(Set<Menu> menus)
+    {
+        this.menus = menus;
+    }
+
+    /**
+     * @return Returns the funcs.
+     */
+    public Set<Func> getFuncs()
+    {
+        return funcs;
+    }
+
+    /**
+     * @param funcs The funcs to set.
+     */
+    public void setFuncs(Set<Func> funcs)
+    {
+        this.funcs = funcs;
+    }
+
+    /**
+     * @return Returns the attrs.
+     */
+    public Set<Attribute> getAttrs()
+    {
+        return attrs;
+    }
+
+    /**
+     * @param attrs The attrs to set.
+     */
+    public void setAttrs(Set<Attribute> attrs)
+    {
+        this.attrs = attrs;
+    }
     
 }

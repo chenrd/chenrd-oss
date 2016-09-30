@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.abs.AbstractBaseDAO;
+import com.chenrd.sys.entity.LogRecord;
 
 /**
  * 
@@ -24,7 +25,7 @@ import com.chenrd.dao.abs.AbstractBaseDAO;
  * @since
  */
 @Repository("logRevordDAO")
-public class LogRevordDAOImpl extends AbstractBaseDAO implements BaseDAO
+public class LogRevordDAOImpl extends AbstractBaseDAO<LogRecord> implements BaseDAO
 {
     
 }

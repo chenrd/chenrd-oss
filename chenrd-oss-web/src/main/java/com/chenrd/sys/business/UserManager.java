@@ -71,4 +71,15 @@ public interface UserManager extends PowerBusiness
      * @see
      */
     void resetPassword(String id, String username);
+    
+    /**
+     * 分配字段权限
+     * 
+     * @param userId
+     * @param fieldId 
+     * @see
+     */
+    void allotField(String userId, Long fieldId);
+    
+    void deleteField(String userId, Long fieldId);
 }

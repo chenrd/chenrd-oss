@@ -19,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.chenrd.common.Paging;
-import com.chenrd.dao.abs.QueryParamsBaseDAO;
+import com.chenrd.dao.abs.AbstractBaseDAO;
 import com.chenrd.sys.dao.RoleDAO;
 import com.chenrd.sys.entity.Role;
 import com.chenrd.sys.service.Status;
@@ -32,7 +32,7 @@ import com.chenrd.sys.service.Status;
  * @since
  */
 @Repository("roleDAO")
-public class RoleDAOImpl extends QueryParamsBaseDAO<Role> implements RoleDAO
+public class RoleDAOImpl extends AbstractBaseDAO<Role> implements RoleDAO
 {
 
     @SuppressWarnings("unchecked")
@@ -62,12 +62,5 @@ public class RoleDAOImpl extends QueryParamsBaseDAO<Role> implements RoleDAO
         List<Role> list = (List<Role>) super.find(hql.toString(), params);
         return list == null || list.size() == 0 ? null : list.get(0);
     }
-
-    @Override
-    public Class<Role> getDomClass()
-    {
-        return Role.class;
-    }
-    
     
 }

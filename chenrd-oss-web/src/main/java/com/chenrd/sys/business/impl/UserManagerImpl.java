@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chenrd.common.BeanCopyUtils;
 import com.chenrd.common.Encryption;
-import com.chenrd.dao.QueryParamDAO;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.UserManager;
 import com.chenrd.sys.dao.UserDAO;
@@ -32,6 +32,8 @@ import com.chenrd.sys.entity.Apply;
 import com.chenrd.sys.entity.Power;
 import com.chenrd.sys.entity.Role;
 import com.chenrd.sys.entity.User;
+import com.chenrd.sys.entity.UserPowerMapping;
+import com.chenrd.sys.entity.classKey.UserPowerKey;
 import com.chenrd.sys.vo.UserVO;
 
 /**
@@ -219,13 +221,26 @@ public class UserManagerImpl extends AbstractPowerBusiness implements UserManage
         info.setRolestrs(roles);
         return info;
     }
-
+    
+    @Override
+    public void allotField(String userId, Long fieldId)
+    {
+        UserPowerMapping mapping = new UserPowerMapping(userId, fieldId);
+        userDAO.save(mapping);
+    }
+    
+    @Override
+    public void deleteField(String userId, Long fieldId)
+    {
+        UserPowerMapping mapping = userDAO.get(UserPowerMapping.class, new UserPowerKey(userId, fieldId));
+        if (mapping != null)
+            userDAO.delete(mapping);
+    }
 
     @Override
-    public QueryParamDAO getQueryParamsBaseDAO()
+    public BaseDAO getDAO()
     {
         return userDAO;
     }
-    
 
 }

@@ -21,11 +21,15 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chenrd.common.BeanCopyUtils;
 import com.chenrd.common.Paging;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.BeanUtil;
+import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.FuncManager;
 import com.chenrd.sys.dao.PowerDAO;
 import com.chenrd.sys.entity.Apply;
+import com.chenrd.sys.entity.Attribute;
 import com.chenrd.sys.entity.Func;
 import com.chenrd.sys.entity.Menu;
 import com.chenrd.sys.entity.Power;
@@ -33,6 +37,7 @@ import com.chenrd.sys.service.PowerEnum;
 import com.chenrd.sys.service.PowerType;
 import com.chenrd.sys.service.Status;
 import com.chenrd.sys.service.info.PowerInfo;
+import com.chenrd.sys.vo.AttributeVO;
 
 /**
  * 功能manager
@@ -43,7 +48,7 @@ import com.chenrd.sys.service.info.PowerInfo;
  */
 @Transactional
 @Service("funcManager")
-public class FuncManagerImpl implements FuncManager
+public class FuncManagerImpl extends AbstractPowerBusiness implements FuncManager
 {
     
     /**
@@ -131,12 +136,6 @@ public class FuncManagerImpl implements FuncManager
     }
 
     @Override
-    public List<PowerInfo> findAll()
-    {
-        return BeanUtil.returnList(powerDAO.findAll(PowerType.FUNC_POWER), PowerInfo.class);
-    }
-
-    @Override
     public List<PowerInfo> findByUsername(String username)
     {
       //获取与角色相关的菜单权限
@@ -187,6 +186,26 @@ public class FuncManagerImpl implements FuncManager
     public List<PowerInfo> findByParentKey(String parentKey)
     {
         return BeanUtil.returnList(powerDAO.findByProperty(Power.class, new String[] {"type", "parentKey", "status"}, new Object[] {PowerType.FUNC_POWER, parentKey, Status.NO}, "key", "asc"), PowerInfo.class);
+    }
+
+    @Override
+    public List<AttributeVO> findUserAllAttrPowers(String username)
+    {
+        List<Attribute> attributes = powerDAO.findUserFieldPower(username);
+        List<AttributeVO> vos = new ArrayList<AttributeVO>();
+        AttributeVO vo = null;
+        for (Attribute form : attributes) {
+            vo = new AttributeVO();
+            BeanCopyUtils.copy(form, vo, false);
+            vos.add(vo);
+        }
+        return vos;
+    }
+
+    @Override
+    public BaseDAO getDAO()
+    {
+        return powerDAO;
     }
 
 }
