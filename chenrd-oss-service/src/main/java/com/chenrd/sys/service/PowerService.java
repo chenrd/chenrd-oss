@@ -34,6 +34,16 @@ public interface PowerService
     void addFieldPower(PowerInfo info);
     
     /**
+     * 添加字段权限集合，可能发生在导入的时候
+     * 
+     * @param applyKey
+     * @param defClassName
+     * @param infos 
+     * @see
+     */
+    void saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String[] value);
+    
+    /**
      * 
      * @param applyKey 应用KEY
      * @return ""

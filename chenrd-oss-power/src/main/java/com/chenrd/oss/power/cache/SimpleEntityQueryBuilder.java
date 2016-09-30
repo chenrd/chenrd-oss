@@ -28,6 +28,7 @@ import com.chenrd.common.DateUtil;
 import com.chenrd.common.ocp.DateFormat;
 import com.chenrd.dao.BuilderHqlException;
 import com.chenrd.dao.annotation.QueryOrder;
+import com.chenrd.dao.em.Nexus;
 import com.chenrd.dao.info.HqlAttribute;
 import com.chenrd.dao.info.HqlOrderAttribute;
 import com.chenrd.dao.info.QueryInfo;
@@ -44,7 +45,7 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
     
     private Class<?> clazz;
     
-    private List<HqlAttribute> list = new ArrayList<HqlAttribute>();
+    List<HqlAttribute> list = new ArrayList<HqlAttribute>();
     
     private List<HqlOrderAttribute> orders = new ArrayList<HqlOrderAttribute>();
     
@@ -94,6 +95,7 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
                     attribute.setDateFormat(attribute.getGetMethod().getAnnotation(DateFormat.class));
                 }
                 valueTmp = attribute.getGetMethod().invoke(info);
+                if (valueTmp == null) valueTmp = params.get(fieldName);
             } catch (Exception e) {
                 LOG.error("构建实体：{}的查询语句时发生错误", info.getClass(), e);
                 throw new BuilderHqlException("查询构建Hql失败");
@@ -102,6 +104,9 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             //值为空的情况下不添加查询
             if (valueTmp instanceof String && StringUtils.isBlank((String) valueTmp)) continue;
             else if (valueTmp == null) continue;
+            
+            //查询连接关系为in的时候需要注意
+            if (valueTmp instanceof String[] && ((String[]) valueTmp).length == 0) continue;
             
             //默认值不查询，当属性类型为int,long,shrot,float,double,boolean其中一种时，属性值一定不为空，那么需要当前的判断，默认值的情况下添加到查询里面
             if (attribute.getParams().defaultNotQuery() && new BigDecimal(valueTmp + "").compareTo(new BigDecimal(attribute.getParams().defaultNotQueryValue())) == 0) continue;
@@ -118,11 +123,29 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             }
               
             int start = hql.length();
-            hql.append(emtyp_interval_string).append(rightBrecket.equals(attribute.getParams().bracket()) ? rightBrecket : empty_string).append(attribute.getParams().value()).append(emtyp_interval_string)
-                .append(leftBrecket.equals(attribute.getParams().bracket()) ? leftBrecket : empty_string).append("po.").append(attribute.getFieldName())
-                .append(attribute.getParams().nexus().sign).append(":").append(fieldName);
-            attribute.setHqlSection(hql.substring(start));
-            params.put(fieldName, (Serializable) valueTmp);
+            hql.append(emtyp_interval_string).append(rightBrecket.equals(attribute.getParams().bracket()) ? rightBrecket : empty_string)
+                .append(attribute.getParams().value()).append(emtyp_interval_string) //attribute.getParams().value() is and or
+                .append(leftBrecket.equals(attribute.getParams().bracket()) ? leftBrecket : empty_string).append("po.").append(attribute.getFieldName()).append(emtyp_interval_string);
+            
+            //如果是LimitField属性，特殊处理
+            if (valueTmp instanceof String[] && ((String[]) valueTmp).length > 1) {
+                hql.append(Nexus.IN.sign).append(emtyp_interval_string).append(leftBrecket);
+                int index = 1;
+                for (String temp : (String[]) valueTmp) {
+                    hql.append(index == 1 ? "" : ",").append(":").append(fieldName).append(index);
+                    params.put(fieldName + (index++), changeValueType(attribute.getGetMethod().getReturnType(), temp));
+                }
+                hql.append(rightBrecket);
+                params.remove(fieldName);
+            } else {
+                hql.append(attribute.getParams().nexus().sign).append(emtyp_interval_string).append(":").append(fieldName);
+                if (valueTmp instanceof String[]) {
+                    params.put(fieldName, ((String[]) valueTmp)[0]);
+                } else {
+                    params.put(fieldName, (Serializable) valueTmp);
+                    attribute.setHqlSection(hql.substring(start));
+                }
+            }
         }
         
         if (StringUtils.isBlank(orderHQL)) {
@@ -133,6 +156,17 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             orderHQL = orderHQLTmp.toString();
         }
         return hql.append(orderHQL);
+    }
+    
+    
+    private Serializable changeValueType(Class<?> clas, String value) 
+    {
+        if (clas.isAssignableFrom(String.class))
+            return value;
+        if (clas.isAssignableFrom(int.class) || clas.isAssignableFrom(Integer.class))
+            return Integer.parseInt(value);
+        
+        return value;
     }
     
     private void sortOrders()

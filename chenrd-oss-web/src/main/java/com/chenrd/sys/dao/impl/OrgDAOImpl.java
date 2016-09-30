@@ -30,7 +30,7 @@ import com.chenrd.sys.entity.Organization;
  * @since
  */
 @Repository("orgDAO")
-public class OrgDAOImpl extends AbstractBaseDAO implements OrganizationDAO
+public class OrgDAOImpl extends AbstractBaseDAO<Organization> implements OrganizationDAO
 {
 
     @SuppressWarnings("unchecked")

@@ -38,7 +38,7 @@ import com.chenrd.sys.vo.MenuVO;
  */
 @SuppressWarnings("unchecked")
 @Repository("menuDAO")
-public class MenuDAOImpl extends AbstractBaseDAO implements MenuDAO
+public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
 {
     
     @Override

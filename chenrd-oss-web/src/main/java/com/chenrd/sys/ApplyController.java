@@ -30,7 +30,6 @@ import com.chenrd.example.Status;
 import com.chenrd.example.UserSessionParameter;
 import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.sys.business.ApplyManager;
-import com.chenrd.sys.entity.Apply;
 import com.chenrd.sys.service.info.ApplyInfo;
 import com.chenrd.sys.service.info.UserInfo;
 import com.chenrd.sys.vo.ApplyVO;
@@ -82,7 +81,21 @@ public class ApplyController extends FreemakerController
     @ResponseBody
     public JQueryTableResult find(ApplyVO info, Paging paging) 
     {
-        return new JQueryTableResult(applyManager.find("find", Apply.class, ApplyVO.class, info, paging), paging);
+        return new JQueryTableResult(applyManager.find("find", ApplyVO.class, info, paging), paging);
+    }
+    
+    /**
+     * 获取应用列表数据
+     * @param name 名称
+     * @param paging Paging
+     * @return JQueryTableResult
+     * @see
+     */
+    @RequestMapping(value = "/findSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ApplyVO> findSelect() 
+    {
+        return applyManager.find("findSelect", ApplyVO.class, new ApplyVO(Status.NO));
     }
     
     /**
@@ -104,7 +117,7 @@ public class ApplyController extends FreemakerController
         }
         else
         {
-            return applyManager.find("findSelect", Apply.class, ApplyVO.class, new ApplyVO(Status.NO));
+            return applyManager.find("findSelect", ApplyVO.class, new ApplyVO(Status.NO));
         }
     }
     

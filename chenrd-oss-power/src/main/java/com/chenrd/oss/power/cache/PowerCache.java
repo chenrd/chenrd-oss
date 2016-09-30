@@ -11,17 +11,10 @@
 
 package com.chenrd.oss.power.cache;
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.ehcache.Cache.Entry;
 import org.ehcache.Cache;
 import org.ehcache.config.units.EntryUnit;
 
 import com.chenrd.ehcache.EhcacheFactory;
-import com.chenrd.oss.power.AttributeDefined;
 
 /**
  * key为className
@@ -54,18 +47,6 @@ public class PowerCache
     
     private PowerCache()
     {
-        
-    }
-    
-    public void list()
-    {
-        List<AttributeDefined> defineds = new ArrayList<AttributeDefined>();
-        Iterator<Entry<String, EntityQueryBuilder>> iterable = cache.iterator();
-        while (iterable.hasNext())
-        {
-            Entry<String, EntityQueryBuilder> entry = iterable.next();
-            defineds.add(new AttributeDefined());
-        }
         
     }
     

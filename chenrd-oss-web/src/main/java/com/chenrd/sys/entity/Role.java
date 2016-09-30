@@ -90,7 +90,7 @@ public class Role extends Domain
     /**
      * 创建者
      */
-    @LimitFieldPower(defClassName = "用户", defFieldName = "创建用户")
+    @LimitFieldPower({"100", "100"})
     @Column(name = "CREATE_USER", length = 50, nullable = false)
     private String createUser;
     

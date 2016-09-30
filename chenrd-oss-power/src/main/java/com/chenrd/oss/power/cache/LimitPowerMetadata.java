@@ -26,6 +26,8 @@ public class LimitPowerMetadata
     
     DefPowerMetadata defPowerMetadata;
     
+    String key;
+    
     /**
      * @param className
      * @param fieldName
@@ -34,15 +36,14 @@ public class LimitPowerMetadata
      * @param defPowerMetadata
      */
     public LimitPowerMetadata(String className, String fieldName, LimitClassPower limitClassPower,
-                              LimitFieldPower limitFieldPower, DefPowerMetadata defPowerMetadata)
+                              LimitFieldPower limitFieldPower, String key)
     {
         super();
         this.className = className;
         this.fieldName = fieldName;
         this.limitClassPower = limitClassPower;
         this.limitFieldPower = limitFieldPower;
-        this.defPowerMetadata = defPowerMetadata;
-        
+        this.key = key;
     }
     
 }

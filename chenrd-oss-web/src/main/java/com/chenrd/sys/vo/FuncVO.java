@@ -1,9 +1,9 @@
 /*
- * 文件名：AttributeVO.java
+ * 文件名：FuncVO.java
  * 版权：Copyright by www.huawei.com
  * 描述：
  * 修改人：xuwenqiang
- * 修改时间：2016年7月12日
+ * 修改时间：2016年9月30日
  * 跟踪单号：
  * 修改单号：
  * 修改内容：
@@ -12,23 +12,17 @@
 package com.chenrd.sys.vo;
 
 import com.chenrd.dao.annotation.FindConstructor;
-import com.chenrd.dao.info.QueryInfo;
 import com.chenrd.example.VO;
 
-public class AttributeVO extends VO implements QueryInfo
+public class FuncVO extends VO
 {
-    
+
     /**
      * 意义，目的和功能，以及被用到的地方<br>
      */
-    private static final long serialVersionUID = 1432267184520761398L;
-
-    private Long id;
+    private static final long serialVersionUID = -4443639835439573628L;
     
-    /**
-     * 类型
-     */
-    private int type;
+    private Long id;
     
     /**
      * 名称
@@ -40,12 +34,16 @@ public class AttributeVO extends VO implements QueryInfo
      */
     private String key;
     
+    
     /**
      * 应用
      */
     private Long applyId;
     
-    private String applyName;
+    /**
+     * 菜单访问路径
+     */
+    private String url;
     
     /**
      * 
@@ -62,31 +60,16 @@ public class AttributeVO extends VO implements QueryInfo
      */
     private int status;
     
-    private String value;
-    
-    private int attrType;
-    
     
 
     /**
-     * @param parentKey
-     * @param status
-     */
-    public AttributeVO(String parentKey, int status)
-    {
-        super();
-        this.parentKey = parentKey;
-        this.status = status;
-    }
-
-    /**
+     * @param id
      * @param name
      * @param key
      * @param parentKey
-     * @param fullName
      */
-    @FindConstructor(name = "findChilds", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.parentKey, po.fullName) ")
-    public AttributeVO(Long id, String name, String key, String parentKey, String fullName)
+    @FindConstructor(name = "findSelect", value = "select new com.chenrd.sys.vo.FuncVO(po.id, po.name, po.key, po.parentKey, po.fullName) ")
+    public FuncVO(Long id, String name, String key, String parentKey, String fullName)
     {
         super();
         this.id = id;
@@ -95,68 +78,11 @@ public class AttributeVO extends VO implements QueryInfo
         this.parentKey = parentKey;
         this.fullName = fullName;
     }
- 
-    /**
-     * @return Returns the applyName.
-     */
-    public String getApplyName()
-    {
-        return applyName;
-    }
-
-    /**
-     * @param applyName The applyName to set.
-     */
-    public void setApplyName(String applyName)
-    {
-        this.applyName = applyName;
-    }
-
-    /**
-     * @return Returns the value.
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-    /**
-     * @param value The value to set.
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-    /**
-     * @return Returns the attrType.
-     */
-    public int getAttrType()
-    {
-        return attrType;
-    }
-
-    /**
-     * @param attrType The attrType to set.
-     */
-    public void setAttrType(int attrType)
-    {
-        this.attrType = attrType;
-    }
-
-    /**
-     * @param parentKey
-     */
-    public AttributeVO(String parentKey)
-    {
-        super();
-        this.parentKey = parentKey;
-    }
 
     /**
      * 
      */
-    public AttributeVO()
+    public FuncVO()
     {
         super();
     }
@@ -175,22 +101,6 @@ public class AttributeVO extends VO implements QueryInfo
     public void setId(Long id)
     {
         this.id = id;
-    }
-
-    /**
-     * @return Returns the type.
-     */
-    public int getType()
-    {
-        return type;
-    }
-
-    /**
-     * @param type The type to set.
-     */
-    public void setType(int type)
-    {
-        this.type = type;
     }
 
     /**
@@ -239,6 +149,22 @@ public class AttributeVO extends VO implements QueryInfo
     public void setApplyId(Long applyId)
     {
         this.applyId = applyId;
+    }
+
+    /**
+     * @return Returns the url.
+     */
+    public String getUrl()
+    {
+        return url;
+    }
+
+    /**
+     * @param url The url to set.
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 
     /**

@@ -102,7 +102,7 @@ public class UserInfo extends VO implements UserSessionParameter
      */
     private Map<String, PowerInfo> powers;
     
-    private Map<String, String> attributes;
+    private Map<String, List<String>> attributes;
     
     /**
      * 
@@ -412,12 +412,11 @@ public class UserInfo extends VO implements UserSessionParameter
       //开始排序
         Collections.sort(ls, comparator);
     }
-
     
     /**
      * @return Returns the attributes.
      */
-    public Map<String, String> getAttributes()
+    public Map<String, List<String>> getAttributes()
     {
         return attributes;
     }
@@ -425,7 +424,7 @@ public class UserInfo extends VO implements UserSessionParameter
     /**
      * @param attributes The attributes to set.
      */
-    public void setAttributes(Map<String, String> attributes)
+    public void setAttributes(Map<String, List<String>> attributes)
     {
         this.attributes = attributes;
     }

@@ -21,8 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chenrd.common.Paging;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.BeanUtil;
-import com.chenrd.dao.QueryParamDAO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.RoleManager;
 import com.chenrd.sys.dao.RoleDAO;
@@ -141,7 +141,7 @@ public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManage
     }
 
     @Override
-    public QueryParamDAO getQueryParamsBaseDAO()
+    public BaseDAO getDAO()
     {
         return roleDAO;
     }

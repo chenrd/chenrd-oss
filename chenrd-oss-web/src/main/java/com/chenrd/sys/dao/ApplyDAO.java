@@ -10,7 +10,8 @@
 
 package com.chenrd.sys.dao;
 
-import com.chenrd.dao.QueryParamDAO;
+import com.chenrd.dao.BaseDAO;
+
 
 /**
  * 
@@ -19,7 +20,7 @@ import com.chenrd.dao.QueryParamDAO;
  * @see ApplyDAO
  * @since
  */
-public interface ApplyDAO extends QueryParamDAO
+public interface ApplyDAO extends BaseDAO
 {
     
 }

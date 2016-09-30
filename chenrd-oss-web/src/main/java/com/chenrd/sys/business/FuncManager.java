@@ -13,7 +13,9 @@ package com.chenrd.sys.business;
 import java.util.List;
 
 import com.chenrd.common.Paging;
+import com.chenrd.oss.power.PowerBusiness;
 import com.chenrd.sys.service.info.PowerInfo;
+import com.chenrd.sys.vo.AttributeVO;
 
 /**
  * 
@@ -22,7 +24,7 @@ import com.chenrd.sys.service.info.PowerInfo;
  * @see FuncManager
  * @since
  */
-public interface FuncManager
+public interface FuncManager extends PowerBusiness
 {
     
     /**
@@ -54,13 +56,14 @@ public interface FuncManager
      */
     List<PowerInfo> findByUsername(String username);
     
+    
     /**
+     * 获取指定用户所有的字段权限 用于用户字段权限分配
      * 
-     * 查询全部
-     * @return List<PowerInfo>
+     * @return 
      * @see
      */
-    List<PowerInfo> findAll();
+    List<AttributeVO> findUserAllAttrPowers(String username);
     
     /**
      * 

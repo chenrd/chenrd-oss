@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.chenrd.common.FreemakerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
+import com.chenrd.example.Status;
 import com.chenrd.example.UserSessionParameter;
 import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.sys.business.ApplyManager;
@@ -33,9 +34,12 @@ import com.chenrd.sys.business.FuncManager;
 import com.chenrd.sys.business.MenuManager;
 import com.chenrd.sys.business.RoleManager;
 import com.chenrd.sys.business.UserManager;
-import com.chenrd.sys.entity.Apply;
-import com.chenrd.sys.entity.User;
+import com.chenrd.sys.entity.Func;
+import com.chenrd.sys.entity.Menu;
+import com.chenrd.sys.info.PowerCommonQueryInfo;
 import com.chenrd.sys.vo.ApplyVO;
+import com.chenrd.sys.vo.FuncVO;
+import com.chenrd.sys.vo.MenuVO;
 import com.chenrd.sys.vo.UserVO;
 
 /**
@@ -107,7 +111,7 @@ public class UserController extends FreemakerController
     @ResponseBody
     public JQueryTableResult findPaging(UserVO vo, Paging paging)
     {
-        return new JQueryTableResult(userManager.find("find", User.class, UserVO.class, vo, paging), paging);
+        return new JQueryTableResult(userManager.find("find", UserVO.class, vo, paging), paging);
     }
     
     /**
@@ -225,19 +229,16 @@ public class UserController extends FreemakerController
     @RequestMapping(value = "allot/{id}", method = RequestMethod.GET)
     public String allot(@PathVariable String id, ModelMap map, HttpServletRequest request)
     {
-        map.put("bean", userManager.getUserAndPower(id));
-        
-        if (UserSessionParameter.OSS_DEFAULT_ADMIN.equals(request.getUserPrincipal().getName()))
-        {
-            map.put("funcs", funcManager.findAll());
-            map.put("menus", menuManager.findAll());
-        }
-        else
-        {
+        //系统默认管理员ROOT可以查询所有的权限
+        if (UserSessionParameter.OSS_DEFAULT_ADMIN.equals(request.getUserPrincipal().getName())) {
+            map.put("funcs", funcManager.find("findSelect", Func.class, FuncVO.class, new PowerCommonQueryInfo(Status.ON)));
+            map.put("menus", menuManager.find("findSelect", Menu.class, MenuVO.class, new PowerCommonQueryInfo(Status.ON)));
+        } else {
             map.put("menus", menuManager.findByUsername(request.getUserPrincipal().getName()));
             map.put("funcs", funcManager.findByUsername(request.getUserPrincipal().getName()));
         }
-        map.put("applys", applyManager.find("findSelect", Apply.class, ApplyVO.class, new ApplyVO()));
+        map.put("bean", userManager.getUserAndPower(id));
+        map.put("applys", applyManager.find("findSelect", ApplyVO.class, new ApplyVO(Status.ON)));
         map.put("roles", roleManager.findALL());
         return getViewName("view/user/allot");
     }
@@ -255,6 +256,68 @@ public class UserController extends FreemakerController
     public void allot(@PathVariable String id, String[] roles, String[] powers, String[] applys)
     {
         userManager.allot(id, roles, powers, applys);
+    }
+    
+    /**
+     * 
+     * 
+     * @param id
+     * @param map
+     * @param request
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "allotField/{id}/{username}", method = RequestMethod.GET)
+    public String allotField(@PathVariable String id, @PathVariable String username, ModelMap map, HttpServletRequest request)
+    {
+        map.put("id", id);
+        map.put("username", username);
+        return getViewName("view/user/allotField");
+    }
+    
+    /**
+     * 
+     * 
+     * @param id
+     * @param map
+     * @param request
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "allotField/{userId}", method = RequestMethod.POST)
+    @ResponseBody
+    public void allotField(@PathVariable String userId, Long fieldId)
+    {
+        userManager.allotField(userId, fieldId);
+    }
+    
+    /**
+     * 
+     * 
+     * @param id
+     * @param map
+     * @param request
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "deleteField/{userId}/{fieldId}", method = RequestMethod.GET)
+    @ResponseBody
+    public void deleteField(@PathVariable String userId, @PathVariable Long fieldId)
+    {
+        userManager.deleteField(userId, fieldId);
+    }
+    
+    /**
+     * 
+     * 
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "findUserFieldPower/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public JQueryTableResult findUserFieldPower(@PathVariable String username, Paging paging)
+    {
+        return new JQueryTableResult(funcManager.findUserAllAttrPowers(username), paging);
     }
     
     /**

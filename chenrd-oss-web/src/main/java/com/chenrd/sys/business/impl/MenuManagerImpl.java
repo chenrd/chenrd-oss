@@ -25,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chenrd.common.DateUtil;
 import com.chenrd.common.Paging;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.BeanUtil;
+import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.FuncManager;
 import com.chenrd.sys.business.MenuManager;
 import com.chenrd.sys.dao.ApplyDAO;
@@ -47,7 +49,7 @@ import com.chenrd.sys.vo.MenuVO;
  */
 @Transactional
 @Service("menuManager")
-public class MenuManagerImpl implements MenuManager
+public class MenuManagerImpl extends AbstractPowerBusiness implements MenuManager
 {
     /**
      * 
@@ -280,6 +282,12 @@ public class MenuManagerImpl implements MenuManager
       //开始排序
         Collections.sort(menus, comparator);
         return BeanUtil.returnList(menus, MenuVO.class);
+    }
+
+    @Override
+    public BaseDAO getDAO()
+    {
+        return menuDAO;
     }
 
 }

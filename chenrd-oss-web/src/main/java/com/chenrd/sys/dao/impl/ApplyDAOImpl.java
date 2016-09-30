@@ -12,7 +12,7 @@ package com.chenrd.sys.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.chenrd.dao.abs.QueryParamsBaseDAO;
+import com.chenrd.dao.abs.AbstractBaseDAO;
 import com.chenrd.sys.dao.ApplyDAO;
 import com.chenrd.sys.entity.Apply;
 
@@ -24,12 +24,6 @@ import com.chenrd.sys.entity.Apply;
  * @since
  */
 @Repository("applyDAO")
-public class ApplyDAOImpl extends QueryParamsBaseDAO<Apply> implements ApplyDAO
+public class ApplyDAOImpl extends AbstractBaseDAO<Apply> implements ApplyDAO
 {
-    
-    @Override
-    public Class<Apply> getDomClass()
-    {
-        return Apply.class;
-    }
 }

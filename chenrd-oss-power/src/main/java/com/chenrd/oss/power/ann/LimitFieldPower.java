@@ -31,7 +31,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface LimitFieldPower
 {
-    String defClassName();
     
-    String defFieldName();
+    /**
+     * 0:classKey
+     * 1:fieldKey
+     * 
+     * @return 
+     * @see
+     */
+    String[] value();
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chenrd.common.BeanCopyUtils;
-import com.chenrd.dao.QueryParamDAO;
+import com.chenrd.dao.BaseDAO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.ApplyManager;
 import com.chenrd.sys.dao.ApplyDAO;
@@ -52,12 +52,11 @@ public class ApplyManagerImpl extends AbstractPowerBusiness implements ApplyMana
         BeanCopyUtils.copy(apply, po, true);
         applyDAO.saveOrUpdate(po);
     }
-    
+
     @Override
-    public QueryParamDAO getQueryParamsBaseDAO()
+    public BaseDAO getDAO()
     {
         return applyDAO;
     }
-
-
+    
 }

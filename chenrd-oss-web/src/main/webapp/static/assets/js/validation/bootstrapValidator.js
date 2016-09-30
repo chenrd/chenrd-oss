@@ -254,7 +254,7 @@
 
             var that      = this,
                 type      = fields.attr('type'),
-                event     = ('radio' == type || 'checkbox' == type || 'file' == type || 'SELECT' == fields[0].tagName) ? 'change' : that._changeEvent,
+                event     = (fields.attr('data-bv-field-event') ? fields.attr('data-bv-field-event') : ('radio' == type || 'checkbox' == type || 'file' == type || 'SELECT' == fields[0].tagName) ? 'change' : that._changeEvent),
                 total     = fields.length,
                 updateAll = (total == 1) || ('radio' == type) || ('checkbox' == type);
 
@@ -300,7 +300,7 @@
                     && (!updateAll || i == total - 1))
                 {
                     $parent.addClass('has-feedback');
-                    var $icon = $('<i/>').css('display', 'none').addClass('form-control-feedback').attr('data-bv-field', field).insertAfter($field);
+                    var $icon = $('<i/>').css('display', 'none').addClass('form-control-feedback').attr('data-bv-field', field).insertAfter($field.attr('type') == 'radio' || $field.attr('type') == 'checkbox' ? $field.parent() : $field);
                     // The feedback icon does not render correctly if there is no label
                     // https://github.com/twbs/bootstrap/issues/12873
                     if ($parent.find('label').length == 0) {
@@ -476,6 +476,7 @@
             if (!this.options.fields) {
                 return this;
             }
+            
             this.disableSubmitButtons(true);
 
             for (var field in this.options.fields) {

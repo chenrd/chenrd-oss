@@ -4,34 +4,34 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="chenrd-oss-ex-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-ex/chenrd-oss-ex">
+        <dependent-module archiveName="chenrd-oss-ex-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-ex/chenrd-oss-ex">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-oss-shiro-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-shiro/chenrd-oss-shiro">
+        <dependent-module archiveName="chenrd-oss-shiro-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-shiro/chenrd-oss-shiro">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-common/chenrd-common">
+        <dependent-module archiveName="chenrd-common-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-common/chenrd-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-spring-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-spring/chenrd-spring">
+        <dependent-module archiveName="chenrd-spring-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-spring/chenrd-spring">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-oss-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-service/chenrd-oss-service">
+        <dependent-module archiveName="chenrd-oss-service-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-service/chenrd-oss-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-oss-power-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-power/chenrd-oss-power">
+        <dependent-module archiveName="chenrd-oss-power-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-oss-power/chenrd-oss-power">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-business-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-business/chenrd-business">
+        <dependent-module archiveName="chenrd-business-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-business/chenrd-business">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-hibernate-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-hibernate/chenrd-hibernate">
+        <dependent-module archiveName="chenrd-hibernate-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-hibernate/chenrd-hibernate">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-ehcache-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-ehcache/chenrd-ehcache">
+        <dependent-module archiveName="chenrd-ehcache-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-ehcache/chenrd-ehcache">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chenrd-example-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-example/chenrd-example">
+        <dependent-module archiveName="chenrd-example-0.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/chenrd-example/chenrd-example">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="chenrd-oss-web"/>

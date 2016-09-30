@@ -22,12 +22,20 @@ import com.chenrd.example.VO;
 public interface PowerBusiness extends Business
 {
     
-    <E extends Domain, T extends VO> List<T> find(String methodName, Class<E> entityClass, Class<T> clazz, QueryInfo info, Paging paging);
+    <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging);
     
-    <E extends Domain, T extends VO> List<T> find(String methodName, Class<E> entityClass, Class<T> clazz, QueryInfo info);
+    <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info);
+    
+    <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info, Paging paging);
+    
+    <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info);
+    
+    <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging);
+    
+    <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info);
+    
+    <T extends VO> List<T> find(Class<T> clazz, QueryInfo info, Paging paging);
+    
+    <T extends VO> List<T> find(Class<T> clazz, QueryInfo info);
  
-    
-    <E extends Domain, T extends VO> List<T> find(Class<E> entityClass, Class<T> clazz, QueryInfo info, Paging paging);
-    
-    <E extends Domain, T extends VO> List<T> find(Class<E> entityClass, Class<T> clazz, QueryInfo info);
 }

@@ -22,5 +22,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface DefFieldPower
 {
-    String value();
+    /**
+     * value[0] name, value[1] key
+     * 
+     * @return 
+     * @see
+     */
+    String[] value() default "";
 }

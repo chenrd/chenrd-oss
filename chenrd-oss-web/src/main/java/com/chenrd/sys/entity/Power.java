@@ -27,6 +27,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.chenrd.dao.annotation.QueryParams;
+import com.chenrd.dao.em.Nexus;
 import com.chenrd.example.Domain;
 
 
@@ -84,8 +85,11 @@ public class Power extends Domain
      * 应用
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "APPLY_")
+    @JoinColumn(name = "APPLY_", nullable = false)
     private Apply apply;
+    
+    @Column(name = "APPLY_", insertable = false, updatable = false)
+    private Long applyId;
     
     /**
      * 菜单访问路径
@@ -110,6 +114,7 @@ public class Power extends Domain
     /**
      * 状态
      */
+    @QueryParams(defaultNotQuery = true, nexus = Nexus.GTEQUAL)
     @Column(name = "STATUS")
     private int status;
 
