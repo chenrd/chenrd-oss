@@ -26,7 +26,7 @@ import com.chenrd.sys.vo.AttributeVO;
  */
 public interface AttributeManager extends PowerBusiness
 {
-
+    
     /**
      * 
      * 
@@ -44,6 +44,8 @@ public interface AttributeManager extends PowerBusiness
      * @see
      */
     List<PowerInfo> findParent(String applyKey);
+    
+    void saveOrUpdate(AttributeVO vo);
     
     /**
      * 

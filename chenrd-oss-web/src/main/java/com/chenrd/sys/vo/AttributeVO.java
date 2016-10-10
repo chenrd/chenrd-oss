@@ -13,6 +13,7 @@ package com.chenrd.sys.vo;
 
 import com.chenrd.dao.annotation.FindConstructor;
 import com.chenrd.dao.info.QueryInfo;
+import com.chenrd.example.Status;
 import com.chenrd.example.VO;
 
 public class AttributeVO extends VO implements QueryInfo
@@ -60,13 +61,33 @@ public class AttributeVO extends VO implements QueryInfo
     /**
      * 状态
      */
-    private int status;
+    private int status = Status.OFF;
     
     private String value;
     
     private int attrType;
     
     
+
+    /**
+     * @param id
+     * @param name
+     * @param key
+     * @param status
+     * @param value
+     * @param attrType
+     */
+    @FindConstructor(name = "find", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.status, po.value, po.attrType) ")
+    public AttributeVO(Long id, String name, String key, int status, String value, int attrType)
+    {
+        super();
+        this.id = id;
+        this.name = name;
+        this.key = key;
+        this.status = status;
+        this.value = value;
+        this.attrType = attrType;
+    }
 
     /**
      * @param parentKey
@@ -85,8 +106,8 @@ public class AttributeVO extends VO implements QueryInfo
      * @param parentKey
      * @param fullName
      */
-    @FindConstructor(name = "findChilds", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.parentKey, po.fullName) ")
-    public AttributeVO(Long id, String name, String key, String parentKey, String fullName)
+    @FindConstructor(name = "findChilds", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.parentKey, po.fullName, po.applyId) ")
+    public AttributeVO(Long id, String name, String key, String parentKey, String fullName, Long applyId)
     {
         super();
         this.id = id;
@@ -94,6 +115,7 @@ public class AttributeVO extends VO implements QueryInfo
         this.key = key;
         this.parentKey = parentKey;
         this.fullName = fullName;
+        this.applyId = applyId;
     }
  
     /**

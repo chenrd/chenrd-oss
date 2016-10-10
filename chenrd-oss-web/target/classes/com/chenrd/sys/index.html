@@ -475,6 +475,10 @@ border: 1px solid #999;top: 0px;;width: 200px;height: 100px;
     		$('#modal-danger .modal-body').html(message);
        		$('#modal-danger-btn').click();
     	},
+    	successCallback: function(message) {
+    		$('#modal-success .modal-body').html(message);
+       		$('#modal-success-btn').click();
+    	},
     	callback: function(data)
     	{
     		if (data != undefined && data != null && data != '') {
@@ -527,7 +531,7 @@ border: 1px solid #999;top: 0px;;width: 200px;height: 100px;
     
     function modalInfo(message, width) {
     	$('#modal-info .modal-dialog').width(width != undefined ? width : 300);
-    	$('#modal-info .modal-body').html('<textarea style="margin-left: 20px;width:' + ($('#modal-info .modal-dialog').width() - 30) + 'px;height:400px;background: white;border: none;" readonly="readonly">' + message + '</textarea>');
+    	$('#modal-info .modal-body').html('<textarea style="width:' + ($('#modal-info .modal-dialog').width() - 40) + 'px;height:400px;background: white;border: none;" readonly="readonly">' + message + '</textarea>');
    		$('#modal-info-btn').click();
     }
     

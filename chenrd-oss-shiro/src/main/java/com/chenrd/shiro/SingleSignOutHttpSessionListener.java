@@ -48,6 +48,7 @@ public final class SingleSignOutHttpSessionListener implements HttpSessionListen
         UserEhcacheHandle userEhcacheHandle = (UserEhcacheHandle) SpringBeanUtil.getObject("userEhcacheHandle");
         userEhcacheHandle.removeSessionId(session.getId());
         sessionMappingStorage.removeBySessionById(session.getId());
+        LOG.warn("into sessionDestroyed method and done.");
     }
 
     /**

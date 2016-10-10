@@ -27,7 +27,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Lazy;
 
 import com.chenrd.dao.annotation.QueryOrder;
 import com.chenrd.dao.annotation.QueryParams;
@@ -78,6 +81,7 @@ public class User extends Domain
     /**
      * 
      */
+    @Lazy
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "OSS_USER_ORGANIZATION", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ORGANIZATION_ID")})
     private Set<Organization> organization;
@@ -85,30 +89,18 @@ public class User extends Domain
     /**
      * 
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @Lazy
+    @ManyToMany
     @JoinTable(name = "OSS_USER_ROLE", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
+    @Fetch(FetchMode.SELECT)
     private Set<Role> roles;
     
     /**
      * 
      */
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
-    private Set<Menu> menus;
-    
-    /**
-     * 
-     */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
-    private Set<Func> funcs;
-    
-    /**
-     * 
-     */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
-    private Set<Attribute> attrs;
+    @JoinTable(name = "OSS_USER_POWER", joinColumns = {@JoinColumn(name= "USER_ID", insertable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID", insertable = false, updatable = false)})
+    private Set<Power> powers;
     
     /**
      * 曾用名
@@ -568,51 +560,19 @@ public class User extends Domain
     }
 
     /**
-     * @return Returns the menus.
+     * @return Returns the powers.
      */
-    public Set<Menu> getMenus()
+    public Set<Power> getPowers()
     {
-        return menus;
+        return powers;
     }
 
     /**
-     * @param menus The menus to set.
+     * @param powers The powers to set.
      */
-    public void setMenus(Set<Menu> menus)
+    public void setPowers(Set<Power> powers)
     {
-        this.menus = menus;
-    }
-
-    /**
-     * @return Returns the funcs.
-     */
-    public Set<Func> getFuncs()
-    {
-        return funcs;
-    }
-
-    /**
-     * @param funcs The funcs to set.
-     */
-    public void setFuncs(Set<Func> funcs)
-    {
-        this.funcs = funcs;
-    }
-
-    /**
-     * @return Returns the attrs.
-     */
-    public Set<Attribute> getAttrs()
-    {
-        return attrs;
-    }
-
-    /**
-     * @param attrs The attrs to set.
-     */
-    public void setAttrs(Set<Attribute> attrs)
-    {
-        this.attrs = attrs;
+        this.powers = powers;
     }
     
 }

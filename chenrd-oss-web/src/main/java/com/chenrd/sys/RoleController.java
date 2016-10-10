@@ -10,6 +10,8 @@
 
 package com.chenrd.sys;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,11 +25,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chenrd.common.FreemakerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
+import com.chenrd.example.Status;
+import com.chenrd.example.UserSessionParameter;
 import com.chenrd.sys.business.FuncManager;
 import com.chenrd.sys.business.MenuManager;
 import com.chenrd.sys.business.RoleManager;
+import com.chenrd.sys.entity.Func;
+import com.chenrd.sys.entity.Menu;
+import com.chenrd.sys.info.PowerCommonQueryInfo;
 import com.chenrd.sys.service.info.RoleInfo;
-import com.chenrd.sys.service.info.UserInfo;
+import com.chenrd.sys.vo.FuncVO;
+import com.chenrd.sys.vo.MenuVO;
+import com.chenrd.sys.vo.RoleVO;
 
 /**
  * 
@@ -81,9 +90,22 @@ public class RoleController extends FreemakerController
      */
     @RequestMapping(value = "find", method = RequestMethod.POST)
     @ResponseBody
-    public JQueryTableResult findPaging(String name, Paging paging)
+    public JQueryTableResult findPaging(RoleVO info, Paging paging)
     {
-        return new JQueryTableResult(roleManager.findPaging(name, paging), paging);
+        return new JQueryTableResult(roleManager.find("find", RoleVO.class, info, paging), paging);
+    }
+    
+    
+    /**
+     * 
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "findSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public List<RoleVO> findSelect()
+    {
+        return roleManager.find("findSelect", RoleVO.class, new RoleVO());
     }
     
     /**
@@ -97,20 +119,14 @@ public class RoleController extends FreemakerController
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable Long id, ModelMap map, HttpServletRequest request)
     {
-        if (id != null)
-        {
-            map.put("bean", roleManager.get(id));
-        }
-        if ((int) request.getSession().getAttribute(UserInfo.OSS_SESSION_USER_TYPE) != 1)
-        {
+        if (UserSessionParameter.OSS_DEFAULT_ADMIN.equals(request.getUserPrincipal().getName())) {
+            map.put("funcs", funcManager.find("findSelect", Func.class, FuncVO.class, new PowerCommonQueryInfo(Status.ON)));
+            map.put("menus", menuManager.find("findSelect", Menu.class, MenuVO.class, new PowerCommonQueryInfo(Status.ON)));
+        } else {
             map.put("menus", menuManager.findByUsername(request.getUserPrincipal().getName()));
             map.put("funcs", funcManager.findByUsername(request.getUserPrincipal().getName()));
         }
-        else
-        {
-            map.put("funcs", funcManager.findAll());
-            map.put("menus", menuManager.findAll());
-        }
+        map.put("bean", roleManager.get(id));
         return getViewName("view/role/edit");
     }
     
@@ -125,15 +141,12 @@ public class RoleController extends FreemakerController
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Long id, ModelMap map, HttpServletRequest request)
     {
-        if ((int) request.getSession().getAttribute(UserInfo.OSS_SESSION_USER_TYPE) != 1)
-        {
+        if (UserSessionParameter.OSS_DEFAULT_ADMIN.equals(request.getUserPrincipal().getName())) {
+            map.put("funcs", funcManager.find("findSelect", Func.class, FuncVO.class, new PowerCommonQueryInfo(Status.ON)));
+            map.put("menus", menuManager.find("findSelect", Menu.class, MenuVO.class, new PowerCommonQueryInfo(Status.ON)));
+        } else {
             map.put("menus", menuManager.findByUsername(request.getUserPrincipal().getName()));
             map.put("funcs", funcManager.findByUsername(request.getUserPrincipal().getName()));
-        }
-        else
-        {
-            map.put("funcs", funcManager.findAll());
-            map.put("menus", menuManager.findAll());
         }
         return getViewName("view/role/edit");
     }
@@ -178,7 +191,7 @@ public class RoleController extends FreemakerController
     @ResponseBody
     public void delete(@PathVariable Long id)
     {
-        roleManager.deleted(id);
+        roleManager.delete(id);
     }
     
 

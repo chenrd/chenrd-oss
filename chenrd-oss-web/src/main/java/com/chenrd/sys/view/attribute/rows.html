@@ -9,7 +9,7 @@
     </div>
 	<div class="widget-body">
 	    <div class="table-toolbar">
-	        <@func aClass="btn btn-default purple create-btn" url="/attribute/import" iClass="fa fa-plus" />
+	        <@func aClass="btn btn-default purple create-btn" id="create-btn" url="/attribute/create" iClass="fa fa-plus" />
 	    </div>
 	    <table class="table table-striped table-hover table-bordered" style="width: 100% !important;">
             <thead>
@@ -18,7 +18,7 @@
              	<th width="60">序号</th>
                 <th width="100">名称</th>
                 <th width="150">标识</th>
-                <th width="100">访问路径</th>
+                <th width="100">值</th>
                 <th width="80">启用</th>
                 <th width="80">操作</th>
                	</tr>
@@ -31,40 +31,22 @@
 <script type="text/javascript">
 $(function(){
     var search = {}, iStart = 1, myPannel = tab.current;
-    var oTable = myPannel.center.find('.table').dataTable({
-        "aLengthMenu": [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"]
-        ],
-        "sEcho": "1",
-        "bFilter" : false,// 搜索栏
-        "bLengthChange" : false,// 每行显示记录数
+    var oTable = myPannel.center.find('.table').dataTable($.extend({}, oTableOpts, {
         "iDisplayLength": 10,
-        "bServerSide": true,
-        "bPaginate": true,
-        "bProcessing": true,
-        "bDestroy":false,
-        "sAjaxDataProp": "rows",
-        "sAjaxSource": "<@url value='/func/find/${applyId}?parentKey=${parentKey}'/>",
-        "sPaginationType": "bootstrap",
-        "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
-        "oTableTools": {
-            "aButtons": []
-        },
+        "sAjaxSource": "<@url value='/attribute/find?parentKey=${parentKey}'/>",
         "fnServerData": function(sSource, aoData, fnCallback) {
         	iStart = aoData.iDisplayStart +　1;
         	Home.datatableAjax(sSource, aoData, fnCallback, search);
         },
-        "language": language,
         "fnRowCallback": function(target, n) {
         	$(target).find('.edit').click(function() {
-        		Home.loadCenter('func-edit-body', '<@url value="/func/edit/' + n.id + '?applyId=${applyId}&parentKey=${parentKey}"/>', '编辑菜单', true, myPannel);
+        		Home.loadCenter('attribute-edit-body', '<@url value="/attribute/edit/' + n.id + '?applyId=${applyId}&parentKey=${parentKey}"/>', '编辑菜单', true, myPannel);
         	})
         	$(target).find('.delete').click(function() {
-        		Home.deleteReloadCurrent('<@url value="/func/delete?id=' + n.id + '"/>', '操作无法被恢复，请确认该操作？', myPannel.callback);
+        		Home.deleteReloadCurrent('<@url value="/attribute/delete/' + n.id + '"/>', '操作无法被恢复，请确认该操作？', myPannel.callback);
         	})
         	$(target).find('.publish').click(function() {
-        		Home.ajaxGetReq('<@url value="/func/publish?id=' + n.id + '"/>', myPannel.callback);
+        		Home.ajaxGetReq('<@url value="/attribute/publish/' + n.id + '"/>', myPannel.callback);
         	})
         },
         "aoColumns": [
@@ -72,7 +54,7 @@ $(function(){
 		  	{ "mDataProp": "serial", "bSortable": false, "mRender" : function ( data, type ) {return iStart++;} },
           	{ "mDataProp": "name", "bSortable": false },
           	{ "mDataProp": "key", "bSortable": false },
-          	{ "mDataProp": "url", "bSortable": false },
+          	{ "mDataProp": "value", "bSortable": false },
           	{ "mDataProp": "status", "bSortable": false, 'sClass': 'center', "mRender" : function ( data, type ) {return data == 1 ? '<a href="#" class="prop-a publish"><i class="fa fa-check"></i></a>' : '<a href="#" class="prop-b publish"><i class="fa fa-times"></i></a>';} },
           	{ "mDataProp": "id", "bSortable": false, "mRender": function ( data, type ) {
         	  	return '<@func aClass="btn btn-info btn-xs times btn-circle edit" url="/func/edit/*" iClass="fa fa-edit" title="编辑"/>'
@@ -80,10 +62,10 @@ $(function(){
     	  		} 
           	}
         ]
-    });
+    }));
     
     myPannel.center.find('.create-btn').click(function() {
-    	Home.loadCenter('attribute-import-body', '<@url value="/attribute/import?applyId=${applyId}"/>', '导入权限', true, myPannel);
+    	Home.loadCenter('attribute-edit-body', '<@url value="/attribute/create?applyId=${applyId}&parentKey=${parentKey}"/>', '添加属性', true, myPannel);
     })
     
     myPannel.callback = function() {

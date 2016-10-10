@@ -26,27 +26,8 @@
 <script type="text/javascript">
 $(function(){
     var search = {}, iStart = 1, myPannel = tab.current;
-    
-    var oTable = myPannel.center.find('.table').dataTable({
-        "aLengthMenu": [
-            [10, 20, 50, 100, -1],
-            [10, 20, 50, 100, "All"]
-        ],
-        "sEcho": "1",
-        "bFilter" : false,// 搜索栏
-        "bLengthChange" : false,// 每行显示记录数
-        "iDisplayLength": 20,
-        "bServerSide": true,
-        "bPaginate": true,
-        "bProcessing": true,
-        "bDestroy":false,
-        "sAjaxDataProp": "rows",
+    var oTable = myPannel.center.find('.table').dataTable($.extend({}, oTableOpts, {
         "sAjaxSource": "<@url value='log/find/${applyKey}/${type}'/>",
-        "sPaginationType": "bootstrap",
-        "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
-        "oTableTools": {
-            "aButtons": []
-        },
         "fnServerData": function(sSource, aoData, fnCallback) {
         	iStart = aoData.iDisplayStart +　1;
         	Home.datatableAjax(sSource, aoData, fnCallback, search);
@@ -57,15 +38,17 @@ $(function(){
 		  { "mDataProp": "label", "bSortable": false },
           { "mDataProp": "createDate", "bSortable": false },
           { "mDataProp": "userName", "bSortable": false },
-          { "mDataProp": "type", "bSortable": false, "mRender" : function ( data, type ) {return type == 0 ? "登陆日志" : (type == 1 ? "操作日志" : "异常日志");} }
+          { "mDataProp": "type", "bSortable": false, "mRender" : function ( data, type ) {return data == 0 ? "登陆日志" : (data == 1 ? "操作日志" : "异常日志");} }
         ],
         "fnDrawCallback": function(oSettings) {
         	$(oTable[0]).find('tbody tr').click(function() {
-        		$.get('<@url value="/log/show/' + $(this).find('td').eq(0).text() + '"/>', function(m) {
-        			modalInfo(m, 1200);
-        		})
+        		if ($(this).find('td').eq(5).text() == '异常日志') {
+        			$.get('<@url value="/log/show/' + $(this).find('td').eq(0).text() + '"/>', function(m) {
+            			modalInfo(m, 1200);
+            		})
+        		}
             })
         }
-    });
+    }));
 })
 </script>

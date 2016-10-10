@@ -10,9 +10,7 @@
 
 package com.chenrd.sys.business;
 
-import java.util.List;
-
-import com.chenrd.common.Paging;
+import com.chenrd.oss.power.PowerBusiness;
 import com.chenrd.sys.service.info.RoleInfo;
 
 /**
@@ -22,33 +20,8 @@ import com.chenrd.sys.service.info.RoleInfo;
  * @see RoleManager
  * @since
  */
-public interface RoleManager
+public interface RoleManager extends PowerBusiness
 {
-
-    /**
-     * 
-     * 查询列表数据
-     * @param name 名称
-     * @param paging 分页条件
-     * @return JQueryTableResult
-     * @see
-     */
-    List<RoleInfo> findPaging(String name, Paging paging);
-    
-    /**
-     * 查询全部
-     * @return 全部
-     */
-    List<RoleInfo> findALL();
-    
-    /**
-     * 
-     * 
-     * @param id 
-     * @return RoleInfo
-     * @see
-     */
-    RoleInfo get(Long id);
     
     /**
      * 
@@ -60,19 +33,6 @@ public interface RoleManager
      */
     void saveOrUpdate(RoleInfo info, Long[] powers);
     
-    /**
-     * 
-     * 
-     * @param id 
-     * @see
-     */
-    void publish(Long id);
+    RoleInfo get(Long id);
     
-    /**
-     * 
-     * 
-     * @param id  
-     * @see
-     */
-    void deleted(Long id);
 }

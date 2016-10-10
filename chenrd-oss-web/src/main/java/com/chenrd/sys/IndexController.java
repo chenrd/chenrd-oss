@@ -30,6 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.chenrd.common.FreemakerController;
 import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.sys.service.LogRecordService;
+import com.chenrd.sys.service.UserService;
 import com.chenrd.sys.service.info.LogInfo;
 import com.chenrd.sys.service.info.MenuInfo;
 import com.chenrd.sys.service.info.UserInfo;
@@ -75,6 +76,9 @@ public class IndexController extends FreemakerController
     @Value("#{settings['apply.url']}")
     private String applyUrl;
     
+    @Resource
+    private UserService userService;
+    
     /**
      * 
      * 首页
@@ -102,6 +106,26 @@ public class IndexController extends FreemakerController
         return getViewName("index");
     }
     
+    /**
+     * 
+     * 
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "updatePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public void updatePassword(String oldPassword, String newPassword, HttpServletRequest request)
+    {
+        int status = userService.modifyPassword(request.getUserPrincipal().getName(), oldPassword, newPassword);
+        if (status == 1)
+        {
+            throw new RuntimeException("修改密码失败，用户【" + request.getUserPrincipal().getName() + "】不存在");
+        }
+        else if (status == 2)
+        {
+            throw new RuntimeException("旧密码错误");
+        }
+    }
     
     /**
      * 
@@ -120,7 +144,7 @@ public class IndexController extends FreemakerController
      * @param request 
      * @see
      */
-    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    @RequestMapping(value = "logout")
     @ResponseBody
     public void logout(HttpServletRequest request)
     {

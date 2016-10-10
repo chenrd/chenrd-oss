@@ -12,7 +12,6 @@ package com.chenrd.sys.business.impl;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -20,7 +19,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chenrd.common.Paging;
 import com.chenrd.dao.BaseDAO;
 import com.chenrd.dao.BeanUtil;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
@@ -28,7 +26,6 @@ import com.chenrd.sys.business.RoleManager;
 import com.chenrd.sys.dao.RoleDAO;
 import com.chenrd.sys.entity.Power;
 import com.chenrd.sys.entity.Role;
-import com.chenrd.sys.service.Status;
 import com.chenrd.sys.service.info.RoleInfo;
 
 /**
@@ -49,12 +46,6 @@ public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManage
     @Resource(name = "roleDAO")
     private RoleDAO roleDAO;
     
-    @Override
-    public List<RoleInfo> findPaging(String name, Paging paging)
-    {
-        return BeanUtil.returnList(roleDAO.findPaging(name, paging), RoleInfo.class);
-    }
-
     /**
      * @param roleDAO The roleDAO to set.
      */
@@ -92,30 +83,6 @@ public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManage
     }
 
     @Override
-    public void publish(Long id)
-    {
-        Role role = roleDAO.get(Role.class, id);
-        if (role == null)
-        {
-            throw new RuntimeException("发布失败，没有找到要发布的角色");
-        }
-        role.setStatus(role.getStatus() == 0 ? 1 : 0);
-        roleDAO.update(role);
-    }
-
-    @Override
-    public void deleted(Long id)
-    {
-        Role role = roleDAO.get(Role.class, id);
-        if (role == null)
-        {
-            throw new RuntimeException("删除失败，没有找到要删除的角色");
-        }
-        role.setStatus(-1);
-        roleDAO.update(role);
-    }
-
-    @Override
     public RoleInfo get(Long id)
     {
         Role role = roleDAO.get(Role.class, id);
@@ -132,12 +99,6 @@ public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManage
         }
         info.setPowers(powers);
         return info;
-    }
-
-    @Override
-    public List<RoleInfo> findALL()
-    {
-        return BeanUtil.returnList(roleDAO.findByProperty(Role.class, "status", Status.NO, null), RoleInfo.class);
     }
 
     @Override

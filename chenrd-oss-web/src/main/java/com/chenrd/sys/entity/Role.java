@@ -26,7 +26,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.chenrd.dao.QueryByUsername;
+import com.chenrd.dao.annotation.QueryOrder;
+import com.chenrd.dao.annotation.QueryParams;
+import com.chenrd.dao.em.Nexus;
 import com.chenrd.example.Domain;
+import com.chenrd.example.Status;
 import com.chenrd.oss.power.ann.LimitClassPower;
 import com.chenrd.oss.power.ann.LimitFieldPower;
 
@@ -59,6 +63,7 @@ public class Role extends Domain
     /**
      * 
      */
+    @QueryParams
     @Column(name = "NAME_", length = 50)
     private String name;
 
@@ -72,6 +77,7 @@ public class Role extends Domain
     /**
      * 
      */
+    @QueryParams(nexus = Nexus.LIKE)
     @Column(name = "KEY_", length = 100)
     private String key;
     
@@ -90,6 +96,7 @@ public class Role extends Domain
     /**
      * 创建者
      */
+    @QueryParams
     @LimitFieldPower({"100", "100"})
     @Column(name = "CREATE_USER", length = 50, nullable = false)
     private String createUser;
@@ -102,8 +109,10 @@ public class Role extends Domain
     /**
      * 
      */
+    @QueryOrder(index = 1, value = "desc")
+    @QueryParams(nexus = Nexus.GTEQUAL)
     @Column(name = "STATUS")
-    private int status;
+    private int status = Status.OFF;
 
     /**
      * @return Returns the id.

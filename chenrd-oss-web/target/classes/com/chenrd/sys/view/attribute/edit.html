@@ -1,24 +1,51 @@
 <div class="widget">
     <div class="widget-body">
-        <form id="config-form" action="<@url value='/config/saveOrUpdate'/>" method="post" class="form-horizontal bv-form" novalidate="novalidate">
-            <div class="form-group" style="height: 300px;">
-		    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: left;">
-			    	<ul class="select2-results" result-target="power_result" data-target="vessel2" id="vessel1" style="min-height: 300px;max-height: 300px;">
-			    		<#list menus as menu>
-				    		<li class="select2-results-dept-0 select2-result select2-result-selectable" value="${menu.id}" index="${menu_index}">
-				    			<div class="select2-result-label">
-				    			<span class="select2-match"></span>${menu.fullName}
-                               	</div>
-                           	</li>
-                          	</#list>
-                     </ul>
-		    	</div>
-		    	<div style="width: 42%;border: 1px solid rgba(0,0,0,.25);background: white;box-shadow: 0 1px 3px rgba(0,0,0,.3);float: right;height: 300px;">
-		    		<ul class="select2-results vessel" data-target="vessel1" id="vessel2" style="min-height: 300px;max-height: 300px;">
-		    			
-		    		</ul>
-		    	</div>
-		    </div>
+        <form id="registrationForm-media" action="<@url value='/attribute/saveOrUpdate'/>" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+            <div class="form-title">属性编辑</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">名称</label>
+                <div class="col-lg-10">
+                	<input type="text" class="form-control" name="name" value="<#if bean??>${bean.name}</#if>"/>
+                </div>
+            </div>
+			<div class="form-group">
+                <label class="col-lg-2 control-label">值</label>
+                <div class="col-lg-10">
+                	<input type="text" class="form-control" name="value" value="<#if bean??>${bean.value}</#if>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                	<input type="hidden" name="applyId" value="${applyId}"/>
+                	<input type="hidden" name="parentKey" value="${parentKey}"/>
+                    <input type="hidden" name="id" value="<#if bean??>${bean.id}</#if>"/>
+                    <button type="submit" class="btn btn-blue"> 提交 </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
+<!--Page Related Scripts-->
+<script src="assets/js/select2/select2.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#application_edit select').select2();
+	$("#registrationForm-media").bootstrapValidator({
+		excluded: [':disabled'],
+		feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	value: {
+        		validators: {
+        			notEmpty: {message: '请完成表单'}
+        		}
+        	}
+        },
+		submitHandler: submitHandler
+	})
+	
+});
+</script>

@@ -26,14 +26,17 @@ import com.chenrd.common.BeanCopyUtils;
 import com.chenrd.common.Encryption;
 import com.chenrd.dao.BaseDAO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
+import com.chenrd.oss.power.ann.DefClassPower;
 import com.chenrd.sys.business.UserManager;
 import com.chenrd.sys.dao.UserDAO;
 import com.chenrd.sys.entity.Apply;
+import com.chenrd.sys.entity.Attribute;
 import com.chenrd.sys.entity.Power;
 import com.chenrd.sys.entity.Role;
 import com.chenrd.sys.entity.User;
 import com.chenrd.sys.entity.UserPowerMapping;
 import com.chenrd.sys.entity.classKey.UserPowerKey;
+import com.chenrd.sys.service.PowerService;
 import com.chenrd.sys.vo.UserVO;
 
 /**
@@ -59,6 +62,9 @@ public class UserManagerImpl extends AbstractPowerBusiness implements UserManage
      */
     @Value("#{settings['default.password']}")
     private String defaultPassword;
+    
+    @Resource(name = "powerService")
+    private PowerService powerService;
     
     @Value("#{settings['apply.key']}")
     private String applyKey;
@@ -86,6 +92,9 @@ public class UserManagerImpl extends AbstractPowerBusiness implements UserManage
         BeanCopyUtils.copy(userInfo, user, currentNoCopy);
         
         userDAO.saveOrUpdate(user);
+        
+        DefClassPower def = User.class.getAnnotation(DefClassPower.class);
+        powerService.saveFieldPowers(applyKey, def.value()[0], def.value()[1], "用户名", "100", new String[] {user.getUsername()});
         return user.getId();
     }
 
@@ -115,9 +124,14 @@ public class UserManagerImpl extends AbstractPowerBusiness implements UserManage
         
         //授权用户
         Set<Power> powerSet = new HashSet<Power>();
+        //字段权限不再授权里面，所以字段权限要加进入
+        if (user.getPowers() != null) {
+            for (Power power : user.getPowers()) {
+                if (power instanceof Attribute) powerSet.add(power);
+            }
+        }
         if (powers != null)
         {
-            
             for (String pId : powers)
             {
                 if (!StringUtils.isNotBlank(pId))
@@ -191,29 +205,23 @@ public class UserManagerImpl extends AbstractPowerBusiness implements UserManage
         UserVO info = new UserVO();
         BeanUtils.copyProperties(user, info);
         String powers = "";
-        if (user.getPowers() != null) 
-        {
-            for (Power power : user.getPowers())
-            {
+        if (user.getPowers() != null)  {
+            for (Power power : user.getPowers()) {
                 powers += power.getId() + ",";
             }
         }
         info.setPowerstrs(powers);
         
         String roles = "";
-        if (user.getRoles() != null)
-        {
-            for (Role role : user.getRoles())
-            {
+        if (user.getRoles() != null) {
+            for (Role role : user.getRoles()) {
                 roles += role.getId() + ",";
             }
         }
         
         String applystrs = "";
-        if (user.getApplys() != null)
-        {
-            for (Apply apply : user.getApplys())
-            {
+        if (user.getApplys() != null) {
+            for (Apply apply : user.getApplys()) {
                 applystrs += apply.getId() + ",";
             }
         }

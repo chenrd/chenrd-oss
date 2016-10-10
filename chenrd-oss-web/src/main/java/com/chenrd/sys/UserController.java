@@ -40,6 +40,7 @@ import com.chenrd.sys.info.PowerCommonQueryInfo;
 import com.chenrd.sys.vo.ApplyVO;
 import com.chenrd.sys.vo.FuncVO;
 import com.chenrd.sys.vo.MenuVO;
+import com.chenrd.sys.vo.RoleVO;
 import com.chenrd.sys.vo.UserVO;
 
 /**
@@ -109,9 +110,9 @@ public class UserController extends FreemakerController
      */
     @RequestMapping(value = "find", method = RequestMethod.POST)
     @ResponseBody
-    public JQueryTableResult findPaging(UserVO vo, Paging paging)
+    public JQueryTableResult findPaging(UserVO info, Paging paging)
     {
-        return new JQueryTableResult(userManager.find("find", UserVO.class, vo, paging), paging);
+        return new JQueryTableResult(userManager.find("find", UserVO.class, info, paging), paging);
     }
     
     /**
@@ -139,10 +140,7 @@ public class UserController extends FreemakerController
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable String id, ModelMap map)
     {
-        if (id != null) 
-        {
-            map.put("bean", userManager.get(id, UserVO.class));
-        }
+        map.put("bean", userManager.get(id, UserVO.class));
         return getViewName("view/user/edit");
     }
     
@@ -162,20 +160,6 @@ public class UserController extends FreemakerController
         }
         vo.setUpdateUser(request.getUserPrincipal().getName());
         userManager.saveOrUpdate(vo);
-    }
-    
-    
-    /**
-     * 
-     * 重置密码
-     * @param userId 用户ID
-     * @see
-     */
-    @RequestMapping(value = "resetpassword", method = RequestMethod.POST)
-    @ResponseBody
-    public void resetpassword(String userId)
-    {
-        
     }
     
     /**
@@ -239,7 +223,7 @@ public class UserController extends FreemakerController
         }
         map.put("bean", userManager.getUserAndPower(id));
         map.put("applys", applyManager.find("findSelect", ApplyVO.class, new ApplyVO(Status.ON)));
-        map.put("roles", roleManager.findALL());
+        map.put("roles", roleManager.find("findSelect", RoleVO.class, new RoleVO()));
         return getViewName("view/user/allot");
     }
     
@@ -328,7 +312,7 @@ public class UserController extends FreemakerController
     @RequestMapping(value = "upload")
     public void upload(@RequestParam(value = "Filedata", required = false) MultipartFile file)
     {
-        System.out.println(1);
+        
     }
     
     /**

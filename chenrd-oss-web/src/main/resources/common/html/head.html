@@ -50,7 +50,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-toggle" data-toggle="dropdown" title="注销" href="#" onclick="document.location.href = '${casUrl}/logout?service=${applyUrl}/${(.now?datetime)?string('yyyyMMddHHmmss')}'">
+                            <a class="dropdown-toggle" data-toggle="dropdown" title="注销" href="#" onclick="document.location.href = '${casUrl}/logout?service=${applyUrl}/logout?${(.now?datetime)?string('yyyyMMddHHmmss')}'">
                                 <i class="icon fa fa-trash-o"></i>
                             </a>
                         </li>

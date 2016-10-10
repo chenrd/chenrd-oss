@@ -11,6 +11,7 @@
 package com.chenrd.sys.business.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,7 @@ public class LogRecordServiceImpl implements LogRecordManager, LogRecordService
     {
         LogRecord record = new LogRecord();
         BeanUtil.copyProperties(info, record);
+        record.setCreateDate(new Date());
         logRevordDAO.saveOrUpdate(record);
     }
 

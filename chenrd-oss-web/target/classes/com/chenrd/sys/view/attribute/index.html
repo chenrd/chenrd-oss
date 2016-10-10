@@ -75,8 +75,12 @@ $(function(){
     
     function overwrite(treeDataSource) {
     	treeDataSource.data = function (options, callback) {
+    		if (options.key.split('/').length == 4) {
+    			callback({data: []});
+    			return;
+    		}
     		var self = this;
-    		$.get('<@url value="/attribute/findChilds/' + options.key + '"/>', function(d) {
+    		$.get('<@url value="/attribute/findChilds/' + options.key.replace(/[/]/g, '-') + '"/>', function(d) {
     			for (var i = 0; i < d.length; i++) {
     	    		d[i].type = 'folder';
     	    		d[i]['icon-class'] = 'success';
