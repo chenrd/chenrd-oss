@@ -17,14 +17,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import com.chenrd.dao.annotation.QueryOrder;
+import com.chenrd.dao.annotation.QueryParams;
+import com.chenrd.dao.em.Nexus;
 import com.chenrd.example.Domain;
+import com.chenrd.example.Status;
 
 
 /**
@@ -37,6 +43,7 @@ import com.chenrd.example.Domain;
  */
 @Table(name = "OSS_ORGANIZATION")
 @Entity
+@SequenceGenerator(name = "seq_org_id", sequenceName = "seq_org_id", allocationSize = 1)
 public class Organization extends Domain
 {
 
@@ -49,35 +56,34 @@ public class Organization extends Domain
      * 
      */
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "UUID", length = 32)
-    private String id;
+    @GeneratedValue(generator = "seq_org_id", strategy = GenerationType.AUTO)
+    @Column(name = "ID", length = 32)
+    private Long id;
     
     /**
      * 名称
      */
+    @QueryParams
     @Column(name = "NAME_", length = 50)
     private String name;
     
     /**
      * 
      */
-    @Column(name = "KEY_")
+    @QueryOrder(index = 1)
+    @Column(name = "KEY_", unique = true)
     private String key;
     
     /**
      * 
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_")
+    @JoinColumn(name = "PARENT_", insertable = false, updatable = false)
     private Organization parent;
     
-    /**
-     * 控制power的权限
-     */
-    @Column(name = "POWER", length = 20)
-    private String power;
+    @QueryParams
+    @Column(name = "PARENT_")
+    private Long parentId;
     
     /**
      * 全称
@@ -111,12 +117,6 @@ public class Organization extends Domain
     private String fax;
     
     /**
-     * 排序
-     */
-    @Column(name = "ORDER_", length = 5)
-    private int order;
-    
-    /**
      * 备注
      */
     @Column(name = "REMARK", length = 200)
@@ -125,31 +125,30 @@ public class Organization extends Domain
     /**
      * 创建时间
      */
-    @Column(name = "CREATE_DATE")
-    private Date createDate;
+    @Column(name = "CREATE_TIME", nullable = false) @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
     
-    /**
-     * 删除时间
-     */
-    @Column(name = "DELETE_DATE")
-    private Date deleteDate;
+    @Column(name = "CREATE_USER", length = 64)
+    private String createUser;
     
-    /**
-     * 删除人姓名
-     */
-    @Column(name = "DELETE_NAME", length = 50)
-    private String deleteName;
+    @Column(name = "UPDATE_TIME", nullable = false) @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
+    
+    @Column(name = "UPDATE_USER", length = 64)
+    private String updateUser;
+    
     
     /**
      * 状态
      */
+    @QueryParams(nexus = Nexus.GTEQUAL)
     @Column(name = "STATUS", length = 1)
-    private int status;
+    private int status = Status.ON;
     
     /**
      * @return Returns the id.
      */
-    public String getId()
+    public Long getId()
     {
         return id;
     }
@@ -157,7 +156,7 @@ public class Organization extends Domain
     /**
      * @param id The id to set.
      */
-    public void setId(String id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -259,22 +258,6 @@ public class Organization extends Domain
     }
 
     /**
-     * @return Returns the order.
-     */
-    public int getOrder()
-    {
-        return order;
-    }
-
-    /**
-     * @param order The order to set.
-     */
-    public void setOrder(int order)
-    {
-        this.order = order;
-    }
-
-    /**
      * @return Returns the remark.
      */
     public String getRemark()
@@ -288,54 +271,6 @@ public class Organization extends Domain
     public void setRemark(String remark)
     {
         this.remark = remark;
-    }
-
-    /**
-     * @return Returns the createDate.
-     */
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    /**
-     * @param createDate The createDate to set.
-     */
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    /**
-     * @return Returns the deleteDate.
-     */
-    public Date getDeleteDate()
-    {
-        return deleteDate;
-    }
-
-    /**
-     * @param deleteDate The deleteDate to set.
-     */
-    public void setDeleteDate(Date deleteDate)
-    {
-        this.deleteDate = deleteDate;
-    }
-
-    /**
-     * @return Returns the deleteName.
-     */
-    public String getDeleteName()
-    {
-        return deleteName;
-    }
-
-    /**
-     * @param deleteName The deleteName to set.
-     */
-    public void setDeleteName(String deleteName)
-    {
-        this.deleteName = deleteName;
     }
 
     /**
@@ -379,22 +314,6 @@ public class Organization extends Domain
     }
 
     /**
-     * @return Returns the power.
-     */
-    public String getPower()
-    {
-        return power;
-    }
-
-    /**
-     * @param power The power to set.
-     */
-    public void setPower(String power)
-    {
-        this.power = power;
-    }
-
-    /**
      * @return Returns the status.
      */
     public int getStatus()
@@ -409,5 +328,75 @@ public class Organization extends Domain
     {
         this.status = status;
     }
+
+	/**
+	 * @return Returns the createTime.
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime The createTime to set.
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	/**
+	 * @return Returns the createUser.
+	 */
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	/**
+	 * @param createUser The createUser to set.
+	 */
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	/**
+	 * @return Returns the updateTime.
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	/**
+	 * @param updateTime The updateTime to set.
+	 */
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	/**
+	 * @return Returns the updateUser.
+	 */
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	/**
+	 * @param updateUser The updateUser to set.
+	 */
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	/**
+	 * @return Returns the parentId.
+	 */
+	public Long getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * @param parentId The parentId to set.
+	 */
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
     
 }

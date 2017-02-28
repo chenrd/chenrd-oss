@@ -10,10 +10,8 @@
 
 package com.chenrd.sys.business;
 
-import java.util.List;
-
-import com.chenrd.common.Paging;
-import com.chenrd.sys.service.info.OrgInfo;
+import com.chenrd.oss.power.PowerBusiness;
+import com.chenrd.sys.vo.OrganizationVO;
 
 /**
  * 
@@ -23,15 +21,10 @@ import com.chenrd.sys.service.info.OrgInfo;
  * @see OrganizationManager
  * @since
  */
-public interface OrganizationManager
-{
+public interface OrganizationManager extends PowerBusiness {
     
-    /**
-     * 
-     * @param id 
-     * @param paging 分页条件
-     * @return List<OrgInfo>
-     * @see
-     */
-    List<OrgInfo> find(String id, Paging paging);
+	Long DEFUALT_ORG_ID = 1l;
+	String DEFUALT_ORG_NAME = "ROOT";
+	
+	void saveOrUpdate(OrganizationVO vo);
 }

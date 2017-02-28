@@ -23,6 +23,7 @@ import com.chenrd.dao.abs.AbstractBaseDAO;
 import com.chenrd.sys.dao.UserDAO;
 import com.chenrd.sys.entity.User;
 import com.chenrd.sys.service.Status;
+import com.chenrd.sys.service.info.UserInfo;
 
 
 
@@ -88,5 +89,14 @@ public class UserDAOImpl extends AbstractBaseDAO<User> implements UserDAO
         params.put("username", username);
         return super.count(hql.toString(), params);
     }
+
+	@Override
+	public List<UserInfo> findFieldByPowerKey(String key) {
+		Map<String, Serializable> params = new HashMap<String, Serializable>();
+		StringBuilder hql = new StringBuilder("select new com.chenrd.sys.service.info.UserInfo(po.id, po.name, po.username) from ").append(User.class.getSimpleName()).append(" as po inner join po.powers as power with power.key=:key and power.status=:status where po.status=:status");
+		params.put("status", Status.NO);
+		params.put("key", key);
+		return (List<UserInfo>) super.find(hql.toString(), params);
+	}
 
 }

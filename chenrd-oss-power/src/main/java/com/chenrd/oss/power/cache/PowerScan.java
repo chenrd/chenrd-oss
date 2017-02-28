@@ -100,9 +100,10 @@ public class PowerScan
         {
             if (Modifier.isStatic(field.getModifiers())) continue;
             if (entityQuery instanceof PowerEntityQueryBuilder) {
-                LimitFieldPower limitFieldPower = field.getAnnotation(LimitFieldPower.class);
-                if (limitFieldPower != null)
-                    ((PowerEntityQueryBuilder) entityQuery).with(new LimitPowerMetadata(clazz.getName(), field.getName(), limitClassPower, limitFieldPower, DefPowerMetadata.formKeyName(applyKey, limitFieldPower.value()[0], limitFieldPower.value()[1])));
+            	LimitFieldPower limitFieldPower = field.getAnnotation(LimitFieldPower.class);
+                if (limitFieldPower != null) {
+                    ((PowerEntityQueryBuilder) entityQuery).with(new LimitPowerMetadata(clazz.getName(), field.getAnnotation(QueryParams.class) != null, field.getName(), limitClassPower, limitFieldPower, DefPowerMetadata.formKeyName(applyKey, limitFieldPower.value()[0], limitFieldPower.value()[1])));
+                }
             } 
             
             QueryParams params = field.getAnnotation(QueryParams.class);

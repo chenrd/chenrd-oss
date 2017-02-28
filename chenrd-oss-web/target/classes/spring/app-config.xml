@@ -63,7 +63,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<!-- 开启查询缓存 -->
 				<prop key="hibernate.cache.use_query_cache">false</prop>
 				<!-- 配置二级缓存 --> 

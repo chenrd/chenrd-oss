@@ -111,6 +111,7 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             //默认值不查询，当属性类型为int,long,shrot,float,double,boolean其中一种时，属性值一定不为空，那么需要当前的判断，默认值的情况下添加到查询里面
             if (attribute.getParams().defaultNotQuery() && new BigDecimal(valueTmp + "").compareTo(new BigDecimal(attribute.getParams().defaultNotQueryValue())) == 0) continue;
               
+            LOG.debug("=========" + attribute.getDateFormat() + "============");
             //日期格式转换
             if (valueTmp instanceof String && attribute.getDateFormat() != null)
                 valueTmp = DateUtil.parseDate((String) valueTmp, attribute.getDateFormat().value().format);
@@ -125,11 +126,11 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             int start = hql.length();
             hql.append(emtyp_interval_string).append(rightBrecket.equals(attribute.getParams().bracket()) ? rightBrecket : empty_string)
                 .append(attribute.getParams().value()).append(emtyp_interval_string) //attribute.getParams().value() is and or
-                .append(leftBrecket.equals(attribute.getParams().bracket()) ? leftBrecket : empty_string).append("po.").append(attribute.getFieldName()).append(emtyp_interval_string);
+                .append(leftBrecket.equals(attribute.getParams().bracket()) ? leftBrecket : empty_string);
             
             //如果是LimitField属性，特殊处理
             if (valueTmp instanceof String[] && ((String[]) valueTmp).length > 1) {
-                hql.append(Nexus.IN.sign).append(emtyp_interval_string).append(leftBrecket);
+                hql.append("po.").append(attribute.getFieldName()).append(emtyp_interval_string).append(Nexus.IN.sign).append(emtyp_interval_string).append(leftBrecket);
                 int index = 1;
                 for (String temp : (String[]) valueTmp) {
                     hql.append(index == 1 ? "" : ",").append(":").append(fieldName).append(index);
@@ -138,9 +139,14 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
                 hql.append(rightBrecket);
                 params.remove(fieldName);
             } else {
-                hql.append(attribute.getParams().nexus().sign).append(emtyp_interval_string).append(":").append(fieldName);
+                if (attribute.getParams().nexus().type == 1) {
+                	hql.append("po.").append(attribute.getFieldName()).append(emtyp_interval_string).append(attribute.getParams().nexus().sign).append(emtyp_interval_string).append(":").append(fieldName);
+                } else {
+                	//调用自定义sql方法
+                	hql.append(attribute.getParams().nexus().sign).append("(po.").append(attribute.getFieldName()).append(", :").append(fieldName).append(")>0");
+                }
                 if (valueTmp instanceof String[]) {
-                    params.put(fieldName, ((String[]) valueTmp)[0]);
+                    params.put(fieldName, changeValueType(attribute.getGetMethod().getReturnType(), ((String[]) valueTmp)[0]));
                 } else {
                     params.put(fieldName, (Serializable) valueTmp);
                     attribute.setHqlSection(hql.substring(start));
@@ -165,7 +171,8 @@ public class SimpleEntityQueryBuilder implements EntityQueryBuilder
             return value;
         if (clas.isAssignableFrom(int.class) || clas.isAssignableFrom(Integer.class))
             return Integer.parseInt(value);
-        
+        if (clas.isAssignableFrom(long.class) || clas.isAssignableFrom(Long.class))
+            return Long.parseLong(value);
         return value;
     }
     

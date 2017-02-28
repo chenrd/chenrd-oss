@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
 import com.chenrd.sys.business.ApplyManager;
@@ -39,7 +39,7 @@ import com.chenrd.sys.vo.MenuVO;
  */
 @RequestMapping("menu")
 @Controller
-public class MenuController extends FreemakerController
+public class MenuController extends FreemarkerController
 {
     
     /**

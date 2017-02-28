@@ -15,6 +15,7 @@ import java.util.List;
 import com.chenrd.common.Paging;
 import com.chenrd.dao.BaseDAO;
 import com.chenrd.sys.entity.User;
+import com.chenrd.sys.service.info.UserInfo;
 
 /**
  * 
@@ -53,5 +54,11 @@ public interface UserDAO extends BaseDAO
      * @see
      */
     Long countByUserName(String username);
+    
+    /**
+     * 查询拥有指定字段权限的用户集合，只返回id,username字段的值
+     * @see
+     */
+    List<UserInfo> findFieldByPowerKey(String key);
     
 }

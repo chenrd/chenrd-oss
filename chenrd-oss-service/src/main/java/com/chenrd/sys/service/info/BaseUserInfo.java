@@ -54,6 +54,8 @@ public class BaseUserInfo implements Serializable
     private String updateUser;
     
     private String defaultRole;
+    
+    private Long[] roleIds; //
 
     public BaseUserInfo(String username, String name, String createUser, String updateUser)
     {
@@ -62,6 +64,16 @@ public class BaseUserInfo implements Serializable
         this.name = name;
         this.createUser = createUser;
         this.updateUser = updateUser;
+    }
+    
+    public BaseUserInfo(String username, String name, String createUser, Long... roleIds)
+    {
+        super();
+        this.username = username;
+        this.name = name;
+        this.createUser = createUser;
+        this.updateUser = createUser;
+        this.roleIds = roleIds;
     }
 
     public BaseUserInfo()
@@ -236,5 +248,19 @@ public class BaseUserInfo implements Serializable
     {
         this.defaultRole = defaultRole;
     }
+
+	/**
+	 * @return Returns the roleIds.
+	 */
+	public Long[] getRoleIds() {
+		return roleIds;
+	}
+
+	/**
+	 * @param roleIds The roleIds to set.
+	 */
+	public void setRoleIds(Long[] roleIds) {
+		this.roleIds = roleIds;
+	}
     
 }

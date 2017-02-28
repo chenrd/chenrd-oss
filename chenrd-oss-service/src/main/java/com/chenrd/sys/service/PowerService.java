@@ -41,7 +41,9 @@ public interface PowerService
      * @param infos 
      * @see
      */
-    void saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String[] value);
+    Long[] saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String[] value);
+    
+    Long saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String value, String name);
     
     /**
      * 

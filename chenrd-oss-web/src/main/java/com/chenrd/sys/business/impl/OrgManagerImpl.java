@@ -10,17 +10,22 @@
 
 package com.chenrd.sys.business.impl;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chenrd.common.Paging;
+import com.chenrd.common.BeanCopyUtils;
+import com.chenrd.dao.BaseDAO;
+import com.chenrd.example.VO;
+import com.chenrd.oss.power.abs.AbstractPowerBusiness;
 import com.chenrd.sys.business.OrganizationManager;
 import com.chenrd.sys.dao.OrganizationDAO;
-import com.chenrd.sys.service.info.OrgInfo;
+import com.chenrd.sys.entity.Organization;
+import com.chenrd.sys.vo.OrganizationVO;
 
 /**
  * 
@@ -33,7 +38,7 @@ import com.chenrd.sys.service.info.OrgInfo;
  */
 @Transactional
 @Service("orgManager")
-public class OrgManagerImpl implements OrganizationManager
+public class OrgManagerImpl extends AbstractPowerBusiness implements OrganizationManager
 {
 
     /**
@@ -41,11 +46,37 @@ public class OrgManagerImpl implements OrganizationManager
      */
     @Resource(name = "orgDAO")
     private OrganizationDAO orgDAO;
+
+	@Override
+	public BaseDAO getDAO() {
+		return orgDAO;
+	}
+
+	@Override
+	public void saveOrUpdate(OrganizationVO vo) {
+		Organization po = null, parent = (Organization) orgDAO.get(vo.getParentId());
+		if (vo.getId() != null) {
+			po = (Organization) orgDAO.get(vo.getId());
+		} else {
+			po = new Organization();
+			po.setCreateTime(new Date());
+			po.setCreateUser(vo.getCreator());
+		}
+		BeanCopyUtils.copy(vo, po, false);
+		po.setKey(parent.getKey() + "/" + vo.getKey());
+		po.setUpdateTime(new Date());
+		po.setUpdateUser(vo.getCreator());
+		orgDAO.saveOrUpdate(po);
+	}
     
-    @Override
-    public List<OrgInfo> find(String id, Paging paging)
-    {
-        return null;
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends VO> T get(Serializable id, Class<T> clazz) {
+		OrganizationVO vo = (OrganizationVO) super.get(id, clazz);
+		int lastIndex = vo.getKey().lastIndexOf("/");
+		if (lastIndex != -1) vo.setKey(vo.getKey().substring(lastIndex + 1));
+		vo.setParentName(((Organization) orgDAO.get(vo.getParentId())).getName());
+		return (T) vo;
+	}
 
 }

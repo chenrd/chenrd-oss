@@ -14,6 +14,7 @@
   	<module>../chenrd-oss-shiro</module>
   	<module>../chenrd-oss-web</module>
   	<module>../chenrd-oss-power</module>
+  	<module>chenrd-oss-oa</module>
   </modules>
   <version>0.0.2-SNAPSHOT</version>
 </project>

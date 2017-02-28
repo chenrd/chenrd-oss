@@ -10,21 +10,25 @@
 
 package com.chenrd.sys;
 
+
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
+import com.chenrd.example.Status;
 import com.chenrd.sys.business.OrganizationManager;
-import com.chenrd.sys.service.info.OrgInfo;
+import com.chenrd.sys.vo.OrganizationVO;
 
 /**
  * 
@@ -35,23 +39,21 @@ import com.chenrd.sys.service.info.OrgInfo;
  */
 @Controller
 @RequestMapping("org")
-public class OrganizationController extends FreemakerController
-{
+public class OrganizationController extends FreemarkerController {
     
     /**
      * 
      */
     @Resource(name = "orgManager")
     private OrganizationManager orgManager;
-
+    
     /**
      * 
      * @return 
      * @see
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index()
-    {
+    public String index() {
         return getViewName("view/org/index");
     }
     
@@ -61,11 +63,9 @@ public class OrganizationController extends FreemakerController
      * @return 
      * @see
      */
-    @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable String id, ModelMap map)
-    {
-        map.put("id", id);
-        return getViewName("view/org/rows");
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public String create() {
+        return getViewName("view/org/edit");
     }
     
     /**
@@ -74,10 +74,29 @@ public class OrganizationController extends FreemakerController
      * @return 
      * @see
      */
-    @RequestMapping(value = "find/{id}", method = RequestMethod.POST)
-    public JQueryTableResult find(@PathVariable String id, Paging paging)
-    {
-        return new JQueryTableResult(orgManager.find(id, paging), paging);
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable Long id, ModelMap map) {
+    	map.put("bean", orgManager.get(id, OrganizationVO.class));
+        return getViewName("view/org/edit");
+    }
+    
+    @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public void saveOrUpdate(OrganizationVO vo, HttpServletRequest request) {
+    	vo.setCreator(request.getUserPrincipal().getName());
+    	orgManager.saveOrUpdate(vo);
+    }
+    
+    @RequestMapping(value = "publish/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void publish(@PathVariable Long id) {
+    	orgManager.publish(id);
+    }
+    
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void delete(@PathVariable Long id) {
+    	orgManager.delete(id);
     }
     
     /**
@@ -86,9 +105,25 @@ public class OrganizationController extends FreemakerController
      * @return 
      * @see
      */
-    @RequestMapping(value = "{id}/find", method = RequestMethod.POST)
-    public List<OrgInfo> find(@PathVariable String id)
-    {
-        return orgManager.find(id, null);
+    @RequestMapping(value = "find", method = RequestMethod.POST)
+    @ResponseBody
+    public JQueryTableResult find(OrganizationVO info, Paging paging) {
+        return new JQueryTableResult(orgManager.find("find", OrganizationVO.class, info, paging), paging);
+    }
+    
+    @RequestMapping(value = "findSelect")
+    @ResponseBody
+    public List<OrganizationVO> findSelect(OrganizationVO info) {
+    	if (info.getParentId() == null) {
+    		info.setName(OrganizationManager.DEFUALT_ORG_NAME);
+    	}
+    	info.setStatus(Status.ON);
+    	return orgManager.find("find", OrganizationVO.class, info);
+    }
+    
+    @RequestMapping(value = "findSelectAll")
+    @ResponseBody
+    public List<OrganizationVO> findSelectAll() {
+    	return orgManager.find("find", OrganizationVO.class, OrganizationVO.QUERY_YES_PUBLISH);
     }
 }

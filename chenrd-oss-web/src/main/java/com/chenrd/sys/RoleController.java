@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
 import com.chenrd.example.Status;
@@ -37,6 +37,7 @@ import com.chenrd.sys.service.info.RoleInfo;
 import com.chenrd.sys.vo.FuncVO;
 import com.chenrd.sys.vo.MenuVO;
 import com.chenrd.sys.vo.RoleVO;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 /**
  * 
@@ -47,7 +48,7 @@ import com.chenrd.sys.vo.RoleVO;
  */
 @Controller
 @RequestMapping("role")
-public class RoleController extends FreemakerController
+public class RoleController extends FreemarkerController
 {
 
     /**
@@ -106,6 +107,21 @@ public class RoleController extends FreemakerController
     public List<RoleVO> findSelect()
     {
         return roleManager.find("findSelect", RoleVO.class, new RoleVO());
+    }
+    
+    /**
+     * 
+     * @return 
+     * @see
+     */
+    @RequestMapping(value = "findJsonp", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONPObject findJsonp(String callback, HttpServletRequest request)
+    {
+    	RoleVO info = new RoleVO();
+    	info.setStatus(1);
+    	List<RoleVO> list = roleManager.find("findSelect",  RoleVO.class, info);
+    	return new JSONPObject(callback, list);
     }
     
     /**

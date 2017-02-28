@@ -17,9 +17,10 @@
     <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
  
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.chenrd.sys.service.UserService" ref="userService" />
-    <dubbo:service interface="com.chenrd.sys.service.PowerService" ref="powerService" />
-    <dubbo:service interface="com.chenrd.sys.service.MenuService" ref="menuService" />
-    <dubbo:service interface="com.chenrd.sys.service.LogRecordService" ref="logRecordService" />
+    <dubbo:service timeout="3000" interface="com.chenrd.sys.service.UserService" ref="userService" />
+    <dubbo:service timeout="3000" interface="com.chenrd.sys.service.PowerService" ref="powerService" />
+    <dubbo:service timeout="3000" interface="com.chenrd.sys.service.MenuService" ref="menuService" />
+    <dubbo:service timeout="3000" interface="com.chenrd.sys.service.LogRecordService" ref="logRecordService" />
+    <dubbo:service timeout="3000" interface="com.chenrd.sys.service.OrganizationService" ref="organizationService" />
     
 </beans>

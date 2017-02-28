@@ -54,7 +54,8 @@ public class FuncVariable implements TemplateDirectiveModel
             iClass = ((SimpleScalar) params.get("iClass")).getAsString(),
             id = params.get("id") == null ? null : ((SimpleScalar) params.get("id")).getAsString(),
             dataTarget = params.get("dataTarget") == null ? null : ((SimpleScalar) params.get("dataTarget")).getAsString(),
-            title = params.get("title") == null ? null : ((SimpleScalar) params.get("title")).getAsString();
+            title = params.get("title") == null ? null : ((SimpleScalar) params.get("title")).getAsString(), 
+            href = params.get("href") == null ? null : ((SimpleScalar) params.get("href")).getAsString();
         
         UserEhcacheHandle userEhcacheHandle = (UserEhcacheHandle) SpringBeanUtil.getObject("userEhcacheHandle");
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();  
@@ -64,7 +65,8 @@ public class FuncVariable implements TemplateDirectiveModel
         StringBuilder btnStr = new StringBuilder();
         PowerInfo info = null;
         if ((info = powers.get(url)) != null) {
-            btnStr.append("<a href=\"javascript:void(0)\"");
+            if (StringUtils.isBlank(href)) btnStr.append("<a href=\"javascript:void(0)\"");
+            else btnStr.append("<a href=\"").append(href.equals("url") ? request.getSession().getServletContext().getContextPath() + url : href).append("\"");
             if (StringUtils.isNotBlank(aClass)) btnStr.append(" class=\"").append(aClass).append("\"");
             if (StringUtils.isNotBlank(aClass) && aClass.indexOf("btn-circle") != -1) btnStr.append(" title=\"").append(info.getName()).append("\"");
             if (StringUtils.isNotBlank(id)) btnStr.append(" id=\"").append(id).append("\"");

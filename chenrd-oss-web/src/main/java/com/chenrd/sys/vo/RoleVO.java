@@ -51,6 +51,14 @@ public class RoleVO extends VO implements QueryInfo
     private String createUser;
 
     /**
+	 * @param status
+	 */
+	public RoleVO(int status) {
+		super();
+		this.status = status;
+	}
+
+	/**
      * 
      */
     public RoleVO()

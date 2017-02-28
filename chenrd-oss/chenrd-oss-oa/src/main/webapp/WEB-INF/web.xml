@@ -1,0 +1,121 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>chenrd-oa-web</display-name>
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/**/*.xml</param-value>
+    </context-param>
+    <context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>chenrd-oa-web</param-value>
+	</context-param>
+    
+		<listener><listener-class>org.springframework.web.context.ContextLoaderListener</listener-class></listener>
+	<listener><listener-class>org.springframework.web.context.request.RequestContextListener</listener-class></listener>
+	<listener><listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class></listener>
+	<listener><listener-class>org.springframework.web.util.Log4jConfigListener</listener-class></listener>
+	<listener><listener-class>com.chenrd.shiro.SingleSignOutHttpSessionListener</listener-class></listener>  
+	
+	<filter>  
+       <filter-name>CAS Single Sign Out Filter</filter-name>  
+       <filter-class>com.chenrd.shiro.SingleSignOutFilter</filter-class>  
+    </filter>
+    <filter-mapping>  
+	    <filter-name>CAS Single Sign Out Filter</filter-name>  
+	    <url-pattern>/*</url-pattern>  
+ 	</filter-mapping>
+ 	
+ 	<!-- 配置shiro的核心拦截器 -->
+	<filter>  
+	  <filter-name>shiroFilter</filter-name>  
+	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+	  <init-param>  
+        <param-name>targetFilterLifecycle</param-name>  
+        <param-value>true</param-value>  
+    	</init-param>
+	</filter>  
+	<filter-mapping>  
+	  <filter-name>shiroFilter</filter-name>  
+	  <url-pattern>/*</url-pattern>  
+	</filter-mapping>
+	
+	<!-- 身份验证 -->
+	<filter>
+		<filter-name>ShiroCheckFilter</filter-name>
+		<filter-class>com.chenrd.shiro.ShiroCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ShiroCheckFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+    	<filter-name>encodingFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+	
+	<!-- urlreWriter -->
+	<filter>
+    	<filter-name>UrlRewriteFilter</filter-name>
+    	<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    	<init-param>
+      		<param-name>confReloadCheckInterval</param-name>
+      		<param-value>60</param-value>
+   		</init-param>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>INFO</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+    	<filter-name>UrlRewriteFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+  	<!-- hibernate Session 保持  -->
+  	<filter>
+    	<filter-name>HibernateSpringFilter</filter-name>
+    	<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+    	<init-param>
+      		<param-name>sessionFactoryBeanName</param-name>
+      		<param-value>sessionFactory</param-value>
+    	</init-param>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>HibernateSpringFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  
+  	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>spring</servlet-name>
+    	<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+  	
+  	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>/static/*</url-pattern>
+  	</servlet-mapping>
+  	
+  	<welcome-file-list>
+  		<welcome-file>index.html</welcome-file>
+  	</welcome-file-list>
+  	<session-config>
+    	<session-timeout>240</session-timeout>
+  	</session-config>
+</web-app>

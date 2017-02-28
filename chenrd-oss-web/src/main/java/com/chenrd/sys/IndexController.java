@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.sys.service.LogRecordService;
 import com.chenrd.sys.service.UserService;
@@ -42,7 +42,7 @@ import com.chenrd.sys.service.info.UserInfo;
  * @since
  */
 @Controller
-public class IndexController extends FreemakerController
+public class IndexController extends FreemarkerController
 {
     
     /**
@@ -87,7 +87,7 @@ public class IndexController extends FreemakerController
      * @return 首页
      * @see
      */
-    @RequestMapping("")
+    @RequestMapping({"", "home"})
     public String index(HttpServletRequest request, ModelMap map)
     {
         UserInfo userInfo = userEhcacheHandle.get(request.getRequestedSessionId());
@@ -145,8 +145,7 @@ public class IndexController extends FreemakerController
      * @see
      */
     @RequestMapping(value = "logout")
-    @ResponseBody
-    public void logout(HttpServletRequest request)
+    public String logout(HttpServletRequest request)
     {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();  
         HttpServletRequest rq = attr.getRequest();
@@ -158,5 +157,6 @@ public class IndexController extends FreemakerController
             applyKey, "注销用户");
         logRecordService.newLogRecord(logInfo);
         user.logout();
+        return "redirect:home";
     }
 }

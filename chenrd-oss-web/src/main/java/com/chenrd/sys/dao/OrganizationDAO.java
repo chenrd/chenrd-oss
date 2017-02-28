@@ -10,10 +10,7 @@
 
 package com.chenrd.sys.dao;
 
-import java.util.List;
-
-import com.chenrd.common.Paging;
-import com.chenrd.sys.entity.Organization;
+import com.chenrd.dao.BaseDAO;
 
 /**
  * 
@@ -22,14 +19,6 @@ import com.chenrd.sys.entity.Organization;
  * @see OrganizationDAO
  * @since
  */
-public interface OrganizationDAO
-{
-    /**
-     * 
-     * @param id 
-     * @param paging 分页条件
-     * @return List<OrgInfo>
-     * @see
-     */
-    List<Organization> find(String id, Paging paging);
+public interface OrganizationDAO extends BaseDAO {
+	
 }

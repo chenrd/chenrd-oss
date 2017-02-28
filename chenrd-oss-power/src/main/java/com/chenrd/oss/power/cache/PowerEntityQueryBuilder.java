@@ -51,50 +51,55 @@ public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
         }
         return super.builder(info, params);
     }
-
+    
     public EntityQueryBuilder with(LimitPowerMetadata metadata)
     {
         if (limits == null) limits = new HashMap<String, LimitPowerMetadata>();
         if (metadata != null) {
             limits.put(metadata.key, metadata);
-            super.with(new HqlAttribute(metadata.fieldName, new QueryParams()
-            {
-                @Override
-                public Class<? extends Annotation> annotationType()
-                {
-                    return QueryParams.class;
-                }
-                @Override
-                public String value()
-                {
-                    return "and";
-                }
-                @Override
-                public Nexus nexus()
-                {
-                    return Nexus.IN;
-                }
-                @Override
-                public String bracket()
-                {
-                    return "";
-                }
-                @Override
-                public String name()
-                {
-                    return "";
-                }
-                @Override
-                public boolean defaultNotQuery()
-                {
-                    return false;
-                }
-                @Override
-                public double defaultNotQueryValue()
-                {
-                    return 0;
-                }
-            }));
+            if (!metadata.isFieldAnnotationQueryParams()) 
+	            super.with(new HqlAttribute(metadata.fieldName, new QueryParams()
+	            {
+	                @Override
+	                public Class<? extends Annotation> annotationType()
+	                {
+	                    return QueryParams.class;
+	                }
+	                @Override
+	                public String value()
+	                {
+	                    return "and";
+	                }
+	                @Override
+	                public Nexus nexus()
+	                {
+	                    return Nexus.IN;
+	                }
+	                @Override
+	                public String bracket()
+	                {
+	                    return "";
+	                }
+	                @Override
+	                public String name()
+	                {
+	                    return "";
+	                }
+	                @Override
+	                public boolean defaultNotQuery()
+	                {
+	                    return false;
+	                }
+	                @Override
+	                public double defaultNotQueryValue()
+	                {
+	                    return 0;
+	                }
+					@Override
+					public String hql() {
+						return "";
+					}
+	            }));
         }
         return this;
     }

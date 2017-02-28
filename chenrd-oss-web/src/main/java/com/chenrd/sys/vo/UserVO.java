@@ -121,6 +121,14 @@ public class UserVO extends VO implements QueryInfo
         this.status = status;
         this.createDate = DateUtil.formatDateTime(createDate);
     }
+    
+    @FindConstructor(name = "findSelect", value = "select new com.chenrd.sys.vo.UserVO(po.id, po.username) ")
+    public UserVO(String id, String username)
+	{
+    	super();
+    	this.id = id;
+    	this.username = username;
+	}
 
     /**
      * @return Returns the id.

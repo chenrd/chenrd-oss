@@ -25,10 +25,27 @@ import com.chenrd.sys.service.info.UserInfo;
 public interface UserService
 {
     
-    List<UserInfo> find();
+	/**
+	 * 获取全部，只获取到id,username,name属性
+	 * 
+	 * @return 
+	 * @see
+	 */
+    List<UserInfo> findSelect();
     
-    void resetPassword(String id, String username);
+    /**
+     * 查询拥有指定字段权限的用户集合，只返回id,username字段的值
+     * @return 
+     * @see
+     */
+    List<UserInfo> findFieldByPowerKey(String key);
     
+    /**
+     * 保存一个
+     * 
+     * @return 
+     * @see
+     */
     String saveOrUpdate(BaseUserInfo userInfo, String applyKey);
     
     /**
@@ -43,6 +60,12 @@ public interface UserService
     void delete(String id);
     
     /**
+     * 重置密码
+     * @see
+     */
+    void resetPassword(String id, String username);
+    
+    /**
      * 修改密码
      * 
      * @param old 旧密码
@@ -51,4 +74,26 @@ public interface UserService
      * @see
      */
     int modifyPassword(String username, String old, String newPassword);
+    
+    /**
+     * 分配字段权限
+     * 
+     * @param userId
+     * @param fieldId 
+     * @see
+     */
+    void allotField(String userId, Long fieldId);
+    
+    void deleteField(String userId, Long fieldId);
+    
+    /**
+     * 分配字段权限
+     * 
+     * @param userId
+     * @param fieldId 
+     * @see
+     */
+    void allotFields(String[] userIds, Long fieldId);
+    
+    void deleteFields(String[] userIds, Long fieldId);
 }

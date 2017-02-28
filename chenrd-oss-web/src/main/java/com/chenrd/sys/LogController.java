@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
 import com.chenrd.sys.business.LogRecordManager;
@@ -32,7 +32,7 @@ import com.chenrd.sys.business.LogRecordManager;
  */
 @RequestMapping("log")
 @Controller
-public class LogController extends FreemakerController
+public class LogController extends FreemarkerController
 {
 
     /**

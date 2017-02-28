@@ -10,10 +10,14 @@
 
 package com.chenrd.sys;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chenrd.common.FreemakerController;
+import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
 import com.chenrd.example.Status;
@@ -42,6 +46,7 @@ import com.chenrd.sys.vo.FuncVO;
 import com.chenrd.sys.vo.MenuVO;
 import com.chenrd.sys.vo.RoleVO;
 import com.chenrd.sys.vo.UserVO;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 /**
  * 
@@ -52,7 +57,7 @@ import com.chenrd.sys.vo.UserVO;
  */
 @RequestMapping("user")
 @Controller
-public class UserController extends FreemakerController
+public class UserController extends FreemarkerController
 {
 
     /**
@@ -88,6 +93,7 @@ public class UserController extends FreemakerController
     @Resource(name = "userEhcacheHandle")
     private UserEhcacheHandle userEhcacheHandle;
     
+    private static Logger LOG = LoggerFactory.getLogger(UserController.class);
     /**
      * 
      * 
@@ -110,9 +116,26 @@ public class UserController extends FreemakerController
      */
     @RequestMapping(value = "find", method = RequestMethod.POST)
     @ResponseBody
-    public JQueryTableResult findPaging(UserVO info, Paging paging)
-    {
+    public JQueryTableResult findPaging(UserVO info, Paging paging) {
         return new JQueryTableResult(userManager.find("find", UserVO.class, info, paging), paging);
+    }
+    
+    @RequestMapping(value = "findSelect")
+    @ResponseBody
+    public List<UserVO> findSelect() {
+    	UserVO info = new UserVO();
+    	info.setStatus(1);
+    	return userManager.find("findSelect", UserVO.class, info);
+    }
+    
+    @RequestMapping(value = "findJsonp", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONPObject findJsonp(String callback, HttpServletRequest request) {
+    	LOG.debug(request.getUserPrincipal() + "");
+    	UserVO info = new UserVO();
+    	info.setStatus(1);
+    	List<UserVO> list = userManager.find("findSelect", UserVO.class, info);
+    	return new JSONPObject(callback, list);
     }
     
     /**
@@ -223,7 +246,8 @@ public class UserController extends FreemakerController
         }
         map.put("bean", userManager.getUserAndPower(id));
         map.put("applys", applyManager.find("findSelect", ApplyVO.class, new ApplyVO(Status.ON)));
-        map.put("roles", roleManager.find("findSelect", RoleVO.class, new RoleVO()));
+        
+        map.put("roles", roleManager.find("findSelect", RoleVO.class, new RoleVO(Status.ON)));
         return getViewName("view/user/allot");
     }
     

@@ -124,6 +124,21 @@ public class UserInfo extends VO implements UserSessionParameter
     
     
     /**
+	 * @param id
+	 * @param name
+	 * @param username
+	 */
+	public UserInfo(String id, String name, String username) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.username = username;
+	}
+
+
+
+
+	/**
      * 
      * @param name
      * @param username

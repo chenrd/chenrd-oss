@@ -1,0 +1,88 @@
+<div class="widget">
+    <div class="widget-body">
+        <form id="org-edit-form" action="<@url value='/org/saveOrUpdate'/>" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+            <div class="form-title">部门信息</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">部门简称</label>
+                <div class="col-lg-4">
+                   <input class="form-control" type="text" name="name" value="<#if bean??>${bean.name}</#if>">
+                </div>
+                <label class="col-lg-2 control-label">部门全称</label>
+                <div class="col-lg-4">
+                   <input class="form-control" type="text" name="fullName" value="<#if bean??>${bean.fullName}</#if>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">部门编号</label>
+                <div class="col-lg-4">
+                   <input class="form-control" type="text" name="key" value="<#if bean??>${bean.key}</#if>">
+                </div>
+                <label class="col-lg-2 control-label">上级部门</label>
+                <div class="col-lg-4">
+                	<input type="text" id="parentId" style="width: 100%" name="parentId" data-bv-field-event="change" text-target="<#if bean??>${bean.parentName}</#if>" value="<#if bean??>${bean.parentId}</#if>" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">部门领导</label>
+                <div class="col-lg-4">
+                   	<input type="text" id="user" style="width: 100%" name="leaderId" data-bv-field-event="change" text-target="<#if bean??>${bean.leaderName}</#if>" value="<#if bean??>${bean.leaderId}</#if>" />
+                	<input type="hidden" id="leaderName" name="leaderName" value="<#if bean??>${bean.leaderName}</#if>"/>
+                </div>
+                <label class="col-lg-2 control-label">部门电话</label>
+                <div class="col-lg-4">
+                   <input class="form-control" type="text" name="contact" value="<#if bean??>${bean.contact}</#if>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">部门传真</label>
+                <div class="col-lg-4">
+                   <input class="form-control" type="text" name="fax" value="<#if bean??>${bean.fax}</#if>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">备注</label>
+                <div class="col-lg-10">
+                   <textarea class="form-control" rows="4" id="form-field-8" name="remark" placeholder="Default Text"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="hidden" name="id" value="<#if bean??>${bean.id?c}</#if>"/>
+                    <button type="submit" class="btn btn-blue"> &nbsp;提 交&nbsp; </button>
+                    <a href="javascript:void(0);" id="cancel" class="btn btn-danger"> &nbsp;取 消&nbsp; </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="width: 100%;height: 100px;"></div>
+<!--Page Related Scripts-->
+<script type="text/javascript">
+$(function() {
+	var myPannel = tab.current, C = myPannel.center;
+	C.find('#parentId').select2({multiple: false, ajax: {url: '<@url value="org/findSelectAll"/>', cache: true, type: 'get', dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'id', 'name', empty)};}}});
+	var uselect = C.find('#user').select2({multiple: false, ajax: {url: '<@url value="user/findSelect"/>', cache: true, type: 'get', dataType: 'json', results: function(data) {return {more: false, results: changeResults(data, 'id', 'username', empty)};}}});
+	C.find('#user').change(function() {
+		myPannel.center.find('#leaderName').text(uselect.selection.text());
+	})
+	
+	myPannel.center.find("#org-edit-form").bootstrapValidator({
+		excluded: [':disabled'],
+		feedbackIcons: { valid: 'glyphicon glyphicon-ok', invalid: 'glyphicon glyphicon-remove', validating: 'glyphicon glyphicon-refresh' },
+        fields: {
+        	name: { validators: { notEmpty: {message: '请填写部门名称'} } },
+        	fullName: { validators: { notEmpty: {message: '请填写部门全称'} } },
+        	key: { validators: { notEmpty: {message: '请填写部门编号'} } },
+        	parentId: { validators: { notEmpty: {message: '请选择上级部门'} } },
+        	leaderId: { validators: { notEmpty: {message: '请选择部门领导'} } },
+        	contact: { validators: { notEmpty: {message: '请填写部门电话'} } }
+        },
+		submitHandler: submitHandler
+	})
+	
+	myPannel.center.find('#cancel').click(function(){
+		Home.callback();
+	})
+});
+</script>

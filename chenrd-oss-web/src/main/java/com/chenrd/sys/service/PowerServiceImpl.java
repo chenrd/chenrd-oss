@@ -55,7 +55,7 @@ public class PowerServiceImpl implements PowerService
     
     @Transactional
     @Override
-    public void saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String[] values)
+    public Long[] saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName, String defFieldKey, String[] values)
     {
         Apply apply = powerDAO.getByProperties(Apply.class, new String[] {"status", "key"}, new Object[] {Status.ON, applyKey});
         Attribute parent = powerDAO.getByProperties(Attribute.class, new String[] {"status", "name", "parentKey"}, new Object[] {Status.ON, defClassName, applyKey});
@@ -89,12 +89,18 @@ public class PowerServiceImpl implements PowerService
             powerDAO.save(parent);
         }
         
+        
         Attribute attribute = null;
         if (values != null) 
         {
+        	Long[] ids = new Long[values.length];
+        	int index = 0;
             for (String value : values) {
-                key = parent.getKey().concat("/").concat(value);
-                if (powerDAO.countByProperty(Attribute.class, new String[] {"status", "key"}, new Object[] {Status.ON, key}) > 0) continue;
+            	key = parent.getKey().concat("/").concat(value);
+                if ((attribute = powerDAO.getByProperties(Attribute.class, new String[] {"status", "key"}, new Object[] {Status.ON, key})) != null) {
+                	ids[index++] = attribute.getId();
+                	continue;
+                }
                 attribute = new Attribute();
                 attribute.setParentKey(parent.getKey());
                 attribute.setApply(apply);
@@ -106,9 +112,72 @@ public class PowerServiceImpl implements PowerService
                 attribute.setStatus(1);
                 attribute.setAttrType(3);
                 powerDAO.save(attribute);
+                ids[index++] = attribute.getId();
             }
+            return ids;
         }
+        return null;
     }
+    
+    @Transactional
+	@Override
+	public Long saveFieldPowers(String applyKey, String defClassName, String defClassKey, String defFieldName,
+			String defFieldKey, String value, String name) {
+		
+		Apply apply = powerDAO.getByProperties(Apply.class, new String[] {"status", "key"}, new Object[] {Status.ON, applyKey});
+        Attribute parent = powerDAO.getByProperties(Attribute.class, new String[] {"status", "name", "parentKey"}, new Object[] {Status.ON, defClassName, applyKey});
+        if (parent == null) {
+            parent = new Attribute();
+            parent.setName(defClassName);
+            parent.setParentKey(applyKey);
+            parent.setApply(apply);
+            parent.setCreateDate(new Date());
+            
+            parent.setKey(applyKey.concat("/").concat(PowerEnum.FILED.getKey() + "/").concat(defClassKey));
+            parent.setFullName(applyKey + "-" + defClassName);
+            parent.setStatus(1);
+            parent.setAttrType(1);
+            powerDAO.save(parent);
+        }
+        
+        String key = parent.getKey();
+        parent = powerDAO.getByProperties(Attribute.class, new String[] {"status", "name", "parentKey"}, new Object[] {Status.ON, defFieldName, key});
+        if (parent == null) {
+            parent = new Attribute();
+            parent.setName(defFieldName);
+            parent.setParentKey(key);
+            parent.setApply(apply);
+            parent.setCreateDate(new Date());
+            
+            parent.setKey(key.concat("/").concat(defFieldKey));
+            parent.setFullName(applyKey + "-" + defClassName + "-" + defFieldName);
+            parent.setStatus(1);
+            parent.setAttrType(2);
+            powerDAO.save(parent);
+        }
+        
+        Long id = null;
+        if (value != null) {
+        	Attribute attribute = null;
+        	key = parent.getKey().concat("/").concat(value);
+            if ((attribute = powerDAO.getByProperties(Attribute.class, new String[] {"status", "key"}, new Object[] {Status.ON, key})) == null) {
+            	attribute = new Attribute();
+	            attribute.setParentKey(parent.getKey());
+	            attribute.setApply(apply);
+	            attribute.setCreateDate(new Date());
+	            
+	            attribute.setKey(key);
+	            attribute.setFullName(parent.getFullName().concat("-").concat(name));
+	            attribute.setName(name);
+	            attribute.setValue(value);
+	            attribute.setStatus(1);
+	            attribute.setAttrType(3);
+	            powerDAO.save(attribute);
+            }
+            id = attribute.getId();
+        }
+		return id;
+	}
 
     /**
      * @param powerDAO The powerDAO to set.

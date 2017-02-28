@@ -12,7 +12,6 @@ package com.chenrd.sys.service;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -25,8 +24,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,29 +59,15 @@ import com.chenrd.sys.service.info.UserInfo;
 public class UserServiceImpl extends UserManagerImpl implements UserService
 {
     
-    private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
-    
-    /**
-     * 
-     */
     @Resource(name = "userDAO")
     private UserDAO userDAO;
     
-    /**
-     * 
-     */
     @Resource(name = "menuDAO")
     private MenuDAO menuDAO;
     
-    /**
-     * 
-     */
     @Resource(name = "powerDAO")
     private PowerDAO powerDAO;
     
-    /**
-     * 
-     */
     @Resource(name = "roleDAO")
     private RoleDAO roleDAO;
     
@@ -98,7 +81,6 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
     @Override
     public UserInfo findPowerByUsername(String username, String applyKey)
     {
-        LOG.debug("inio findPowerByUsername method time=[{}]", Calendar.getInstance().getTime().getTime());
         User user = userDAO.getByProperties(User.class, new String[]{"username", "status"}, new Object[]{username, Status.NO});
         if (user == null)
         {
@@ -174,7 +156,6 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
             }
             info.setApplys(infos);
         }
-        LOG.debug("end findPowerByUsername method time=[{}]", Calendar.getInstance().getTime().getTime());
         return info;
     }
     
@@ -210,9 +191,19 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
     
     @Transactional
     @Override
-    public List<UserInfo> find()
+    public List<UserInfo> findSelect()
     {
-        return BeanUtil.returnList(userDAO.findByProperty(User.class, "status", Status.NO, "id"), UserInfo.class);
+    	List<UserInfo> infos = new ArrayList<UserInfo>();
+    	List<User> list = userDAO.findByProperty(User.class, "status", Status.NO, "id");
+    	UserInfo info = null;
+    	for (User u : list) {
+    		info = new UserInfo();
+    		info.setId(u.getId());
+    		info.setUsername(u.getUsername());
+    		info.setName(u.getName());
+    		infos.add(info);
+    	}
+        return infos;
     }
     
     /**
@@ -235,9 +226,9 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
         } 
         else 
         {
-            if (userDAO.countByUserName(userInfo.getUsername()) > 0)
+            if ((user = userDAO.getByProperties(User.class, "username", userInfo.getUsername())) != null)
             {
-                return null;
+                return user.getId();
             }
             user = new User();
             userInfo.setId(null);
@@ -258,11 +249,20 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
                 logRecordService.newLogRecord(new LogInfo(null, LogInfo.TYPE_ERROR, new Date(), userInfo.getCreateUser(), applyKey, "添加默认角色错误", "错误原因：（" + userInfo.getDefaultRole() + "）当前角色不存在，或者当前用户不具备分配权限"));
             } else
             {
-                Set<Role> roles = new HashSet<Role>();
+            	Set<Role> roles = new HashSet<Role>();
                 roles.add(role);
                 user.setRoles(roles);
                 userDAO.update(user);
             }
+        }
+        if (userInfo.getRoleIds() != null) {
+        	Set<Role> roles = new HashSet<Role>();
+        	for (Long roleId : userInfo.getRoleIds()) {
+        		Role role = (Role) roleDAO.get(roleId);
+        		roles.add(role);
+        		user.setRoles(roles);
+        		userDAO.update(user);
+        	}
         }
         return user.getId();
     }
@@ -301,4 +301,28 @@ public class UserServiceImpl extends UserManagerImpl implements UserService
         
     }
 
+    @Transactional
+	@Override
+	public void allotFields(String[] userIds, Long fieldId) {
+		if (userIds != null) {
+			for (String id : userIds) {
+				super.allotField(id, fieldId);
+			}
+		}
+	}
+
+    @Transactional
+	@Override
+	public void deleteFields(String[] userIds, Long fieldId) {
+		if (userIds != null) {
+			for (String id : userIds) {
+				super.deleteField(id, fieldId);
+			}
+		}
+	}
+    
+    @Override
+	public List<UserInfo> findFieldByPowerKey(String key) {
+		return userDAO.findFieldByPowerKey(key);
+	}
 }

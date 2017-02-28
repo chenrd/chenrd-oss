@@ -1,58 +1,91 @@
-<html>
-<head>
-	<style type="text/css">
-		.modal-body{padding: 0px !important;}
-	</style>
-</head>
-<body>
-	<div class="main-container container-fluid">
-	<div class="page-container">
-	
-	<div class="page-sidebar" id="sidebar">
-		<!-- 左边树枝 -->
-		<div class="widget-header bg-lightred">
-            <span class="widget-caption">组织机构</span>
-
-            <div class="widget-buttons">
-                <a href="#" data-toggle="collapse">
-                    <i class="fa fa-minus"></i>
-                </a>
-                <a href="#" data-toggle="dispose">
-                    <i class="fa fa-times"></i>
-                </a>
+<div class="mail-container">
+    <div class="mail-header">
+        <ul class="header-buttons">
+            <li>
+                <a href="javascript:void(0)" id="create-org-btn" class="tooltip-primary" data-toggle="tooltip" data-original-title="Compose"><i class="glyphicon glyphicon-pencil"></i></a>
+            </li>
+            <li>
+                <a class="tooltip-primary" data-toggle="tooltip" data-original-title="Reply"><i class="glyphicon glyphicon-repeat"></i></a>
+            </li>
+        </ul>
+        <ul class="header-buttons pull-right">
+            <li class="search">
+                <span class="input-icon">
+                    <input type="text" class="form-control input-sm" id="fontawsome-search">
+                    <i class="glyphicon glyphicon-search lightgray"></i>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="mail-body" style="min-height: 400px;">
+		<table class="table table-hover" style="width: 100% !important;">
+		         <thead class="bordered-darkorange">
+		             <tr role="row">
+		             	 <th style="display: none;"></th>
+		             	 <th style="width: 80px;">序号</th>
+		                 <th style="min-width: 120px;">部门名称</th>
+		                 <th style="min-width: 120px;">部门编号</th>
+		                 <th style="min-width: 100px;">部门领导</th>
+		                 <th style="width: 100px;">联系电话</th>
+		                 <th style="min-width: 220px;">备注</th>
+		                 <th style="width: 80px;">启用</th>
+		                 <th style="width: 100px;">操作</th>
+		             </tr>
+		         </thead>
+		</table>
+   	</div>
+    <div class="mail-sidebar">
+    	<div id="MyTree6" class="tree tree-no-line tree-unselectable">
+			<div class="tree-folder" style="display: none;">
+        		<div class="tree-folder-header">
+            		<i class="fa fa-folder"></i>
+            		<div class="tree-folder-name"></div>
+        		</div>
+        		<div class="tree-folder-content"></div>
+       			<div class="tree-loader" style="display: none;"></div>
+    		</div>
+    		<div class="tree-item" style="display: none;">
+                <i class="tree-dot"></i>
+                <div class="tree-item-name"></div>
             </div>
         </div>
-		<div class="widget-body">
-            <div id="MyTree" class="tree">
-                <div class="tree-folder" style="display: none;">
-                    <div class="tree-folder-header">
-                        <i class="fa fa-folder"></i>
-                        <div class="tree-folder-name"></div>
-                    </div>
-                    <div class="tree-folder-content">
-                    </div>
-                    <div class="tree-loader" style="display: none;"></div>
-                </div>
-                <div class="tree-item" style="display: none;">
-                    <i class="tree-dot"></i>
-                    <div class="tree-item-name"></div>
-                </div>
-            </div>
-     	</div>
-	</div>
-	<div class="page-content">
-          <div class="page-body" style="padding-top: 0px !important;padding-right: 0px !important;">
-	        <div class="row">
-	        	<div class="col-lg-12 col-sm-12 col-xs-12" id="org_content">
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-</div>
+        <ul class="mail-menu">
+            <li class="menu-title">
+                <h6>Tags</h6>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="badge badge-palegreen badge-tag badge-square"></span>
+                    Business
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="badge badge-darkorange badge-tag badge-square"></span>
+                    Sports
+                </a>
+            </li>
 
+            <li>
+                <a href="#">
+                    <span class="badge badge-yellow badge-tag badge-square"></span>
+                    Friends
+                </a>
+            </li>
+            <li class="divider">
+            </li>
+            <li>
+                <a href="#">
+                    + Add Tag
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+                    
 <script type="text/javascript">
-$(function(){
+$(function() {
+	var search = {}, iStart = 1, myPannel = tab.current, parentId = 1;
 	var DataSourceTree = function (options) {
         this._data = options.data;
         this._delay = options.delay;
@@ -62,46 +95,45 @@ $(function(){
 
         data: function (options, callback) {
             var self = this;
-            var data = $.extend(true, [], self._data);
-            callback({ data: data });
+
+            setTimeout(function () {
+                var data = $.extend(true, [], self._data);
+
+                callback({ data: data });
+
+            }, this._delay)
         }
     };
+
+    function loadTree(parentId) {
+    	$.ajax({url: '<@url value="/org/findSelect?parentId=' + parentId + '"/>', type: 'get', dataType: 'json', success: asyncCallback});
+    }
     
-    
-    $.ajax({url: '<@url value="/org/${id}/find"/>', type: 'get', dataType: 'json', success: function(data) {
-    	for (var i = 0; i < data.length; i++) {
-    		data[i].type = 'folder';
-    		data[i]['icon-class'] = 'success';
-    		data[i].uuid = data[i].id;
-    		data[i].click = function(id, key) {
-    			$('#org_content').load('<@url value="org/show/${id}"/>');
+    function asyncCallback(res) {
+    	var data = new Array();
+    	if (res) {
+    		for (var i = 0; i < res.length; i++) {
+    			data.push({name: res[i].name, type: 'folder', uuid: res[i].id, click: function(uuid, key){myPannel.callback(uuid);}});
     		}
     	}
     	var treeDataSource = new DataSourceTree({
             data: data,
             delay: 400
         });
-        
-        var t = $('#MyTree').tree({
+    	$('#MyTree6').tree({
+            selectable: false,
             dataSource: treeDataSource,
-            multiSelect: true,
             loadingHTML: '<div class="tree-loading"><i class="fa fa-rotate-right fa-spin"></i></div>'
         });
-        //overwrite(treeDataSource);
-        $('.tree-folder-header:eq(1)').click();
-    }})
-    
-    
-    function overwrite(treeDataSource) {
-    	treeDataSource.data = function (options, callback) {
+    	treeDataSource.data = function(options, callback) {
     		var self = this;
-    		$.get('<@url value="/menu/findChilds/' + options.uuid + '?parentKey=' + options.key + '"/>', function(d) {
+    		$.get('<@url value="/org/findSelect?parentId=' + options.uuid + '"/>', function(d) {
     			for (var i = 0; i < d.length; i++) {
     	    		d[i].type = 'folder';
     	    		d[i]['icon-class'] = 'success';
-    	    		d[i].uuid = d[i].applyId;
+    	    		d[i].uuid = d[i].id;
     	    		d[i].click = function(id, key) {
-    	    			$('#org_content').load('<@url value="func/show/' + id + '/?parentKey=' + key + '"/>');
+    	    			myPannel.callback(id);
     	    		}
     	    	}
     			var data = $.extend(true, [], d);
@@ -109,9 +141,52 @@ $(function(){
     		}, 'json');
     	}
     }
+    
+    
+    var oTable = myPannel.center.find('.table').dataTable($.extend(oTableOpts, {
+        "sAjaxSource": "<@url value='org/find?parentId=1'/>",
+        "fnServerData": function(sSource, aoData, fnCallback) {
+        	iStart = aoData.iDisplayStart +　1;
+        	Home.datatableAjax(sSource, aoData, fnCallback, search);
+        },
+        "fnRowCallback": function(target, n) {
+        	$(target).find('.edit').click(function() {
+        		Home.loadCenter('user-edit-body', '<@url value="/org/edit/' + n.id + '"/>', '用户编辑', true, myPannel);
+        	})
+        	$(target).find('.delete').click(function() {
+        		Home.deleteReloadCurrent('<@url value="/org/delete/' + n.id + '"/>', '操作无法被恢复，请确认该操作？', myPannel.callback);
+        	})
+        	$(target).find('.publish').click(function() {
+        		Home.ajaxGetReq('<@url value="/org/publish/' + n.id + '"/>', myPannel.callback);
+        	})
+        },
+        "aoColumns": [
+		  { "mDataProp": "id", "sClass": "hide", "bSortable": false},
+		  { "mDataProp": "serial", "bSortable": false, "mRender" : function ( data, type ) {return iStart++;} },
+          { "mDataProp": "name", "bSortable": false},
+          { "mDataProp": "key", "bSortable": false},
+          { "mDataProp": "leaderName", "bSortable": false},
+          { "mDataProp": "contact", "bSortable": false},
+          { "mDataProp": "remark", "bSortable": false},
+          { "mDataProp": "status", "bSortable": false, 'sClass': 'center', "mRender" : function ( data, type ) {return data == 1 ? '<a href="#" class="prop-a publish"><i class="fa fa-check"></i></a>' : '<a href="#" class="prop-b publish"><i class="fa fa-times"></i></a>';} },
+          { "mDataProp": "id", "bSortable": false, "mRender" : function ( data, type ) {
+        	  	return ' <@func aClass="btn btn-info btn-xs times btn-circle edit" url="/org/edit/*" iClass="fa fa-edit" title="编辑"/>'
+        		+ ' <@func aClass="btn btn-danger btn-xs times btn-circle delete" url="/org/delete/*" iClass="fa fa-trash-o" title="删除"/>';
+        	  } 
+          }
+        ]
+    }));
+    
+    myPannel.center.find('#create-org-btn').click(function() {
+    	Home.loadCenter('org-create-body', '<@url value="/org/create?parentId=${parentId}"/>', '添加部门', true, myPannel);
+    })
+    
+    myPannel.callback = function(parentId) {
+    	var oSettings = oTable.fnSettings();
+    	if (parentId) oSettings.sAjaxSource = '<@url value="org/find?parentId=' + parentId + '"/>';
+    	oTable.fnDraw(oSettings);
+    }
+    loadTree('');
 })
-
 </script>
-</body>
-</html>
-
+            
