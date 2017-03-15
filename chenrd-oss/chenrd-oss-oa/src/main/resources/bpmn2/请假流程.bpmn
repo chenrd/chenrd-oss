@@ -1,78 +1,70 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.3.0.Final-v20160602-2145-B47" targetNamespace="http://org.eclipse.bpmn2/default/process">
-  <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="_employeeItem"/>
-  <bpmn2:itemDefinition id="ItemDefinition_587" isCollection="false" structureRef="xs:string"/>
-  <bpmn2:itemDefinition id="ItemDefinition_1212" isCollection="false" structureRef="xs:boolean"/>
-  <bpmn2:error id="Error_1" errorCode="200" name="Error 1" structureRef="ItemDefinition_587"/>
-  <bpmn2:signal id="Signal_1" name="Signal 1" structureRef="ItemDefinition_587"/>
-  <bpmn2:escalation id="Escalation_1" escalationCode="1" name="Escalation 1" structureRef="ItemDefinition_1"/>
-  <bpmn2:resource id="Resource_3" name="Resource 1"/>
-  <bpmn2:message id="Message_1" itemRef="ItemDefinition_1" name="Message 1">
-    <bpmn2:extensionElements>
-      <ext:style/>
-    </bpmn2:extensionElements>
-  </bpmn2:message>
-  <bpmn2:dataStore id="DataStore_1" itemSubjectRef="ItemDefinition_1212" name="Data Store 1">
-    <bpmn2:dataState id="DataState_2" name="Data State 1"/>
-  </bpmn2:dataStore>
-  <bpmn2:category id="Category_1" name="Category 1"/>
-  <bpmn2:process id="请假流程" name="leave" isExecutable="true" processType="Private">
-    <bpmn2:startEvent id="StartEvent_1" name="开始">
-      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:endEvent id="EndEvent_1" name="结束">
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:userTask id="UserTask_1" name="申请">
-      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" sourceRef="UserTask_1" targetRef="EndEvent_1"/>
-    <bpmn2:property id="Property_1" itemSubjectRef="ItemDefinition_1" name="processVar1">
-      <bpmn2:dataState id="DataState_3" name="Data State 3"/>
-    </bpmn2:property>
-    <bpmn2:resourceRole id="ResourceRole_1" name="Resource Role 1">
-      <bpmn2:resourceRef>Resource_3</bpmn2:resourceRef>
-      <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1"/>
-    </bpmn2:resourceRole>
-  </bpmn2:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="请假流程">
-      <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="15.0" width="24.0" x="106.0" y="136.0"/>
-        </bpmndi:BPMNLabel>
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://org.eclipse.bpmn2/default/process"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_processVar1Item" structureRef="_employeeItem" />
+
+  <itemDefinition id="UserTask_1-processVar1Item" structureRef="_employeeItem" />
+
+  <itemDefinition id="ItemDefinition_1212" structureRef="xs:boolean" />
+  <dataStore name="Data Store 1" id="DataStore_1" itemSubjectRef="ItemDefinition_1212"/>
+  <process processType="Private" isExecutable="true" id="请假流程" name="leave" >
+
+    <!-- process variables -->
+    <property id="processVar1" itemSubjectRef="_processVar1Item"/>
+
+    <!-- nodes -->
+    <startEvent id="StartEvent_1" name="�?�?" />
+    <endEvent id="EndEvent_1" name="结束" />
+    <userTask id="UserTask_1" name="申请" >
+      <ioSpecification>
+        <inputSet>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+    </userTask>
+
+    <!-- connections -->
+    <sequenceFlow id="UserTask_1-EndEvent_1" sourceRef="UserTask_1" targetRef="EndEvent_1" />
+    <sequenceFlow id="StartEvent_1-UserTask_1" sourceRef="StartEvent_1" targetRef="UserTask_1" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="请假流程" >
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" >
+        <dc:Bounds x="94" y="94" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_2" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="700.0" y="100.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="15.0" width="24.0" x="706.0" y="136.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" >
+        <dc:Bounds x="694" y="94" width="48" height="48" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="220.0" y="93.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_3" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="15.0" width="24.0" x="263.0" y="110.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape bpmnElement="UserTask_1" >
+        <dc:Bounds x="220" y="93" width="110" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_1" targetElement="BPMNShape_UserTask_1">
-        <di:waypoint xsi:type="dc:Point" x="136.0" y="118.0"/>
-        <di:waypoint xsi:type="dc:Point" x="178.0" y="118.0"/>
-        <di:waypoint xsi:type="dc:Point" x="220.0" y="118.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_4"/>
+      <bpmndi:BPMNEdge bpmnElement="UserTask_1-EndEvent_1" >
+        <di:waypoint x="275" y="118" />
+        <di:waypoint x="515" y="118" />
+        <di:waypoint x="700" y="118" />
+        <di:waypoint x="718" y="118" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_2">
-        <di:waypoint xsi:type="dc:Point" x="330.0" y="118.0"/>
-        <di:waypoint xsi:type="dc:Point" x="515.0" y="118.0"/>
-        <di:waypoint xsi:type="dc:Point" x="700.0" y="118.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_5"/>
+      <bpmndi:BPMNEdge bpmnElement="StartEvent_1-UserTask_1" >
+        <di:waypoint x="118" y="118" />
+        <di:waypoint x="178" y="118" />
+        <di:waypoint x="220" y="118" />
+        <di:waypoint x="275" y="118" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
-    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
-      <dc:Font name="arial" size="9.0"/>
-    </bpmndi:BPMNLabelStyle>
   </bpmndi:BPMNDiagram>
-</bpmn2:definitions>
+
+</definitions>

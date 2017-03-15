@@ -33,6 +33,7 @@ import com.chenrd.oa.workflow.dao.ProcessDefDAO;
 import com.chenrd.oa.workflow.entity.ProcessDef;
 import com.chenrd.oa.workflow.vo.ProcessDefVO;
 import com.chenrd.oss.power.abs.AbstractPowerBusiness;
+import com.chenrd.sys.service.PowerService;
 
 @Service("processDefManager")
 public class ProcessDefManagerImpl extends AbstractPowerBusiness implements ProcessDefManager {
@@ -42,6 +43,12 @@ public class ProcessDefManagerImpl extends AbstractPowerBusiness implements Proc
 	
 	@Value("#{settings['process.file.path']}")
 	private String processFilePath;
+	
+	@Resource(name = "powerService")
+	private PowerService powerService;
+	
+	@Value("#{settings['apply.key']}")
+	private String applyKey;
 	
 	private static Logger LOG = LoggerFactory.getLogger(ProcessDefManagerImpl.class);
 	
@@ -70,6 +77,7 @@ public class ProcessDefManagerImpl extends AbstractPowerBusiness implements Proc
 			def.setCode(UUID.randomUUID().toString());
 		}
 		processDefDAO.save(def);
+		powerService.saveFieldPowers(applyKey, ProcessDef.dcp_name, ProcessDef.dcp_key, ProcessDef.fcp_name, ProcessDef.fcp_key, def.getCode(), def.getName());
 		return FullTextResultCode.success;
 	}
 	

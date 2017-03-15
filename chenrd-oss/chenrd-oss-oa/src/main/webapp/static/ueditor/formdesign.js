@@ -477,7 +477,7 @@ UE.plugins['textarea'] = function () {
     me.commands[thePlugins] = {
         execCommand:function () {
             var dialog = new UE.ui.Dialog({
-                iframeUrl:this.options.applyUrl + '/form/input'+'/textarea.html',
+                iframeUrl:this.options.applyUrl + '/form/input'+'/textarea',
                 name:thePlugins,
                 editor:this,
                 title: '多行文本框',
@@ -487,7 +487,9 @@ UE.plugins['textarea'] = function () {
                     className:'edui-okbutton',
                     label:'确定',
                     onclick:function () {
-                        dialog.close(true);
+                    	var input = $('iframe[src="' + dialog.iframeUrl + '"]')[0].contentWindow.callback();
+						me.execCommand('inserthtml', input);
+						dialog.close(true);
                     }
                 },
                 {

@@ -1,62 +1,96 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<title>自定义表单</title>
 <#include "/common/html/common.html"/>
-
-<#include "/common/html/head.html"/>
-<div class="col-lg-12 col-sm-12 col-xs-12">
-	<div class="widget flat radius-bordered">
-	    <div class="widget-header bordered-bottom bordered-themeprimary">
-	        <i class="widget-icon fa fa-list"></i>
-	        <span class="widget-caption">表单模版列表</span>
-	        <div class="widget-buttons">
-	            <a href="#" data-action="refresh"><i class="fa fa-undo"></i></a>
-	            <a href="#" data-toggle="maximize">
-	                <i class="fa fa-expand"></i>
-	            </a>
-	            <a href="#" data-toggle="collapse">
-	                <i class="fa fa-minus"></i>
-	            </a>
-	            <a href="#" data-toggle="dispose">
-	                <i class="fa fa-times"></i>
-	            </a>
-	        </div><!--Widget Buttons-->
-	    </div><!--Widget Header-->
-                                
-	    <div class="widget-body">
-	    	<div class="table-toolbar">
-	    		<form id="config-form" style="padding-right: 20px;" method="post" class="form-horizontal bv-form" novalidate="novalidate">
-		    	<div class="form-group">
-		    		<div class="col-lg-3 search">
-		    			<label class="col-lg-3 search-label">名称</label>
-		    			<div class="input-group">
-		                    <input class="form-control" name="statDate" id="beginDate" type="text">
-	                    </div>
-		    		</div>
-					<a class="btn btn-primary search-btn" id="search-btn" href="javascript:void(0);"><i class="fa fa-search"></i> 查询</a>
-					<@func aClass="btn btn-default purple right" id="create" url="/form/template/create" iClass="fa fa-plus"/>
+<style type="text/css">
+.page-container{position: relative;}
+</style>
+</head>
+<body>
+<#include "/common/html/nav.html"/>
+<div class="main-container container-fluid">
+    <div class="page-container">
+    <#include "/common/html/left.html"/>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1 id="title">
+            <ul class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="#">首页</a></li>
+              <li class="active">应用管理</li>
+          	</ul>
+        	</h1>
+        </div>
+        <div class="header-buttons">
+        	<!-- 全拼显示 -->
+            <a class="sidebar-toggler" href="#"><i class="fa fa-arrows-h"></i></a>
+            <!-- 刷新 -->
+            <a class="refresh" id="refresh-toggler" href=""><i class="glyphicon glyphicon-refresh"></i></a>
+            <!-- 两边隐藏 -->
+            <a class="fullscreen" id="fullscreen-toggler" href="#"><i class="glyphicon glyphicon-fullscreen"></i></a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    
+	<div class="page-container">
+		<div class="page-sidebar">
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="widget flat radius-bordered">
+				    <div class="widget-header bordered-bottom bordered-themeprimary">
+				        <i class="widget-icon fa fa-list"></i>
+				        <span class="widget-caption">表单模版列表</span>
+				        <div class="widget-buttons">
+				            <a href="#" data-action="refresh"><i class="fa fa-undo"></i></a>
+				            <a href="#" data-toggle="maximize">
+				                <i class="fa fa-expand"></i>
+				            </a>
+				            <a href="#" data-toggle="collapse">
+				                <i class="fa fa-minus"></i>
+				            </a>
+				            <a href="#" data-toggle="dispose">
+				                <i class="fa fa-times"></i>
+				            </a>
+				        </div><!--Widget Buttons-->
+				    </div><!--Widget Header-->
+			                                
+				    <div class="widget-body">
+				    	<div class="table-toolbar">
+				    		<form id="config-form" style="padding-right: 20px;" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+					    	<div class="form-group">
+					    		<div class="col-lg-3 search">
+					    			<label class="col-lg-3 search-label">名称</label>
+					    			<div class="input-group">
+					                    <input class="form-control" name="statDate" id="beginDate" type="text">
+				                    </div>
+					    		</div>
+								<a class="btn btn-primary search-btn" id="search-btn" href="javascript:void(0);"><i class="fa fa-search"></i> 查询</a>
+								<@func aClass="btn btn-default purple right" id="create" url="/form/template/create" iClass="fa fa-plus"/>
+							</div>
+							</form>
+						</div>
+						
+						<table class="table table-striped table-hover table-bordered" style="width: 100% !important;">
+				              <thead>
+				                  <tr role="row">
+				                  	  <th style="display: none;"></th>
+					                  <th style="min-width: 60px;">序号</th>
+					                  <th style="min-width: 80px;">模版名称</th>
+					                  <th style="min-width: 80px;">开始日期</th>
+					                  <th style="min-width: 80px;">结束日期</th>
+					                  <th style="min-width: 120px;">CP</th>
+					                  <th style="min-width: 100px;">产品</th>
+					                  <th style="min-width: 200px;">结算单号</th>
+					                  <th style="min-width: 60px;">结算<br/>金额</th>
+					                  <th style="min-width: 60px;">核对<br/>金额</th>
+					                  <th>操作</th>
+				                  </tr>
+				              </thead>
+					    </table>
+				    </div>
 				</div>
-				</form>
 			</div>
-			
-			<table class="table table-striped table-hover table-bordered" style="width: 100% !important;">
-	              <thead>
-	                  <tr role="row">
-	                  	  <th style="display: none;"></th>
-		                  <th style="min-width: 60px;">序号</th>
-		                  <th style="min-width: 80px;">模版名称</th>
-		                  <th style="min-width: 80px;">开始日期</th>
-		                  <th style="min-width: 80px;">结束日期</th>
-		                  <th style="min-width: 120px;">CP</th>
-		                  <th style="min-width: 100px;">产品</th>
-		                  <th style="min-width: 200px;">结算单号</th>
-		                  <th style="min-width: 60px;">结算<br/>金额</th>
-		                  <th style="min-width: 60px;">核对<br/>金额</th>
-		                  <th>操作</th>
-	                  </tr>
-	              </thead>
-		    </table>
-	    </div>
+		</div>
+	</div>
 	</div>
 </div>
 	

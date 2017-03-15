@@ -29,7 +29,10 @@ import com.chenrd.dao.annotation.QueryOrder;
 import com.chenrd.dao.annotation.QueryParams;
 import com.chenrd.example.Domain;
 import com.chenrd.example.Status;
+import com.chenrd.oss.power.ann.DefClassPower;
+import com.chenrd.oss.power.ann.DefFieldPower;
 
+@DefClassPower({"流程", "100"})
 @Entity
 @Table(name = "workflow_process_def")
 @SequenceGenerator(name = "sqe_workflow_process_def_id", sequenceName = "sqe_workflow_process_def_id", allocationSize = 1)
@@ -43,9 +46,12 @@ public class ProcessDef extends Domain {
 	 */
 	private static final long serialVersionUID = -61143846498754412L;
 	
+	public static final String dcp_name = "流程", dcp_key = "100", fcp_name = "编号", fcp_key = "100";
+	
 	@Id @Column(name = "ID") @GeneratedValue(strategy = GenerationType.AUTO, generator = "sqe_workflow_process_def_id")
 	private Long id;
 	
+	@DefFieldPower({"编号", "100"})
 	@Column(name = "CODE", length = 32, nullable = false)
 	private String code;
 	
@@ -66,7 +72,7 @@ public class ProcessDef extends Domain {
 	@QueryOrder(index = 2, value = "desc")
 	@Column(name = "CREATE_TIME", nullable = false) @Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-
+	
 	/**
 	 * @return Returns the id.
 	 */

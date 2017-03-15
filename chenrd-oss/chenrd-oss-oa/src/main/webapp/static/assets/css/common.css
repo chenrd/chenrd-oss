@@ -1,7 +1,3 @@
-<meta charset="UTF-8">
-<title>首页</title>
-<style type="text/css" >
-<!--
 .hide{display: none;}
 .right{float: right !important;margin-left: 5px;}
 .prop-a:hover,.prop-a:focus{color: #4efa0a !important;}
@@ -43,44 +39,3 @@ border: 1px solid #999;top: 0px;;width: 200px;height: 100px;
 .font-red{color: red;}
 .font-green{color: green;}
 .nowrap-table td{white-space: nowrap}
--->
-</style>
-</head>
-<body>
-    <#include "/common/html/nav.html"/>
-    <!-- /Navbar -->
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-    <div class="page-container">
-            <!-- Page Sidebar -->
-        <#include "/common/html/left.html"/>
-		<div class="page-content">
-            <!-- /Page Breadcrumb -->
-            <!-- Page Header -->
-            <div class="page-header position-relative">
-                <div class="header-title">
-                    <h1 id="title">
-                    	<ul class="breadcrumb">
-		                    <li>
-		                        <i class="fa fa-home"></i>
-		                        <a href="#">首页</a>
-		                    </li>
-		                    <li class="active">应用管理</li>
-		                </ul>
-                    </h1>
-                </div>
-                <div class="header-buttons">
-                	<!-- 全拼显示 -->
-                    <a class="sidebar-toggler" href="#"><i class="fa fa-arrows-h"></i></a>
-                    <!-- 刷新 -->
-                    <a class="refresh" id="refresh-toggler" href=""><i class="glyphicon glyphicon-refresh"></i></a>
-                    <!-- 两边隐藏 -->
-                    <a class="fullscreen" id="fullscreen-toggler" href="#"><i class="glyphicon glyphicon-fullscreen"></i></a>
-                </div>
-                <!--Header Buttons End-->
-            </div>
-            
-			<div class="page-body">
-		        <div class="row">
-

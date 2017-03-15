@@ -45,7 +45,7 @@
 	<!-- 下面部分：事物、数据源、SessionFactory配置 -->
 	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close"> 
 		<property name="forceShutdown" value="true" /> 
-	</bean> 
+	</bean>
 	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp"/> 
 	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"> 
 		<property name="transactionManager" ref="atomikosTransactionManager" /> 

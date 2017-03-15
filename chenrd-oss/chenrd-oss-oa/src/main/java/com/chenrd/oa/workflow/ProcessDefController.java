@@ -26,6 +26,7 @@ import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
 import com.chenrd.oa.workflow.business.ProcessDefManager;
+import com.chenrd.oa.workflow.service.KsessionService;
 import com.chenrd.oa.workflow.vo.ProcessDefVO;
 
 import net.sf.json.JSONObject;
@@ -36,6 +37,9 @@ public class ProcessDefController extends FreemarkerController {
 	
 	@Resource(name = "processDefManager")
 	private ProcessDefManager processDefManager;
+	
+	@Resource(name = "ksessionService")
+	private KsessionService ksessionService;
 	
 	@RequestMapping(value = "")
 	public String index() {
@@ -70,6 +74,11 @@ public class ProcessDefController extends FreemarkerController {
 	@ResponseBody
 	public void delete(@PathVariable Long id) {
 		processDefManager.delete(id);
+	}
+	
+	@RequestMapping(value = "startProcess/{}")
+	public void startProcess() {
+	//	ksessionService.startProcess(processId, params);
 	}
 	
 }
