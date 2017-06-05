@@ -16,299 +16,280 @@ import com.chenrd.dao.info.QueryInfo;
 import com.chenrd.example.Status;
 import com.chenrd.example.VO;
 
-public class AttributeVO extends VO implements QueryInfo
-{
-    
-    /**
-     * 意义，目的和功能，以及被用到的地方<br>
-     */
-    private static final long serialVersionUID = 1432267184520761398L;
+public class AttributeVO extends VO implements QueryInfo {
 
-    private Long id;
-    
-    /**
-     * 类型
-     */
-    private int type;
-    
-    /**
-     * 名称
-     */
-    private String name;
-    
-    /**
-     * 001/002/003
-     */
-    private String key;
-    
-    /**
-     * 应用
-     */
-    private Long applyId;
-    
-    private String applyName;
-    
-    /**
-     * 
-     */
-    private String parentKey;
-    
-    /**
-     * 全称由：应用名称-父名称-本名称
-     */
-    private String fullName;
-    
-    /**
-     * 状态
-     */
-    private int status = Status.OFF;
-    
-    private String value;
-    
-    private int attrType;
-    
-    
+	/**
+	 * 意义，目的和功能，以及被用到的地方<br>
+	 */
+	private static final long serialVersionUID = 1432267184520761398L;
 
-    /**
-     * @param id
-     * @param name
-     * @param key
-     * @param status
-     * @param value
-     * @param attrType
-     */
-    @FindConstructor(name = "find", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.status, po.value, po.attrType) ")
-    public AttributeVO(Long id, String name, String key, int status, String value, int attrType)
-    {
-        super();
-        this.id = id;
-        this.name = name;
-        this.key = key;
-        this.status = status;
-        this.value = value;
-        this.attrType = attrType;
-    }
+	private Long id;
 
-    /**
-     * @param parentKey
-     * @param status
-     */
-    public AttributeVO(String parentKey, int status)
-    {
-        super();
-        this.parentKey = parentKey;
-        this.status = status;
-    }
+	/**
+	 * 类型
+	 */
+	private int type;
 
-    /**
-     * @param name
-     * @param key
-     * @param parentKey
-     * @param fullName
-     */
-    @FindConstructor(name = "findChilds", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.parentKey, po.fullName, po.applyId) ")
-    public AttributeVO(Long id, String name, String key, String parentKey, String fullName, Long applyId)
-    {
-        super();
-        this.id = id;
-        this.name = name;
-        this.key = key;
-        this.parentKey = parentKey;
-        this.fullName = fullName;
-        this.applyId = applyId;
-    }
- 
-    /**
-     * @return Returns the applyName.
-     */
-    public String getApplyName()
-    {
-        return applyName;
-    }
+	/**
+	 * 名称
+	 */
+	private String name;
 
-    /**
-     * @param applyName The applyName to set.
-     */
-    public void setApplyName(String applyName)
-    {
-        this.applyName = applyName;
-    }
+	/**
+	 * 001/002/003
+	 */
+	private String key;
 
-    /**
-     * @return Returns the value.
-     */
-    public String getValue()
-    {
-        return value;
-    }
+	/**
+	 * 应用
+	 */
+	private Long applyId;
 
-    /**
-     * @param value The value to set.
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
+	private String applyName;
 
-    /**
-     * @return Returns the attrType.
-     */
-    public int getAttrType()
-    {
-        return attrType;
-    }
+	/**
+	 * 
+	 */
+	private String parentKey;
 
-    /**
-     * @param attrType The attrType to set.
-     */
-    public void setAttrType(int attrType)
-    {
-        this.attrType = attrType;
-    }
+	/**
+	 * 全称由：应用名称-父名称-本名称
+	 */
+	private String fullName;
 
-    /**
-     * @param parentKey
-     */
-    public AttributeVO(String parentKey)
-    {
-        super();
-        this.parentKey = parentKey;
-    }
+	/**
+	 * 状态
+	 */
+	private int status = Status.OFF;
 
-    /**
-     * 
-     */
-    public AttributeVO()
-    {
-        super();
-    }
+	private String value;
 
-    /**
-     * @return Returns the id.
-     */
-    public Long getId()
-    {
-        return id;
-    }
+	private int attrType;
 
-    /**
-     * @param id The id to set.
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 * @param name
+	 * @param key
+	 * @param status
+	 * @param value
+	 * @param attrType
+	 */
+	@FindConstructor(name = "find", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.status, po.value, po.attrType) ")
+	public AttributeVO(Long id, String name, String key, int status, String value, int attrType) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.key = key;
+		this.status = status;
+		this.value = value;
+		this.attrType = attrType;
+	}
 
-    /**
-     * @return Returns the type.
-     */
-    public int getType()
-    {
-        return type;
-    }
+	/**
+	 * @param parentKey
+	 * @param status
+	 */
+	public AttributeVO(String parentKey, int status) {
+		super();
+		this.parentKey = parentKey;
+		this.status = status;
+	}
 
-    /**
-     * @param type The type to set.
-     */
-    public void setType(int type)
-    {
-        this.type = type;
-    }
+	/**
+	 * @param name
+	 * @param key
+	 * @param parentKey
+	 * @param fullName
+	 */
+	@FindConstructor(name = "findChilds", value = "select new com.chenrd.sys.vo.AttributeVO(po.id, po.name, po.key, po.parentKey, po.fullName, po.applyId) ")
+	public AttributeVO(Long id, String name, String key, String parentKey, String fullName, Long applyId) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.key = key;
+		this.parentKey = parentKey;
+		this.fullName = fullName;
+		this.applyId = applyId;
+	}
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName()
-    {
-        return name;
-    }
+	/**
+	 * @return Returns the applyName.
+	 */
+	public String getApplyName() {
+		return applyName;
+	}
 
-    /**
-     * @param name The name to set.
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+	/**
+	 * @param applyName
+	 *            The applyName to set.
+	 */
+	public void setApplyName(String applyName) {
+		this.applyName = applyName;
+	}
 
-    /**
-     * @return Returns the key.
-     */
-    public String getKey()
-    {
-        return key;
-    }
+	/**
+	 * @return Returns the value.
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * @param key The key to set.
-     */
-    public void setKey(String key)
-    {
-        this.key = key;
-    }
+	/**
+	 * @param value
+	 *            The value to set.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * @return Returns the applyId.
-     */
-    public Long getApplyId()
-    {
-        return applyId;
-    }
+	/**
+	 * @return Returns the attrType.
+	 */
+	public int getAttrType() {
+		return attrType;
+	}
 
-    /**
-     * @param applyId The applyId to set.
-     */
-    public void setApplyId(Long applyId)
-    {
-        this.applyId = applyId;
-    }
+	/**
+	 * @param attrType
+	 *            The attrType to set.
+	 */
+	public void setAttrType(int attrType) {
+		this.attrType = attrType;
+	}
 
-    /**
-     * @return Returns the parentKey.
-     */
-    public String getParentKey()
-    {
-        return parentKey;
-    }
+	/**
+	 * @param parentKey
+	 */
+	public AttributeVO(String parentKey) {
+		super();
+		this.parentKey = parentKey;
+	}
 
-    /**
-     * @param parentKey The parentKey to set.
-     */
-    public void setParentKey(String parentKey)
-    {
-        this.parentKey = parentKey;
-    }
+	/**
+	 * 
+	 */
+	public AttributeVO() {
+		super();
+	}
 
-    /**
-     * @return Returns the fullName.
-     */
-    public String getFullName()
-    {
-        return fullName;
-    }
+	/**
+	 * @return Returns the id.
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * @param fullName The fullName to set.
-     */
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName;
-    }
+	/**
+	 * @param id
+	 *            The id to set.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * @return Returns the status.
-     */
-    public int getStatus()
-    {
-        return status;
-    }
+	/**
+	 * @return Returns the type.
+	 */
+	public int getType() {
+		return type;
+	}
 
-    /**
-     * @param status The status to set.
-     */
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
-    
+	/**
+	 * @param type
+	 *            The type to set.
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return Returns the key.
+	 */
+	public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @param key
+	 *            The key to set.
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	/**
+	 * @return Returns the applyId.
+	 */
+	public Long getApplyId() {
+		return applyId;
+	}
+
+	/**
+	 * @param applyId
+	 *            The applyId to set.
+	 */
+	public void setApplyId(Long applyId) {
+		this.applyId = applyId;
+	}
+
+	/**
+	 * @return Returns the parentKey.
+	 */
+	public String getParentKey() {
+		return parentKey;
+	}
+
+	/**
+	 * @param parentKey
+	 *            The parentKey to set.
+	 */
+	public void setParentKey(String parentKey) {
+		this.parentKey = parentKey;
+	}
+
+	/**
+	 * @return Returns the fullName.
+	 */
+	public String getFullName() {
+		return fullName;
+	}
+
+	/**
+	 * @param fullName
+	 *            The fullName to set.
+	 */
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            The status to set.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 }

@@ -24,62 +24,59 @@ public class OrganizationVO extends VO implements QueryInfo {
 	 * 意义，目的和功能，以及被用到的地方<br>
 	 */
 	private static final long serialVersionUID = -2885488332234287795L;
-	
-	public static final OrganizationVO QUERY_YES_PUBLISH = new OrganizationVO(Status.ON); 
-	
-	private Long id;
-    
-    /**
-     * 名称
-     */
-    private String name;
-    
-    private Long parentId;
-    
-    private String parentName;
-    
-    /**
-     * 
-     */
-    private String key;
-    
-    /**
-     * 全称
-     */
-    private String fullName;
-    
-    
-    /**
-     * 
-     */
-    private String leaderId;
-    
-    /**
-     * 部门领导
-     */
-    private String leaderName;
-    
-    /**
-     * 部门联系电话
-     */
-    private String contact;
-    
-    /**
-     * 传真
-     */
-    private String fax;
-    
-    /**
-     * 备注
-     */
-    private String remark;
-    
-    
-    private String creator;
-    
-    @NoCopy(NoCopyType.Per)
-    private int status = Status.OFF;
 
+	public static final OrganizationVO QUERY_YES_PUBLISH = new OrganizationVO(Status.ON);
+
+	private Long id;
+
+	/**
+	 * 名称
+	 */
+	private String name;
+
+	private Long parentId;
+
+	private String parentName;
+
+	/**
+	 * 
+	 */
+	private String key;
+
+	/**
+	 * 全称
+	 */
+	private String fullName;
+
+	/**
+	 * 
+	 */
+	private String leaderId;
+
+	/**
+	 * 部门领导
+	 */
+	private String leaderName;
+
+	/**
+	 * 部门联系电话
+	 */
+	private String contact;
+
+	/**
+	 * 传真
+	 */
+	private String fax;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
+
+	private String creator;
+
+	@NoCopy(NoCopyType.Per)
+	private int status = Status.OFF;
 
 	/**
 	 * @param id
@@ -93,7 +90,7 @@ public class OrganizationVO extends VO implements QueryInfo {
 	 * @param order
 	 * @param remark
 	 */
-    @FindConstructor(name = "find", value = "select new com.chenrd.sys.vo.OrganizationVO(po.id, po.name, po.key, po.fullName, po.leaderId, po.leaderName, po.contact, po.fax, po.remark, po.status) ")
+	@FindConstructor(name = "find", value = "select new com.chenrd.sys.vo.OrganizationVO(po.id, po.name, po.key, po.fullName, po.leaderId, po.leaderName, po.contact, po.fax, po.remark, po.status) ")
 	public OrganizationVO(Long id, String name, String key, String fullName, String leaderId, String leaderName,
 			String contact, String fax, String remark, int status) {
 		super();
@@ -108,7 +105,7 @@ public class OrganizationVO extends VO implements QueryInfo {
 		this.remark = remark;
 		this.status = status;
 	}
-    
+
 	/**
 	 * @param id
 	 * @param name
@@ -118,9 +115,9 @@ public class OrganizationVO extends VO implements QueryInfo {
 	 * @param parentId
 	 * @param parentName
 	 */
-    @FindConstructor(name = "findSelectByService", value = "select new com.chenrd.sys.vo.OrganizationVO(po.id, po.key, po.name, po.fullName, po.leaderId, po.leaderName, po.parent.id, po.parent.name) ")
-	public OrganizationVO(Long id, String key, String name, String fullName, String leaderId, String leaderName, Long parentId,
-			String parentName) {
+	@FindConstructor(name = "findSelectByService", value = "select new com.chenrd.sys.vo.OrganizationVO(po.id, po.key, po.name, po.fullName, po.leaderId, po.leaderName, po.parent.id, po.parent.name) ")
+	public OrganizationVO(Long id, String key, String name, String fullName, String leaderId, String leaderName,
+			Long parentId, String parentName) {
 		super();
 		this.id = id;
 		this.key = key;
@@ -155,7 +152,8 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param id The id to set.
+	 * @param id
+	 *            The id to set.
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -169,7 +167,8 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param name The name to set.
+	 * @param name
+	 *            The name to set.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -182,9 +181,9 @@ public class OrganizationVO extends VO implements QueryInfo {
 		return key;
 	}
 
-
 	/**
-	 * @param key The key to set.
+	 * @param key
+	 *            The key to set.
 	 */
 	public void setKey(String key) {
 		this.key = key;
@@ -198,7 +197,8 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param fullName The fullName to set.
+	 * @param fullName
+	 *            The fullName to set.
 	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
@@ -212,7 +212,8 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param leaderId The leaderId to set.
+	 * @param leaderId
+	 *            The leaderId to set.
 	 */
 	public void setLeaderId(String leaderId) {
 		this.leaderId = leaderId;
@@ -226,12 +227,12 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param leaderName The leaderName to set.
+	 * @param leaderName
+	 *            The leaderName to set.
 	 */
 	public void setLeaderName(String leaderName) {
 		this.leaderName = leaderName;
 	}
-
 
 	/**
 	 * @return Returns the contact.
@@ -240,14 +241,13 @@ public class OrganizationVO extends VO implements QueryInfo {
 		return contact;
 	}
 
-
 	/**
-	 * @param contact The contact to set.
+	 * @param contact
+	 *            The contact to set.
 	 */
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-
 
 	/**
 	 * @return Returns the fax.
@@ -256,9 +256,9 @@ public class OrganizationVO extends VO implements QueryInfo {
 		return fax;
 	}
 
-
 	/**
-	 * @param fax The fax to set.
+	 * @param fax
+	 *            The fax to set.
 	 */
 	public void setFax(String fax) {
 		this.fax = fax;
@@ -270,9 +270,10 @@ public class OrganizationVO extends VO implements QueryInfo {
 	public String getRemark() {
 		return remark;
 	}
-	
+
 	/**
-	 * @param remark The remark to set.
+	 * @param remark
+	 *            The remark to set.
 	 */
 	public void setRemark(String remark) {
 		this.remark = remark;
@@ -286,21 +287,23 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param creator The creator to set.
+	 * @param creator
+	 *            The creator to set.
 	 */
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @return Returns the parentId.
 	 */
 	public Long getParentId() {
 		return parentId;
 	}
-	
+
 	/**
-	 * @param parentId The parentId to set.
+	 * @param parentId
+	 *            The parentId to set.
 	 */
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
@@ -309,14 +312,15 @@ public class OrganizationVO extends VO implements QueryInfo {
 	/**
 	 * @return Returns the status.
 	 */
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	/**
-	 * @param status The status to set.
+	 * @param status
+	 *            The status to set.
 	 */
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -328,10 +332,11 @@ public class OrganizationVO extends VO implements QueryInfo {
 	}
 
 	/**
-	 * @param parentName The parentName to set.
+	 * @param parentName
+	 *            The parentName to set.
 	 */
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
-	
+
 }

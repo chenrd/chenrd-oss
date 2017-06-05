@@ -26,6 +26,7 @@ import org.hibernate.metadata.ClassMetadata;
 import com.chenrd.dao.annotation.ManyQueryParams;
 import com.chenrd.dao.annotation.QueryOrder;
 import com.chenrd.dao.annotation.QueryParams;
+import com.chenrd.dao.em.Nexus;
 import com.chenrd.dao.info.HqlAttribute;
 import com.chenrd.oss.power.ann.DefClassPower;
 import com.chenrd.oss.power.ann.DefFieldPower;
@@ -40,8 +41,7 @@ import com.chenrd.oss.power.ann.LimitFieldPower;
  * @see PowerScan
  * @since
  */
-public class PowerScan
-{
+public class PowerScan {
     
     private List<SessionFactory> sessionFactorys;
     
@@ -60,19 +60,15 @@ public class PowerScan
      * @see
      */
     @PostConstruct
-    public void scan() throws ClassNotFoundException
-    {
-        for (SessionFactory sessionFactory : sessionFactorys)
-        {
+    public void scan() throws ClassNotFoundException {
+        for (SessionFactory sessionFactory : sessionFactorys) {
             Map<String, ClassMetadata> metadatas = sessionFactory.getAllClassMetadata();
             Class<?> clazz = null;
             EntityQueryBuilder entityQuery = null;
-            for (Entry<String, ClassMetadata> metadata : metadatas.entrySet())
-            {
+            for (Entry<String, ClassMetadata> metadata : metadatas.entrySet()) {
                 clazz = Class.forName(metadata.getKey());
                 DefClassPower classPower = clazz.getAnnotation(DefClassPower.class);
-                if (classPower != null) 
-                {
+                if (classPower != null) {
                     generateMetadata(clazz, classPower);
                 }
                 
@@ -90,34 +86,38 @@ public class PowerScan
         }
     }
     
-    
-    
-    private void generateCache(Class<?> clazz, LimitClassPower limitClassPower, EntityQueryBuilder entityQuery)
-    {
+    private void generateCache(Class<?> clazz, LimitClassPower limitClassPower, EntityQueryBuilder entityQuery) {
         if (clazz.getGenericSuperclass() != null)
             generateCache((Class<?>) clazz.getGenericSuperclass(), limitClassPower, entityQuery);
-        for (Field field : clazz.getDeclaredFields())
-        {
+        for (Field field : clazz.getDeclaredFields()) {
             if (Modifier.isStatic(field.getModifiers())) continue;
+            
+            boolean cachehqlSection = true;
             if (entityQuery instanceof PowerEntityQueryBuilder) {
             	LimitFieldPower limitFieldPower = field.getAnnotation(LimitFieldPower.class);
                 if (limitFieldPower != null) {
+                	cachehqlSection = false; //有添加LimitFieldPower注解的成员变量都不缓存hql片段
                     ((PowerEntityQueryBuilder) entityQuery).with(new LimitPowerMetadata(clazz.getName(), field.getAnnotation(QueryParams.class) != null, field.getName(), limitClassPower, limitFieldPower, DefPowerMetadata.formKeyName(applyKey, limitFieldPower.value()[0], limitFieldPower.value()[1])));
                 }
-            } 
+            }
             
             QueryParams params = field.getAnnotation(QueryParams.class);
-            if (params != null)
-                entityQuery.with(new HqlAttribute(field.getName(), params));
+            if (params != null) {
+            	if (params.nexus() == Nexus.IN) cachehqlSection = false; //params.nexus() == Nexus.IN成员变量都不缓存hql片段
+            	entityQuery.with(new HqlAttribute(field.getName(), cachehqlSection, params));
+            }
             
             QueryOrder queryOrder = field.getAnnotation(QueryOrder.class);
             if (queryOrder != null)
                 entityQuery.with(field.getName(), queryOrder);
             
             ManyQueryParams manyQueryParams = field.getAnnotation(ManyQueryParams.class);
-            if (manyQueryParams != null)
-                for (QueryParams queryParams : manyQueryParams.value())
-                    entityQuery.with(new HqlAttribute(field.getName(), queryParams));
+            if (manyQueryParams != null) {
+            	for (QueryParams queryParams : manyQueryParams.value()) {
+            		if (queryParams.nexus() == Nexus.IN) cachehqlSection = false;//params.nexus() == Nexus.IN成员变量都不缓存hql片段
+            		entityQuery.with(new HqlAttribute(field.getName(), cachehqlSection, queryParams));
+            	}
+            }
         }
     }
     
@@ -151,24 +151,21 @@ public class PowerScan
     /**
      * @return Returns the sessionFactorys.
      */
-    public List<SessionFactory> getSessionFactorys()
-    {
+    public List<SessionFactory> getSessionFactorys() {
         return sessionFactorys;
     }
 
     /**
      * @param sessionFactorys The sessionFactorys to set.
      */
-    public void setSessionFactorys(List<SessionFactory> sessionFactorys)
-    {
+    public void setSessionFactorys(List<SessionFactory> sessionFactorys) {
         this.sessionFactorys = sessionFactorys;
     }
 
     /**
      * @param applyKey The applyKey to set.
      */
-    public void setApplyKey(String applyKey)
-    {
+    public void setApplyKey(String applyKey) {
         this.applyKey = applyKey;
     }
 

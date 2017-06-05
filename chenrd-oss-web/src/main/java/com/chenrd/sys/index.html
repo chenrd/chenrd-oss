@@ -562,6 +562,7 @@ border: 1px solid #999;top: 0px;;width: 200px;height: 100px;
 	}
     
     function changeResults(data, arg1, arg2, arg3) {
+    	console.info(data);
     	if (!data || data == null) {
     		if (!arg3) return null;
     		return [arg3];

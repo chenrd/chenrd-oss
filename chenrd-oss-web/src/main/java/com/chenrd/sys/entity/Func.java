@@ -24,8 +24,7 @@ import com.chenrd.sys.service.PowerType;
  */
 @Entity
 @DiscriminatorValue("1")
-public class Func extends Power
-{
+public class Func extends Power {
 
     /**
      * 意义，目的和功能，以及被用到的地方<br>
@@ -35,8 +34,7 @@ public class Func extends Power
     /**
      * 
      */
-    public Func()
-    {
+    public Func() {
         super();
         super.setType(PowerType.FUNC_POWER);
     }

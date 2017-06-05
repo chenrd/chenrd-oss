@@ -20,19 +20,19 @@ import com.chenrd.sys.service.info.RoleInfo;
  * @see RoleManager
  * @since
  */
-public interface RoleManager extends PowerBusiness
-{
-    
-    /**
-     * 
-     * 添加角色
-     * @param info 
-     * @param powers 
-     * @return 
-     * @see
-     */
-    void saveOrUpdate(RoleInfo info, Long[] powers);
-    
-    RoleInfo get(Long id);
-    
+public interface RoleManager extends PowerBusiness {
+
+	/**
+	 * 
+	 * 添加角色
+	 * 
+	 * @param info
+	 * @param powers
+	 * @return
+	 * @see
+	 */
+	void saveOrUpdate(RoleInfo info, Long[] powers);
+
+	RoleInfo get(Long id);
+
 }

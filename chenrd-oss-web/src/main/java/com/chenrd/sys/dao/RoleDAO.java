@@ -23,8 +23,7 @@ import com.chenrd.sys.entity.Role;
  * @see RoleDAO
  * @since
  */
-public interface RoleDAO extends BaseDAO
-{
+public interface RoleDAO extends BaseDAO {
 
     /**
      * 

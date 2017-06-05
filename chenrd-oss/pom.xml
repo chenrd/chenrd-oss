@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.chenrd</groupId>
     <artifactId>chenrd</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>chenrd-oss</artifactId>
   <packaging>pom</packaging>
@@ -16,5 +16,4 @@
   	<module>../chenrd-oss-power</module>
   	<module>chenrd-oss-oa</module>
   </modules>
-  <version>0.0.2-SNAPSHOT</version>
 </project>

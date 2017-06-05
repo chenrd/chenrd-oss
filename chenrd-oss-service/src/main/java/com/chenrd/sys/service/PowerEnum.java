@@ -18,8 +18,7 @@ package com.chenrd.sys.service;
  * @see PowerEnum
  * @since
  */
-public enum PowerEnum 
-{
+public enum PowerEnum {
     /**
      * 菜单权限，功能权限，字段权限
      */

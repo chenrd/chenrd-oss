@@ -17,14 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-
-
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,8 +39,7 @@ import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.sys.service.info.UserInfo;
 
 
-public abstract class AbstractPowerBusiness extends AbstractBusiness implements PowerBusiness
-{
+public abstract class AbstractPowerBusiness extends AbstractBusiness implements PowerBusiness {
     
     private PowerCache powerCache = PowerCache.getPowerCache();
     
@@ -57,8 +48,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging)
-    {
+    public <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, clas, info);
         String countHql = "select count(*) " + hql.toString();
@@ -68,8 +58,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info)
-    {
+    public <D extends Domain, T extends VO> List<T> find(String methodName, Class<D> clas, Class<T> clazz, QueryInfo info) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, clas, info);
         hql.insert(0, loadFindConstructor(clazz, methodName));
@@ -78,8 +67,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info, Paging paging)
-    {
+    public <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info, Paging paging) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, getDAO().getDomClass(), info);
         String countHql = "select count(*) " + hql.toString();
@@ -89,8 +77,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info)
-    {
+    public <T extends VO> List<T> find(String methodName, Class<T> clazz, QueryInfo info) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, getDAO().getDomClass(), info);
         hql.insert(0, loadFindConstructor(clazz, methodName));
@@ -99,8 +86,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging)
-    {
+    public <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info, Paging paging) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, clas, info);
         String countHql = "select count(*) " + hql.toString();
@@ -110,8 +96,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info)
-    {
+    public <D extends Domain, T extends VO> List<T> find(Class<D> clas, Class<T> clazz, QueryInfo info) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, clas, info);
         List<? extends Domain> list = (List<? extends Domain>) getDAO().find(hql.toString(), params);
@@ -120,8 +105,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends VO> List<T> find(Class<T> clazz, QueryInfo info, Paging paging)
-    {
+    public <T extends VO> List<T> find(Class<T> clazz, QueryInfo info, Paging paging) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, getDAO().getDomClass(), info);
         String countHql = "select count(*) " + hql.toString();
@@ -131,19 +115,16 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
     
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends VO> List<T> find(Class<T> clazz, QueryInfo info)
-    {
+    public <T extends VO> List<T> find(Class<T> clazz, QueryInfo info) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = appendHql(params, getDAO().getDomClass(), info);
         List<? extends Domain> list = (List<? extends Domain>) getDAO().find(hql.toString(), params);
         return BeanUtil.returnList(list, clazz);
     }
     
-    private <E extends Domain, T extends VO> StringBuilder appendHql(Map<String, Serializable> params, Class<E> entityClass, QueryInfo info)
-    {
+    private <E extends Domain, T extends VO> StringBuilder appendHql(Map<String, Serializable> params, Class<E> entityClass, QueryInfo info) {
         EntityQueryBuilder queryBuilder = powerCache.getLimitPowers(entityClass.getName());
-        if (powerCache.isNotEmpty(entityClass.getName()) && queryBuilder instanceof PowerEntityQueryBuilder)
-        {
+        if (powerCache.isNotEmpty(entityClass.getName()) && queryBuilder instanceof PowerEntityQueryBuilder) {
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();  
             HttpServletRequest rq = attr.getRequest();
             UserInfo userInfo = userEhcacheHandle.get(rq.getRequestedSessionId());
@@ -152,8 +133,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
         return queryBuilder.builder(info, params);
     }
     
-    private String loadFindConstructor(Class<?> clazz, String methodName)
-    {
+    private String loadFindConstructor(Class<?> clazz, String methodName) {
         String value = powerCache.getFindConstructor(clazz.getName() + "_" + methodName);
         if (StringUtils.isNotBlank(value)) return value;
         loadFindConstructor(clazz);
@@ -162,8 +142,7 @@ public abstract class AbstractPowerBusiness extends AbstractBusiness implements 
         return value;
     }
     
-    private void loadFindConstructor(Class<?> clazz)
-    {
+    private void loadFindConstructor(Class<?> clazz) {
         FindConstructor findConstructor = null;
         for (Constructor<?> constructor : clazz.getConstructors())
         {

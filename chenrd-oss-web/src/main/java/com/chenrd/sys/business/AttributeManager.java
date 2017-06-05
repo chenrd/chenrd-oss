@@ -24,50 +24,52 @@ import com.chenrd.sys.vo.AttributeVO;
  * @see AttributeManager
  * @since
  */
-public interface AttributeManager extends PowerBusiness
-{
-    
-    /**
-     * 
-     * 
-     * @param key
-     * @return 
-     * @see
-     */
-    List<AttributeVO> findChilds(String key);
-    
-    /**
-     * 二级目录
-     * 
-     * @param applyKey 应用KEY
-     * @return 
-     * @see
-     */
-    List<PowerInfo> findParent(String applyKey);
-    
-    void saveOrUpdate(AttributeVO vo);
-    
-    /**
-     * 
-     * 
-     * @param parentKey 标识
-     * @param 分页条件
-     */
-    List<PowerInfo> find(String parentKey, Paging paging);
-    
-    /**
-     * 启用
-     * @param id 
-     * @see
-     */
-    void publish(Long id);
-    
-    /**
-     * 删除数据
-     * 
-     * @param id 
-     * @see
-     */
-    void delete(Long id);
-    
+public interface AttributeManager extends PowerBusiness {
+
+	/**
+	 * 
+	 * 
+	 * @param key
+	 * @return
+	 * @see
+	 */
+	List<AttributeVO> findChilds(String key);
+
+	/**
+	 * 二级目录
+	 * 
+	 * @param applyKey
+	 *            应用KEY
+	 * @return
+	 * @see
+	 */
+	List<PowerInfo> findParent(String applyKey);
+
+	void saveOrUpdate(AttributeVO vo);
+
+	/**
+	 * 
+	 * 
+	 * @param parentKey
+	 *            标识
+	 * @param 分页条件
+	 */
+	List<PowerInfo> find(String parentKey, Paging paging);
+
+	/**
+	 * 启用
+	 * 
+	 * @param id
+	 * @see
+	 */
+	void publish(Long id);
+
+	/**
+	 * 删除数据
+	 * 
+	 * @param id
+	 * @see
+	 */
+	void delete(Long id);
+
 }

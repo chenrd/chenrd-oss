@@ -26,8 +26,7 @@ import com.chenrd.sys.service.PowerType;
  */
 @Entity
 @DiscriminatorValue("2")
-public class Attribute extends Power
-{
+public class Attribute extends Power {
 
     /**
      * 意义，目的和功能，以及被用到的地方<br>
@@ -55,67 +54,51 @@ public class Attribute extends Power
     /**
      * 
      */
-    public Attribute()
-    {
+    public Attribute() {
         super();
         super.setType(PowerType.FIELD_POWER);
     }
 
-    /**
-     * @return Returns the applyName.
-     */
-    public String getApplyName()
-    {
-        return getApply().getName();
-    }
+	/**
+	 * @return Returns the value.
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * @param applyName The applyName to set.
-     */
-    public void setApplyName(String applyName)
-    {
-        this.applyName = applyName;
-    }
+	/**
+	 * @param value The value to set.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * @return Returns the value.
-     */
-    public String getValue()
-    {
-        return value;
-    }
+	/**
+	 * @return Returns the attrType.
+	 */
+	public int getAttrType() {
+		return attrType;
+	}
 
-    /**
-     * @param value The value to set.
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
+	/**
+	 * @param attrType The attrType to set.
+	 */
+	public void setAttrType(int attrType) {
+		this.attrType = attrType;
+	}
 
-    /**
-     * @return Returns the serialversionuid.
-     */
-    public static long getSerialversionuid()
-    {
-        return serialVersionUID;
-    }
+	/**
+	 * @return Returns the applyName.
+	 */
+	public String getApplyName() {
+		return applyName;
+	}
 
-    /**
-     * @return Returns the attrType.
-     */
-    public int getAttrType()
-    {
-        return attrType;
-    }
-
-    /**
-     * @param attrType The attrType to set.
-     */
-    public void setAttrType(int attrType)
-    {
-        this.attrType = attrType;
-    }
-    
+	/**
+	 * @param applyName The applyName to set.
+	 */
+	public void setApplyName(String applyName) {
+		this.applyName = applyName;
+	}
 
 }

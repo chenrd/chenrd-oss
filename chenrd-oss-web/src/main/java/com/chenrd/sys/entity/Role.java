@@ -25,7 +25,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.chenrd.dao.QueryByUsername;
 import com.chenrd.dao.annotation.QueryOrder;
 import com.chenrd.dao.annotation.QueryParams;
 import com.chenrd.dao.em.Nexus;
@@ -36,6 +35,7 @@ import com.chenrd.oss.power.ann.LimitFieldPower;
 
 /**
  * 角色
+ * 
  * @author chenrd
  * @version 2015年5月20日
  * @see Role
@@ -44,243 +44,255 @@ import com.chenrd.oss.power.ann.LimitFieldPower;
 @LimitClassPower
 @Entity
 @Table(name = "OSS_ROLE")
-@QueryByUsername
-public class Role extends Domain
-{
+public class Role extends Domain {
 
-    /**
-     * 意义，目的和功能，以及被用到的地方<br>
-     */
-    private static final long serialVersionUID = -7169720624265457466L;
-    
-    /**
-     * 
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    /**
-     * 
-     */
-    @QueryParams
-    @Column(name = "NAME_", length = 50)
-    private String name;
+	/**
+	 * 意义，目的和功能，以及被用到的地方<br>
+	 */
+	private static final long serialVersionUID = -7169720624265457466L;
 
-    /**
-     * 
-     */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "OSS_ROLE_POWER", joinColumns = {@JoinColumn(name= "ROLE_ID")}, inverseJoinColumns = {@JoinColumn(name = "POWER_ID")})
-    private Set<Power> powers;
-    
-    /**
-     * 
-     */
-    @QueryParams(nexus = Nexus.LIKE)
-    @Column(name = "KEY_", length = 100)
-    private String key;
-    
-    /**
-     * 
-     */
-    @Column(name = "REMARK", length = 200)
-    private String remark;
-    
-    /**
-     * 
-     */
-    @Column(name = "CREATE_DATE")
-    private Date createDate;
-    
-    /**
-     * 创建者
-     */
-    @QueryParams
-    @LimitFieldPower({"100", "100"})
-    @Column(name = "CREATE_USER", length = 50, nullable = false)
-    private String createUser;
-    
-    @Column(name = "UPDATE_DATE")
-    private Date updateDate;
-    
-    @Column(name = "UPDATE_USER", length = 50, nullable = false)
-    private String updateUser;
-    /**
-     * 
-     */
-    @QueryOrder(index = 1, value = "desc")
-    @QueryParams(nexus = Nexus.GTEQUAL)
-    @Column(name = "STATUS")
-    private int status = Status.OFF;
+	/**
+	 * 
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    /**
-     * @return Returns the id.
-     */
-    public Long getId()
-    {
-        return id;
-    }
+	/**
+	 * 
+	 */
+	@QueryParams
+	@Column(name = "NAME_", length = 50)
+	private String name;
 
-    /**
-     * @param id The id to set.
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	/**
+	 * 
+	 */
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "OSS_ROLE_POWER", joinColumns = { @JoinColumn(name = "ROLE_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "POWER_ID") })
+	private Set<Power> powers;
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName()
-    {
-        return name;
-    }
+	/**
+	 * 
+	 */
+	@QueryParams(nexus = Nexus.LIKE)
+	@Column(name = "KEY_", length = 100)
+	private String key;
 
-    /**
-     * @param name The name to set.
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+	/**
+	 * 
+	 */
+	@Column(name = "REMARK", length = 200)
+	private String remark;
 
-    /**
-     * @return Returns the powers.
-     */
-    public Set<Power> getPowers()
-    {
-        return powers;
-    }
+	/**
+	 * 
+	 */
+	@Column(name = "CREATE_DATE")
+	private Date createDate;
 
-    /**
-     * @param powers The powers to set.
-     */
-    public void setPowers(Set<Power> powers)
-    {
-        this.powers = powers;
-    }
+	/**
+	 * 创建者
+	 */
+	@QueryParams
+	@LimitFieldPower({ "100", "100" })
+	@Column(name = "CREATE_USER", length = 50, nullable = false)
+	private String createUser;
 
-    /**
-     * @return Returns the key.
-     */
-    public String getKey()
-    {
-        return key;
-    }
+	@Column(name = "UPDATE_DATE")
+	private Date updateDate;
 
-    /**
-     * @param key The key to set.
-     */
-    public void setKey(String key)
-    {
-        this.key = key;
-    }
+	@Column(name = "UPDATE_USER", length = 50, nullable = false)
+	private String updateUser;
+	/**
+	 * 
+	 */
+	@QueryOrder(index = 1, value = "desc")
+	@QueryParams(nexus = Nexus.GTEQUAL)
+	@Column(name = "STATUS")
+	private Integer status = Status.OFF;
+	
+	@Override
+	public int hashCode() {
+		int h = id.hashCode();
+        h ^= (h >>> 20) ^ (h >>> 12);
+        return h ^ (h >>> 7) ^ (h >>> 4);
+	}
 
-    /**
-     * @return Returns the remark.
-     */
-    public String getRemark()
-    {
-        return remark;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Role)) {
+			return false;
+		}
+		Role objKey = (Role) obj;
+		if (objKey.id == this.id) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @param remark The remark to set.
-     */
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
-    }
+	/**
+	 * @return Returns the id.
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * @return Returns the createDate.
-     */
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
+	/**
+	 * @param id
+	 *            The id to set.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * @param createDate The createDate to set.
-     */
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * @return Returns the serialversionuid.
-     */
-    public static long getSerialversionuid()
-    {
-        return serialVersionUID;
-    }
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * @return Returns the status.
-     */
-    public int getStatus()
-    {
-        return status;
-    }
+	/**
+	 * @return Returns the powers.
+	 */
+	public Set<Power> getPowers() {
+		return powers;
+	}
 
-    /**
-     * @param status The status to set.
-     */
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
+	/**
+	 * @param powers
+	 *            The powers to set.
+	 */
+	public void setPowers(Set<Power> powers) {
+		this.powers = powers;
+	}
 
-    /**
-     * @return Returns the createUser.
-     */
-    public String getCreateUser()
-    {
-        return createUser;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public String getKey() {
+		return key;
+	}
 
-    /**
-     * @param createUser The createUser to set.
-     */
-    public void setCreateUser(String createUser)
-    {
-        this.createUser = createUser;
-    }
+	/**
+	 * @param key
+	 *            The key to set.
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    /**
-     * @return Returns the updateDate.
-     */
-    public Date getUpdateDate()
-    {
-        return updateDate;
-    }
+	/**
+	 * @return Returns the remark.
+	 */
+	public String getRemark() {
+		return remark;
+	}
 
-    /**
-     * @param updateDate The updateDate to set.
-     */
-    public void setUpdateDate(Date updateDate)
-    {
-        this.updateDate = updateDate;
-    }
+	/**
+	 * @param remark
+	 *            The remark to set.
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
-    /**
-     * @return Returns the updateUser.
-     */
-    public String getUpdateUser()
-    {
-        return updateUser;
-    }
+	/**
+	 * @return Returns the createDate.
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    /**
-     * @param updateUser The updateUser to set.
-     */
-    public void setUpdateUser(String updateUser)
-    {
-        this.updateUser = updateUser;
-    }
-    
-    
+	/**
+	 * @param createDate
+	 *            The createDate to set.
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * @return Returns the serialversionuid.
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            The status to set.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return Returns the createUser.
+	 */
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	/**
+	 * @param createUser
+	 *            The createUser to set.
+	 */
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	/**
+	 * @return Returns the updateDate.
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	/**
+	 * @param updateDate
+	 *            The updateDate to set.
+	 */
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	/**
+	 * @return Returns the updateUser.
+	 */
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	/**
+	 * @param updateUser
+	 *            The updateUser to set.
+	 */
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
 }

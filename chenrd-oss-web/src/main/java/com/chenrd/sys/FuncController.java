@@ -22,11 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chenrd.common.FreemarkerController;
 import com.chenrd.common.JQueryTableResult;
 import com.chenrd.common.Paging;
+import com.chenrd.example.Status;
 import com.chenrd.sys.business.ApplyManager;
 import com.chenrd.sys.business.FuncManager;
 import com.chenrd.sys.business.MenuManager;
+import com.chenrd.sys.info.PowerCommonQueryInfo;
+import com.chenrd.sys.service.PowerType;
 import com.chenrd.sys.service.info.PowerInfo;
 import com.chenrd.sys.vo.ApplyVO;
+import com.chenrd.sys.vo.FuncVO;
 
 /**
  * 功能权限控制器
@@ -37,8 +41,7 @@ import com.chenrd.sys.vo.ApplyVO;
  */
 @RequestMapping("func")
 @Controller
-public class FuncController extends FreemarkerController
-{
+public class FuncController extends FreemarkerController {
     
     /**
      * 
@@ -64,8 +67,7 @@ public class FuncController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index()
-    {
+    public String index() {
         return getViewName("view/func/index");
     }
     
@@ -79,8 +81,7 @@ public class FuncController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "show/{applyId}", method = RequestMethod.GET)
-    public String show(@PathVariable Long applyId, String parentKey, ModelMap map)
-    {
+    public String show(@PathVariable Long applyId, String parentKey, ModelMap map) {
         map.put("applyId", applyId);
         map.put("parentKey", parentKey);
         return getViewName("view/func/rows");
@@ -97,10 +98,8 @@ public class FuncController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable Long id, Long applyId, String parentKey, ModelMap map)
-    {
-        if (id != null)
-        {
+    public String edit(@PathVariable Long id, Long applyId, String parentKey, ModelMap map) {
+        if (id != null) {
             map.put("bean", funcManager.get(id));
         }
         map.put("apply", applyManager.get(applyId, ApplyVO.class));
@@ -120,8 +119,7 @@ public class FuncController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Long id, Long applyId, String parentKey, ModelMap map)
-    {
+    public String create(Long id, Long applyId, String parentKey, ModelMap map) {
         map.put("apply", applyManager.get(applyId, ApplyVO.class));
         map.put("menu", menuManager.getByKey(parentKey));
         map.put("parentKey", parentKey);
@@ -139,9 +137,9 @@ public class FuncController extends FreemarkerController
      */
     @RequestMapping(value = "/find/{applyId}", method = RequestMethod.POST)
     @ResponseBody
-    public JQueryTableResult findPaging(@PathVariable Long applyId, String parentKey, Paging paging)
-    {
-        return new JQueryTableResult(funcManager.findChilds(applyId, parentKey, paging), paging);
+    public JQueryTableResult findPaging(@PathVariable Long applyId, String parentKey, Paging paging) {
+    	PowerCommonQueryInfo info = new PowerCommonQueryInfo(parentKey, Status.OFF, PowerType.FUNC_POWER);
+        return new JQueryTableResult(funcManager.find("find", FuncVO.class, info, paging), paging);
     }
     
     /**
@@ -151,8 +149,7 @@ public class FuncController extends FreemarkerController
      */
     @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public void saveOrUpdate(PowerInfo info)
-    {
+    public void saveOrUpdate(PowerInfo info) {
         funcManager.saveOrUpdate(info);
     }
     
@@ -164,8 +161,7 @@ public class FuncController extends FreemarkerController
      */
     @RequestMapping(value = "publish", method = RequestMethod.GET)
     @ResponseBody
-    public void publish(Long id)
-    {
+    public void publish(Long id) {
         funcManager.publish(id);
     }
     
@@ -177,9 +173,8 @@ public class FuncController extends FreemarkerController
      */
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     @ResponseBody
-    public void delete(Long id)
-    {
-        funcManager.deleted(id);
+    public void delete(Long id) {
+        funcManager.delete(id);
     }
     
 }

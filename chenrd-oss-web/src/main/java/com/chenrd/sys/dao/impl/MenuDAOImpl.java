@@ -86,7 +86,7 @@ public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = new StringBuilder("select new com.chenrd.sys.vo.MenuVO(po.id, po.key, po.name, po.fullName) from ")
             .append(Menu.class.getSimpleName()).append(" as po where po.status = :status order by po.key");
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         return (List<MenuVO>) find(hql.toString(), params);
     }
 
@@ -108,7 +108,7 @@ public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
                 .append(" inner join user.roles as role with role.status=:status inner join role.powers as po with po.status=:status and po.type=:type and po.key like :applyKey")
                 .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         params.put("type", PowerType.MENU_POWER);
         params.put("applyKey", applyKey + "%");
         params.put("username", username);
@@ -122,7 +122,7 @@ public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
             .append(" inner join user.powers as po with po.status=:status and po.type=:type and po.key like :applyKey")
             .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         params.put("type", PowerType.MENU_POWER);
         params.put("applyKey", applyKey + "%");
         params.put("username", username);
@@ -136,7 +136,7 @@ public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
             .append(" inner join user.roles as role with role.status=:status inner join role.powers as po with po.status=:status and po.type=:type")
             .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         params.put("type", PowerType.MENU_POWER);
         params.put("username", username);
         return (List<Menu>) super.find(hql.toString(), params);
@@ -149,7 +149,7 @@ public class MenuDAOImpl extends AbstractBaseDAO<Menu> implements MenuDAO
             .append(" inner join user.powers as po with po.status=:status and po.type=:type")
             .append(" where user.status=:status and user.username=:username order by po.key");
         Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         params.put("type", PowerType.MENU_POWER);
         params.put("username", username);
         return (List<Menu>) super.find(hql.toString(), params);

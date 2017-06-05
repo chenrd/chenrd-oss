@@ -12,9 +12,7 @@ package com.chenrd.sys.dao;
 
 import java.util.List;
 
-import com.chenrd.common.Paging;
 import com.chenrd.dao.BaseDAO;
-import com.chenrd.sys.entity.User;
 import com.chenrd.sys.service.info.UserInfo;
 
 /**
@@ -24,27 +22,7 @@ import com.chenrd.sys.service.info.UserInfo;
  * @see UserDAO
  * @since
  */
-public interface UserDAO extends BaseDAO
-{
-    
-    /**
-     * 
-     * 分页查询数据
-     * @param name 姓名
-     * @param phone 手机
-     * @param paging 分页
-     * @return List<UserInfo>
-     * @see
-     */
-    List<User> findPaging(String name, String phone, String username, Paging paging);
-    
-    /**
-     * 
-     * 逻辑删除
-     * @param id 用户ID
-     * @see
-     */
-    void logicDelete(String id);
+public interface UserDAO extends BaseDAO {
     
     /**
      * 用于判断是否用户名重复

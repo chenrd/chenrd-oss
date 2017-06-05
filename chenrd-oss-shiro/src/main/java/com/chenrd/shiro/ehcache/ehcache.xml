@@ -14,7 +14,7 @@
             overflowToDisk="true"/>
             
         
-        <cache name="authorizationCache"
+  <cache name="authorizationCache"
       maxElementsInMemory="1000"
       eternal="false"
       timeToIdleSeconds="1800"

@@ -14,8 +14,7 @@ package com.chenrd.oss.power.cache;
 import com.chenrd.oss.power.ann.LimitClassPower;
 import com.chenrd.oss.power.ann.LimitFieldPower;
 
-public class LimitPowerMetadata
-{
+public class LimitPowerMetadata {
     String className;
     
     /**
@@ -41,8 +40,7 @@ public class LimitPowerMetadata
      * @param defPowerMetadata
      */
     public LimitPowerMetadata(String className, boolean fieldAnnotationQueryParams, String fieldName, LimitClassPower limitClassPower,
-                              LimitFieldPower limitFieldPower, String key)
-    {
+                              LimitFieldPower limitFieldPower, String key) {
         super();
         this.className = className;
         this.fieldAnnotationQueryParams = fieldAnnotationQueryParams;

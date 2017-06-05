@@ -32,10 +32,10 @@ import com.chenrd.dao.em.Nexus;
 import com.chenrd.example.Domain;
 import com.chenrd.example.Status;
 
-
 /**
  * 
  * 组织机构
+ * 
  * @author xuwenqiang
  * @version 2015年5月12日
  * @see Organization
@@ -44,290 +44,277 @@ import com.chenrd.example.Status;
 @Table(name = "OSS_ORGANIZATION")
 @Entity
 @SequenceGenerator(name = "seq_org_id", sequenceName = "seq_org_id", allocationSize = 1)
-public class Organization extends Domain
-{
+public class Organization extends Domain {
 
-    /**
-     * <br>
-     */
-    private static final long serialVersionUID = -4439546572582914882L;
-    
-    /**
-     * 
-     */
-    @Id
-    @GeneratedValue(generator = "seq_org_id", strategy = GenerationType.AUTO)
-    @Column(name = "ID", length = 32)
-    private Long id;
-    
-    /**
-     * 名称
-     */
-    @QueryParams
-    @Column(name = "NAME_", length = 50)
-    private String name;
-    
-    /**
-     * 
-     */
-    @QueryOrder(index = 1)
-    @Column(name = "KEY_", unique = true)
-    private String key;
-    
-    /**
-     * 
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_", insertable = false, updatable = false)
-    private Organization parent;
-    
-    @QueryParams
-    @Column(name = "PARENT_")
-    private Long parentId;
-    
-    /**
-     * 全称
-     */
-    @Column(name = "FULL_NAME", length = 100)
-    private String fullName;
-    
-    
-    /**
-     * 
-     */
-    @Column(name = "LEADER_ID", length = 32)
-    private String leaderId;
-    
-    /**
-     * 部门领导
-     */
-    @Column(name = "LEADER_NAME", length = 50)
-    private String leaderName;
-    
-    /**
-     * 部门联系电话
-     */
-    @Column(name = "CONTACT_", length = 20)
-    private String contact;
-    
-    /**
-     * 传真
-     */
-    @Column(name = "FAX_", length = 20)
-    private String fax;
-    
-    /**
-     * 备注
-     */
-    @Column(name = "REMARK", length = 200)
-    private String remark;
-    
-    /**
-     * 创建时间
-     */
-    @Column(name = "CREATE_TIME", nullable = false) @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    
-    @Column(name = "CREATE_USER", length = 64)
-    private String createUser;
-    
-    @Column(name = "UPDATE_TIME", nullable = false) @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-    
-    @Column(name = "UPDATE_USER", length = 64)
-    private String updateUser;
-    
-    
-    /**
-     * 状态
-     */
-    @QueryParams(nexus = Nexus.GTEQUAL)
-    @Column(name = "STATUS", length = 1)
-    private int status = Status.ON;
-    
-    /**
-     * @return Returns the id.
-     */
-    public Long getId()
-    {
-        return id;
-    }
+	/**
+	 * <br>
+	 */
+	private static final long serialVersionUID = -4439546572582914882L;
 
-    /**
-     * @param id The id to set.
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	/**
+	 * 
+	 */
+	@Id
+	@GeneratedValue(generator = "seq_org_id", strategy = GenerationType.AUTO)
+	@Column(name = "ID", length = 32)
+	private Long id;
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName()
-    {
-        return name;
-    }
+	/**
+	 * 名称
+	 */
+	@QueryParams
+	@Column(name = "NAME_", length = 50)
+	private String name;
 
-    /**
-     * @param name The name to set.
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+	/**
+	 * 
+	 */
+	@QueryOrder(index = 1)
+	@Column(name = "KEY_", unique = true)
+	private String key;
 
-    /**
-     * @return Returns the fullName.
-     */
-    public String getFullName()
-    {
-        return fullName;
-    }
+	/**
+	 * 
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_", insertable = false, updatable = false)
+	private Organization parent;
 
-    /**
-     * @param fullName The fullName to set.
-     */
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName;
-    }
+	@QueryParams
+	@Column(name = "PARENT_")
+	private Long parentId;
 
-    /**
-     * @return Returns the leaderId.
-     */
-    public String getLeaderId()
-    {
-        return leaderId;
-    }
+	/**
+	 * 全称
+	 */
+	@Column(name = "FULL_NAME", length = 100)
+	private String fullName;
 
-    /**
-     * @param leaderId The leaderId to set.
-     */
-    public void setLeaderId(String leaderId)
-    {
-        this.leaderId = leaderId;
-    }
+	/**
+	 * 
+	 */
+	@Column(name = "LEADER_ID", length = 32)
+	private String leaderId;
 
-    /**
-     * @return Returns the leaderName.
-     */
-    public String getLeaderName()
-    {
-        return leaderName;
-    }
+	/**
+	 * 部门领导
+	 */
+	@Column(name = "LEADER_NAME", length = 50)
+	private String leaderName;
 
-    /**
-     * @param leaderName The leaderName to set.
-     */
-    public void setLeaderName(String leaderName)
-    {
-        this.leaderName = leaderName;
-    }
+	/**
+	 * 部门联系电话
+	 */
+	@Column(name = "CONTACT_", length = 20)
+	private String contact;
 
-    /**
-     * @return Returns the contact.
-     */
-    public String getContact()
-    {
-        return contact;
-    }
+	/**
+	 * 传真
+	 */
+	@Column(name = "FAX_", length = 20)
+	private String fax;
 
-    /**
-     * @param contact The contact to set.
-     */
-    public void setContact(String contact)
-    {
-        this.contact = contact;
-    }
+	/**
+	 * 备注
+	 */
+	@Column(name = "REMARK", length = 200)
+	private String remark;
 
-    /**
-     * @return Returns the fax.
-     */
-    public String getFax()
-    {
-        return fax;
-    }
+	/**
+	 * 创建时间
+	 */
+	@Column(name = "CREATE_TIME", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
 
-    /**
-     * @param fax The fax to set.
-     */
-    public void setFax(String fax)
-    {
-        this.fax = fax;
-    }
+	@Column(name = "CREATE_USER", length = 64)
+	private String createUser;
 
-    /**
-     * @return Returns the remark.
-     */
-    public String getRemark()
-    {
-        return remark;
-    }
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updateTime;
 
-    /**
-     * @param remark The remark to set.
-     */
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
-    }
+	@Column(name = "UPDATE_USER", length = 64)
+	private String updateUser;
 
-    /**
-     * @return Returns the serialversionuid.
-     */
-    public static long getSerialversionuid()
-    {
-        return serialVersionUID;
-    }
+	/**
+	 * 状态
+	 */
+	@QueryParams(nexus = Nexus.GTEQUAL)
+	@Column(name = "STATUS", length = 1)
+	private Integer status = Status.ON;
 
-    /**
-     * @return Returns the parent.
-     */
-    public Organization getParent()
-    {
-        return parent;
-    }
+	/**
+	 * @return Returns the id.
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * @param parent The parent to set.
-     */
-    public void setParent(Organization parent)
-    {
-        this.parent = parent;
-    }
+	/**
+	 * @param id
+	 *            The id to set.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * @return Returns the key.
-     */
-    public String getKey()
-    {
-        return key;
-    }
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * @param key The key to set.
-     */
-    public void setKey(String key)
-    {
-        this.key = key;
-    }
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * @return Returns the status.
-     */
-    public int getStatus()
-    {
-        return status;
-    }
+	/**
+	 * @return Returns the fullName.
+	 */
+	public String getFullName() {
+		return fullName;
+	}
 
-    /**
-     * @param status The status to set.
-     */
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
+	/**
+	 * @param fullName
+	 *            The fullName to set.
+	 */
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	/**
+	 * @return Returns the leaderId.
+	 */
+	public String getLeaderId() {
+		return leaderId;
+	}
+
+	/**
+	 * @param leaderId
+	 *            The leaderId to set.
+	 */
+	public void setLeaderId(String leaderId) {
+		this.leaderId = leaderId;
+	}
+
+	/**
+	 * @return Returns the leaderName.
+	 */
+	public String getLeaderName() {
+		return leaderName;
+	}
+
+	/**
+	 * @param leaderName
+	 *            The leaderName to set.
+	 */
+	public void setLeaderName(String leaderName) {
+		this.leaderName = leaderName;
+	}
+
+	/**
+	 * @return Returns the contact.
+	 */
+	public String getContact() {
+		return contact;
+	}
+
+	/**
+	 * @param contact
+	 *            The contact to set.
+	 */
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	/**
+	 * @return Returns the fax.
+	 */
+	public String getFax() {
+		return fax;
+	}
+
+	/**
+	 * @param fax
+	 *            The fax to set.
+	 */
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	/**
+	 * @return Returns the remark.
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * @param remark
+	 *            The remark to set.
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	/**
+	 * @return Returns the serialversionuid.
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
+	 * @return Returns the parent.
+	 */
+	public Organization getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            The parent to set.
+	 */
+	public void setParent(Organization parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return Returns the key.
+	 */
+	public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @param key
+	 *            The key to set.
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            The status to set.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * @return Returns the createTime.
@@ -337,7 +324,8 @@ public class Organization extends Domain
 	}
 
 	/**
-	 * @param createTime The createTime to set.
+	 * @param createTime
+	 *            The createTime to set.
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
@@ -351,7 +339,8 @@ public class Organization extends Domain
 	}
 
 	/**
-	 * @param createUser The createUser to set.
+	 * @param createUser
+	 *            The createUser to set.
 	 */
 	public void setCreateUser(String createUser) {
 		this.createUser = createUser;
@@ -365,7 +354,8 @@ public class Organization extends Domain
 	}
 
 	/**
-	 * @param updateTime The updateTime to set.
+	 * @param updateTime
+	 *            The updateTime to set.
 	 */
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
@@ -379,7 +369,8 @@ public class Organization extends Domain
 	}
 
 	/**
-	 * @param updateUser The updateUser to set.
+	 * @param updateUser
+	 *            The updateUser to set.
 	 */
 	public void setUpdateUser(String updateUser) {
 		this.updateUser = updateUser;
@@ -393,10 +384,11 @@ public class Organization extends Domain
 	}
 
 	/**
-	 * @param parentId The parentId to set.
+	 * @param parentId
+	 *            The parentId to set.
 	 */
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-    
+
 }

@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,8 +44,7 @@ import com.chenrd.sys.service.info.UserInfo;
  * @since
  */
 @Component
-public class MyExceptionResolver implements HandlerExceptionResolver
-{
+public class MyExceptionResolver implements HandlerExceptionResolver {
     
     /**
      * 
@@ -77,36 +77,27 @@ public class MyExceptionResolver implements HandlerExceptionResolver
      * @param ex 
      * @return ModelAndView
      */
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
-                                         Object handler, Exception ex)
-    {
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         
         Map<String, PowerInfo> params = userEhcacheHandle.get(request.getRequestedSessionId()).getPowers();
         String lable = "";
-        for (String key : params.keySet())
-        {
-            if (RegularExpressionUtil.matches(key, request.getServletPath()))
-            {
+        for (String key : params.keySet()) {
+            if (RegularExpressionUtil.matches(key, request.getServletPath())) {
                 lable = params.get(key).getFullName();
                 break;
             }
         }
-        logRecordService.newLogRecord(new LogInfo(null, LogInfo.TYPE_ERROR, new Date(), (String) request.getSession().getAttribute(UserInfo.OSS_SESSION_USER_NAME), applyKey, lable, exceptionContent(ex)));
-        if (!(ex instanceof BaseExecuteException))
-        {
+        logRecordService.newLogRecord(new LogInfo(null, LogInfo.TYPE_ERROR, new Date(), (String) request.getSession().getAttribute(UserInfo.OSS_SESSION_USER_NAME), applyKey, lable, ExceptionUtils.getStackTrace(ex)));
+        if (!(ex instanceof BaseExecuteException)) {
             log.error("系统错误：", ex);
         }
-        if (ex instanceof AuthorRuntimeException)
-        {
+        if (ex instanceof AuthorRuntimeException) {
             response.setStatus(500);
         }
         String accept = request.getHeader("Accept");
-        if (accept.indexOf("text/html") != -1)
-        {
+        if (accept.indexOf("text/html") != -1) {
             return new ModelAndView("/common/html/error-500");
-        }
-        else
-        {
+        } else {
             ModelMap map = new ModelMap();
             map.put(ControllerResult.STATUSCODE, ControllerResult.ERRORCODE);
             map.put(ControllerResult.CENTENT_LABLE, ex.getMessage());
@@ -115,23 +106,5 @@ public class MyExceptionResolver implements HandlerExceptionResolver
         
     }
     
-    /**
-     * 
-     * 
-     * @param ex Exception
-     * @return ""
-     * @see
-     */
-    private String exceptionContent(Exception ex) 
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.append(ex.getClass().getSimpleName()).append("->").append(ex.getMessage());
-        for (StackTraceElement element : ex.getStackTrace()) 
-        {
-            builder.append("\r\n").append(element.getClassName()).append(element.getMethodName())
-            .append("[").append(element.getFileName()).append(":").append(element.getLineNumber()).append("]");
-        }
-        return builder.toString();
-    }
     
 }

@@ -19,7 +19,8 @@
                 	<input type="hidden" name="applyId" value="${applyId}"/>
                 	<input type="hidden" name="parentKey" value="${parentKey}"/>
                     <input type="hidden" name="id" value="<#if bean??>${bean.id}</#if>"/>
-                    <button type="submit" class="btn btn-blue"> 提交 </button>
+                    <button type="submit" class="btn btn-blue"> 提交 </button>&nbsp;
+                    <a href="javascript:void(0);" onclick="Home.callback();" class="btn btn-danger"> 取消 </a>
                 </div>
             </div>
         </form>

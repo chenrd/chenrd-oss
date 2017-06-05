@@ -27,8 +27,7 @@ import com.chenrd.sys.service.PowerType;
  */
 @Entity
 @DiscriminatorValue("0")
-public class Menu extends Power
-{
+public class Menu extends Power {
 
     /**
      * <br>
@@ -47,8 +46,7 @@ public class Menu extends Power
     /**
      * 
      */
-    public Menu()
-    {
+    public Menu() {
         super();
         super.setType(PowerType.MENU_POWER);
     }
@@ -56,26 +54,22 @@ public class Menu extends Power
     /**
      * @return Returns the icon.
      */
-    public String getIcon()
-    {
+    public String getIcon() {
         return icon;
     }
 
     /**
      * @param icon The icon to set.
      */
-    public void setIcon(String icon)
-    {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
     /**
      * @return Returns the serialversionuid.
      */
-    public static long getSerialversionuid()
-    {
+    public static long getSerialversionuid() {
         return serialVersionUID;
     }
-
     
 }

@@ -12,7 +12,6 @@ package com.chenrd.sys.dao;
 
 import java.util.List;
 
-import com.chenrd.common.Paging;
 import com.chenrd.dao.BaseDAO;
 import com.chenrd.sys.entity.Attribute;
 import com.chenrd.sys.entity.Power;
@@ -24,26 +23,7 @@ import com.chenrd.sys.entity.Power;
  * @see PowerDAO
  * @since
  */
-public interface PowerDAO extends BaseDAO
-{
-    /**
-     * 
-     * @param applyId 应用ID
-     * @param parentKey 父几点KEY
-     * @param type ""
-     * @param paging 分页条件
-     * @return ""
-     * @see
-     */
-    List<Power> findPaging(Long applyId, String parentKey, int type, Paging paging);
-    
-    /**
-     * 获取全部的类型权限
-     * @param type 
-     * @return List<Power>
-     * @see
-     */
-    List<Power> findAll(int type);
+public interface PowerDAO extends BaseDAO {
     
     /**
      * 获取功能及属性权限Status=Status.NO
@@ -115,13 +95,6 @@ public interface PowerDAO extends BaseDAO
     
     /**
      * 
-     * @param power 
-     * @see
-     */
-    void addPower(Attribute power);
-    
-    /**
-     * 
      * @param applyKey
      * @param username
      * @param powerType
@@ -129,5 +102,12 @@ public interface PowerDAO extends BaseDAO
      * @see
      */
     List<Power> findByApplyKeyUsername(String applyKey, String username, int powerType);
+    
+    /**
+     * 
+     * @param power 
+     * @see
+     */
+    void addPower(Attribute power);
     
 }

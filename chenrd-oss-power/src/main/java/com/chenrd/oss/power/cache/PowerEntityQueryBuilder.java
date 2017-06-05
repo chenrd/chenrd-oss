@@ -38,10 +38,8 @@ public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
     
     private Map<String, DefPowerMetadata> classMetadata;
     
-    public StringBuilder builder(QueryInfo info, Map<String, Serializable> params, Map<String, List<String>> attrs)
-    {
-        for (Entry<String, LimitPowerMetadata> entry : limits.entrySet())
-        {
+    public StringBuilder builder(QueryInfo info, Map<String, Serializable> params, Map<String, List<String>> attrs) {
+        for (Entry<String, LimitPowerMetadata> entry : limits.entrySet()) {
             if (entry.getValue().defPowerMetadata == null) {
                 entry.getValue().defPowerMetadata = classMetadata.get(entry.getValue().key);
             }
@@ -52,47 +50,38 @@ public class PowerEntityQueryBuilder extends SimpleEntityQueryBuilder
         return super.builder(info, params);
     }
     
-    public EntityQueryBuilder with(LimitPowerMetadata metadata)
-    {
+    public EntityQueryBuilder with(LimitPowerMetadata metadata) {
         if (limits == null) limits = new HashMap<String, LimitPowerMetadata>();
         if (metadata != null) {
             limits.put(metadata.key, metadata);
             if (!metadata.isFieldAnnotationQueryParams()) 
-	            super.with(new HqlAttribute(metadata.fieldName, new QueryParams()
-	            {
+	            super.with(new HqlAttribute(metadata.fieldName, false, new QueryParams() {
 	                @Override
-	                public Class<? extends Annotation> annotationType()
-	                {
+	                public Class<? extends Annotation> annotationType() {
 	                    return QueryParams.class;
 	                }
 	                @Override
-	                public String value()
-	                {
+	                public String value() {
 	                    return "and";
 	                }
 	                @Override
-	                public Nexus nexus()
-	                {
+	                public Nexus nexus() {
 	                    return Nexus.IN;
 	                }
 	                @Override
-	                public String bracket()
-	                {
+	                public String bracket() {
 	                    return "";
 	                }
 	                @Override
-	                public String name()
-	                {
+	                public String name() {
 	                    return "";
 	                }
 	                @Override
-	                public boolean defaultNotQuery()
-	                {
+	                public boolean defaultNotQuery() {
 	                    return false;
 	                }
 	                @Override
-	                public double defaultNotQueryValue()
-	                {
+	                public double defaultNotQueryValue() {
 	                    return 0;
 	                }
 					@Override

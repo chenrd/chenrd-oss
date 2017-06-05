@@ -24,6 +24,6 @@ import com.chenrd.sys.entity.Apply;
  * @since
  */
 @Repository("applyDAO")
-public class ApplyDAOImpl extends AbstractBaseDAO<Apply> implements ApplyDAO
-{
+public class ApplyDAOImpl extends AbstractBaseDAO<Apply> implements ApplyDAO {
+
 }

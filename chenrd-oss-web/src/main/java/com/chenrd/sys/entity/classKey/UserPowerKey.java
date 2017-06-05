@@ -13,98 +13,96 @@ package com.chenrd.sys.entity.classKey;
 
 import java.io.Serializable;
 
+public class UserPowerKey implements Serializable {
 
-public class UserPowerKey implements Serializable
-{
+	/**
+	 * 意义，目的和功能，以及被用到的地方<br>
+	 */
+	private static final long serialVersionUID = 7882770067433167241L;
 
-    /**
-     * 意义，目的和功能，以及被用到的地方<br>
-     */
-    private static final long serialVersionUID = 7882770067433167241L;
-    
-    private String userId;
-    
-    private Long powerId;
+	private String userId;
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int PRIME = 31;  
-        int result = 1;  
-        result = PRIME * result + (userId.hashCode());
-        result = PRIME * result + powerId.hashCode();
-        return result;
-    }
+	private Long powerId;
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if(this == obj) return true;  
-        if(obj == null) return false;  
-        if(!(obj instanceof UserPowerKey)) return false;  
-        UserPowerKey objKey = (UserPowerKey) obj;  
-        if(powerId == objKey.powerId && userId.equalsIgnoreCase(objKey.userId)) {  
-            return true;  
-        }
-        return false;  
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + (userId.hashCode());
+		result = PRIME * result + powerId.hashCode();
+		return result;
+	}
 
-    /**
-     * 
-     */
-    public UserPowerKey()
-    {
-        super();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof UserPowerKey))
+			return false;
+		UserPowerKey objKey = (UserPowerKey) obj;
+		if (powerId == objKey.powerId && userId.equalsIgnoreCase(objKey.userId)) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @param userId
-     * @param powerId
-     */
-    public UserPowerKey(String userId, Long powerId)
-    {
-        super();
-        this.userId = userId;
-        this.powerId = powerId;
-    }
+	/**
+	 * 
+	 */
+	public UserPowerKey() {
+		super();
+	}
 
-    /**
-     * @return Returns the userId.
-     */
-    public String getUserId()
-    {
-        return userId;
-    }
+	/**
+	 * @param userId
+	 * @param powerId
+	 */
+	public UserPowerKey(String userId, Long powerId) {
+		super();
+		this.userId = userId;
+		this.powerId = powerId;
+	}
 
-    /**
-     * @param userId The userId to set.
-     */
-    public void setUserId(String userId)
-    {
-        this.userId = userId;
-    }
+	/**
+	 * @return Returns the userId.
+	 */
+	public String getUserId() {
+		return userId;
+	}
 
-    /**
-     * @return Returns the powerId.
-     */
-    public Long getPowerId()
-    {
-        return powerId;
-    }
+	/**
+	 * @param userId
+	 *            The userId to set.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    /**
-     * @param powerId The powerId to set.
-     */
-    public void setPowerId(Long powerId)
-    {
-        this.powerId = powerId;
-    }
+	/**
+	 * @return Returns the powerId.
+	 */
+	public Long getPowerId() {
+		return powerId;
+	}
 
-    
+	/**
+	 * @param powerId
+	 *            The powerId to set.
+	 */
+	public void setPowerId(Long powerId) {
+		this.powerId = powerId;
+	}
+
 }

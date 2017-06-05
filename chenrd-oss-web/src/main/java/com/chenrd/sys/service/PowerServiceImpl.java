@@ -198,7 +198,7 @@ public class PowerServiceImpl implements PowerService
     @Override
     public String queryFullNameByUrl(String url)
     {
-        List<Power> powers = powerDAO.findByProperty(Power.class, "url", url, null);
+        List<Power> powers = powerDAO.findByProperty(Power.class, "url", url);
         return powers == null || powers.size() == 0 ? null : powers.get(0).getFullName();
     }
 

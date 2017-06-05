@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.chenrd.oss</groupId>
     <artifactId>chenrd-oss</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>chenrd-oa-web</artifactId>
   <packaging>war</packaging>
@@ -150,12 +150,12 @@
 	<dependency>
 		<groupId>com.chenrd.oss</groupId>
 		<artifactId>chenrd-oss-ex</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</dependency>
     <dependency>
     	<groupId>com.chenrd.oss</groupId>
     	<artifactId>chenrd-oss-power</artifactId>
-    	<version>0.0.2-SNAPSHOT</version>
+    	<version>1.0.1-SNAPSHOT</version>
     </dependency>
   
 	<!-- jbpm -->

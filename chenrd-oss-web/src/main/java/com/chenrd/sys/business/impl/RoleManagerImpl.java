@@ -26,11 +26,13 @@ import com.chenrd.sys.business.RoleManager;
 import com.chenrd.sys.dao.RoleDAO;
 import com.chenrd.sys.entity.Power;
 import com.chenrd.sys.entity.Role;
+import com.chenrd.sys.service.Status;
 import com.chenrd.sys.service.info.RoleInfo;
 
 /**
  * 
  * 角色管理器
+ * 
  * @author chenrd
  * @version 2015年5月25日
  * @see RoleManagerImpl
@@ -38,73 +40,64 @@ import com.chenrd.sys.service.info.RoleInfo;
  */
 @Transactional
 @Service("roleManager")
-public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManager
-{
-    /**
-     * 
-     */
-    @Resource(name = "roleDAO")
-    private RoleDAO roleDAO;
-    
-    /**
-     * @param roleDAO The roleDAO to set.
-     */
-    public void setRoleDAO(RoleDAO roleDAO)
-    {
-        this.roleDAO = roleDAO;
-    }
+public class RoleManagerImpl extends AbstractPowerBusiness implements RoleManager {
+	/**
+	 * 
+	 */
+	@Resource(name = "roleDAO")
+	private RoleDAO roleDAO;
 
-    @Override
-    public void saveOrUpdate(RoleInfo info, Long[] powers)
-    {
-        Role role = null;
-        if (info.getId() != null)
-        {
-            role = roleDAO.get(Role.class, info.getId());
-            info.setStatus(role.getStatus());
-        }
-        else
-        {
-            role = new Role();
-            role.setCreateDate(new Date());
-        }
-        BeanUtil.copyProperties(info, role);
-        if (powers != null)
-        {
-            Set<Power> set = new HashSet<Power>();
-            for (Long power : powers)
-            {
-                set.add(roleDAO.get(Power.class, power));
-            }
-            role.setPowers(set);
-        }
-        role.setUpdateDate(new Date());
-        roleDAO.saveOrUpdate(role);
-    }
+	/**
+	 * @param roleDAO
+	 *            The roleDAO to set.
+	 */
+	public void setRoleDAO(RoleDAO roleDAO) {
+		this.roleDAO = roleDAO;
+	}
 
-    @Override
-    public RoleInfo get(Long id)
-    {
-        Role role = roleDAO.get(Role.class, id);
-        if (role == null)
-        {
-            return null;
-        }
-        RoleInfo info = new RoleInfo();
-        BeanUtil.copyProperties(role, info);
-        String powers = "";
-        for (Power power : role.getPowers())
-        {
-            powers += power.getId() + ",";
-        }
-        info.setPowers(powers);
-        return info;
-    }
+	@Override
+	public void saveOrUpdate(RoleInfo info, Long[] powers) {
+		Role role = null;
+		int status = Status.ON;
+		if (info.getId() != null) {
+			role = roleDAO.get(Role.class, info.getId());
+			status = role.getStatus();
+		} else {
+			role = new Role();
+			role.setCreateDate(new Date());
+		}
+		BeanUtil.copyProperties(info, role);
+		if (powers != null) {
+			Set<Power> set = new HashSet<Power>();
+			for (Long power : powers) {
+				set.add(roleDAO.get(Power.class, power));
+			}
+			role.setPowers(set);
+		}
+		role.setUpdateDate(new Date());
+		role.setStatus(status);
+		roleDAO.saveOrUpdate(role);
+	}
 
-    @Override
-    public BaseDAO getDAO()
-    {
-        return roleDAO;
-    }
+	@Override
+	public RoleInfo get(Long id) {
+		Role role = roleDAO.get(Role.class, id);
+		if (role == null) {
+			return null;
+		}
+		RoleInfo info = new RoleInfo();
+		BeanUtil.copyProperties(role, info);
+		String powers = "";
+		for (Power power : role.getPowers()) {
+			powers += power.getId() + ",";
+		}
+		info.setPowers(powers);
+		return info;
+	}
+
+	@Override
+	public BaseDAO getDAO() {
+		return roleDAO;
+	}
 
 }

@@ -37,8 +37,7 @@ import com.chenrd.sys.vo.AttributeVO;
  */
 @Controller
 @RequestMapping("attribute")
-public class AttributeController extends FreemarkerController
-{
+public class AttributeController extends FreemarkerController {
     
     /**
      * 
@@ -52,8 +51,7 @@ public class AttributeController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index()
-    {
+    public String index() {
         return getViewName("view/attribute/index");
     }
     
@@ -64,8 +62,7 @@ public class AttributeController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "show/{applyId}")
-    public String show(@PathVariable Long applyId, String parentKey, ModelMap map)
-    {
+    public String show(@PathVariable Long applyId, String parentKey, ModelMap map) {
         map.put("applyId", applyId);
         map.put("parentKey", parentKey);
         return getViewName("view/attribute/rows");
@@ -77,8 +74,7 @@ public class AttributeController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Long applyId, String parentKey, ModelMap map)
-    {
+    public String create(Long applyId, String parentKey, ModelMap map) {
         map.put("applyId", applyId);
         map.put("parentKey", parentKey);
         return getViewName("view/attribute/edit");
@@ -90,8 +86,7 @@ public class AttributeController extends FreemarkerController
      * @see
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable Long id, Long applyId, String parentKey, ModelMap map)
-    {
+    public String edit(@PathVariable Long id, Long applyId, String parentKey, ModelMap map) {
         map.put("applyId", applyId);
         map.put("parentKey", parentKey);
         map.put("bean", attributeManager.get(id, AttributeVO.class));
@@ -105,8 +100,7 @@ public class AttributeController extends FreemarkerController
      */
     @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public void saveOrUpdate(AttributeVO vo)
-    {
+    public void saveOrUpdate(AttributeVO vo) {
         attributeManager.saveOrUpdate(vo);
     }
     
@@ -118,8 +112,7 @@ public class AttributeController extends FreemarkerController
      */
     @RequestMapping(value = "find", method = RequestMethod.POST)
     @ResponseBody
-    public JQueryTableResult find(AttributeVO info, Paging paging)
-    {
+    public JQueryTableResult find(AttributeVO info, Paging paging) {
         return new JQueryTableResult(attributeManager.find("find", AttributeVO.class, info, paging), paging);
     }
     
@@ -131,8 +124,7 @@ public class AttributeController extends FreemarkerController
      */
     @RequestMapping(value = "findChilds/{parentKey}", method = RequestMethod.GET)
     @ResponseBody
-    public List<AttributeVO> findChilds(@PathVariable String parentKey)
-    {
+    public List<AttributeVO> findChilds(@PathVariable String parentKey) {
         return attributeManager.find("findChilds", AttributeVO.class, new AttributeVO(parentKey.replace("-", "/"), Status.OFF));
     }
     
@@ -145,8 +137,7 @@ public class AttributeController extends FreemarkerController
      */
     @RequestMapping(value = "findSelect/{parentKey}")
     @ResponseBody
-    public List<AttributeVO> findSelect(@PathVariable String parentKey)
-    {
+    public List<AttributeVO> findSelect(@PathVariable String parentKey) {
         return attributeManager.find("findChilds", AttributeVO.class, new AttributeVO(parentKey.replace("-", "/"), Status.ON));
     }
     

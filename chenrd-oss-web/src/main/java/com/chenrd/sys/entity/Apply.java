@@ -36,8 +36,7 @@ import com.chenrd.sys.service.Status;
  */
 @Table(name = "OSS_APPLY")
 @Entity
-public class Apply extends Domain
-{
+public class Apply extends Domain {
 
     /**
      * 意义，目的和功能，以及被用到的地方<br>
@@ -103,180 +102,177 @@ public class Apply extends Domain
     @QueryOrder(value = "desc", index = 1)
     @QueryParams(nexus = Nexus.GTEQUAL)
     @Column(name = "STATUS")
-    private int status = Status.OFF;
+    private Integer status = Status.OFF;
     
     /**
      * 访问路径
      */
     @Column(name = "URL")
     private String url;
+    
+	@Override
+	public int hashCode() {
+		int h = id.hashCode();
+        h ^= (h >>> 20) ^ (h >>> 12);
+        return h ^ (h >>> 7) ^ (h >>> 4);
+	}
 
-    /**
-     * @return Returns the id.
-     */
-    public Long getId()
-    {
-        return id;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Role)) {
+			return false;
+		}
+		Apply objKey = (Apply) obj;
+		if (objKey.id == this.id) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @param id The id to set.
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	/**
+	 * @return Returns the id.
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName()
-    {
-        return name;
-    }
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * @param name The name to set.
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * @return Returns the address.
-     */
-    public String getAddress()
-    {
-        return address;
-    }
+	/**
+	 * @param name The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * @param address The address to set.
-     */
-    public void setAddress(String address)
-    {
-        this.address = address;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public String getKey() {
+		return key;
+	}
 
-    /**
-     * @return Returns the createDate.
-     */
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
+	/**
+	 * @param key The key to set.
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    /**
-     * @param createDate The createDate to set.
-     */
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
+	/**
+	 * @return Returns the address.
+	 */
+	public String getAddress() {
+		return address;
+	}
 
-    /**
-     * @return Returns the createId.
-     */
-    public String getCreateId()
-    {
-        return createId;
-    }
+	/**
+	 * @param address The address to set.
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    /**
-     * @param createId The createId to set.
-     */
-    public void setCreateId(String createId)
-    {
-        this.createId = createId;
-    }
+	/**
+	 * @return Returns the icon.
+	 */
+	public String getIcon() {
+		return icon;
+	}
 
-    /**
-     * @return Returns the createName.
-     */
-    public String getCreateName()
-    {
-        return createName;
-    }
+	/**
+	 * @param icon The icon to set.
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
-    /**
-     * @param createName The createName to set.
-     */
-    public void setCreateName(String createName)
-    {
-        this.createName = createName;
-    }
+	/**
+	 * @return Returns the createDate.
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    /**
-     * @return Returns the serialversionuid.
-     */
-    public static long getSerialversionuid()
-    {
-        return serialVersionUID;
-    }
+	/**
+	 * @param createDate The createDate to set.
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    /**
-     * @return Returns the icon.
-     */
-    public String getIcon()
-    {
-        return icon;
-    }
+	/**
+	 * @return Returns the createId.
+	 */
+	public String getCreateId() {
+		return createId;
+	}
 
-    /**
-     * @param icon The icon to set.
-     */
-    public void setIcon(String icon)
-    {
-        this.icon = icon;
-    }
+	/**
+	 * @param createId The createId to set.
+	 */
+	public void setCreateId(String createId) {
+		this.createId = createId;
+	}
 
-    /**
-     * @return Returns the key.
-     */
-    public String getKey()
-    {
-        return key;
-    }
+	/**
+	 * @return Returns the createName.
+	 */
+	public String getCreateName() {
+		return createName;
+	}
 
-    /**
-     * @param key The key to set.
-     */
-    public void setKey(String key)
-    {
-        this.key = key;
-    }
+	/**
+	 * @param createName The createName to set.
+	 */
+	public void setCreateName(String createName) {
+		this.createName = createName;
+	}
 
-    /**
-     * @return Returns the status.
-     */
-    public int getStatus()
-    {
-        return status;
-    }
+	/**
+	 * @return Returns the status.
+	 */
+	public Integer getStatus() {
+		return status;
+	}
 
-    /**
-     * @param status The status to set.
-     */
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
+	/**
+	 * @param status The status to set.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    /**
-     * @return Returns the url.
-     */
-    public String getUrl()
-    {
-        return url;
-    }
+	/**
+	 * @return Returns the url.
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-    /**
-     * @param url The url to set.
-     */
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
+	/**
+	 * @param url The url to set.
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 }

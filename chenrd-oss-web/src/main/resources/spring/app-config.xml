@@ -67,13 +67,12 @@
 				<!-- 开启查询缓存 -->
 				<prop key="hibernate.cache.use_query_cache">false</prop>
 				<!-- 配置二级缓存 --> 
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
 				<!-- 强制Hibernate以更人性化的格式将数据存入二级缓存 -->  
-      			<prop key="hibernate.cache.use_structured_entries">true</prop> 
+      			<prop key="hibernate.cache.use_structured_entries">false</prop> 
       			<!-- Hibernate将收集有助于性能调节的统计数据 -->  
-      			<prop key="hibernate.generate_statistics">true</prop>
+      			<prop key="hibernate.generate_statistics">false</prop>
       			<!-- 指定缓存配置文件位置 -->
-      			<prop key="hibernate.cache.provider_configuration_file_resource_path">/spring/ehcache.xml</prop>
 				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
 				<prop key="current_session_context_class">thread</prop>
 			</props>
@@ -99,7 +98,9 @@
 			</bean>
 		</property>
 	</bean> -->
-	<task:executor id="executor" pool-size="5" />
+	
+	<!-- 线程池pool-size大小初始化5个线程，最大25个，最长的等待队列100，keep-alive线程池空闲的情况下线程执行结束之后等待多少秒在关闭 -->
+	<task:executor id="executor"  pool-size="5-25" queue-capacity="100" keep-alive="0"/>
 	<task:scheduler id="scheduler" pool-size="10" />
 	<task:annotation-driven executor="executor" scheduler="scheduler" />
 	

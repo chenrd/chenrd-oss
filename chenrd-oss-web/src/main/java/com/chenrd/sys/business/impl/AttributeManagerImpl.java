@@ -41,77 +41,70 @@ import com.chenrd.sys.vo.AttributeVO;
  */
 @Transactional
 @Service("attributeManager")
-public class AttributeManagerImpl extends AbstractPowerBusiness implements AttributeManager
-{
+public class AttributeManagerImpl extends AbstractPowerBusiness implements AttributeManager {
 
-    /**
-     * 
-     */
-    @Resource(name = "attributeDAO")
-    private AttributeDAO attributeDAO;
-    
-    @Override
-    public void saveOrUpdate(AttributeVO vo)
-    {
-        Attribute attribute = null;
-        if (vo.getId() == null) {
-            attribute = new Attribute();
-        } else {
-            attribute = (Attribute) attributeDAO.get(vo.getId());
-        }
-        Attribute parent = attributeDAO.getByProperties(Attribute.class, new String[] {"key", "status"},  new Object[] {vo.getParentKey(), Status.NO});
-        if (parent == null) throw new BaseExecuteException("没有找到可用的父属性, key = [" + vo.getParentKey() + "]");
-        attribute.setName(vo.getName());
-        attribute.setValue(vo.getValue());
-        attribute.setApply(attributeDAO.get(Apply.class, vo.getApplyId()));
-        attribute.setFullName(parent.getFullName() + "-" + vo.getValue());
-        attribute.setParentKey(vo.getParentKey());
-        attribute.setKey(vo.getParentKey() + "/" + vo.getValue());
-        attribute.setCreateDate(new Date());
-        attribute.setAttrType(parent.getAttrType() + 1);
-        attribute.setStatus(Status.NO);
-        attributeDAO.saveOrUpdate(attribute);
-    }
-    
-    @Override
-    public List<AttributeVO> findChilds(String key)
-    {
-        return super.find("findChilds", AttributeVO.class, new AttributeVO(key));
-    }
-    
-    @Override
-    public List<PowerInfo> findParent(String applyKey)
-    {
-        return BeanUtil.returnList(attributeDAO.findParent(applyKey), PowerInfo.class);
-    }
+	/**
+	 * 
+	 */
+	@Resource(name = "attributeDAO")
+	private AttributeDAO attributeDAO;
 
-    @Override
-    public List<PowerInfo> find(String parentKey, Paging paging)
-    {
-        return BeanUtil.returnList(attributeDAO.findPaging(parentKey, paging), PowerInfo.class);
-    }
+	@Override
+	public void saveOrUpdate(AttributeVO vo) {
+		Attribute attribute = null;
+		if (vo.getId() == null) {
+			attribute = new Attribute();
+		} else {
+			attribute = (Attribute) attributeDAO.get(vo.getId());
+		}
+		Attribute parent = attributeDAO.getByProperties(Attribute.class, new String[] { "key", "status" },
+				new Object[] { vo.getParentKey(), Status.ON });
+		if (parent == null)
+			throw new BaseExecuteException("没有找到可用的父属性, key = [" + vo.getParentKey() + "]");
+		attribute.setName(vo.getName());
+		attribute.setValue(vo.getValue());
+		attribute.setApply(attributeDAO.get(Apply.class, vo.getApplyId()));
+		attribute.setFullName(parent.getFullName() + "-" + vo.getValue());
+		attribute.setParentKey(vo.getParentKey());
+		attribute.setKey(vo.getParentKey() + "/" + vo.getValue());
+		attribute.setCreateDate(new Date());
+		attribute.setAttrType(parent.getAttrType() + 1);
+		attribute.setStatus(Status.ON);
+		attributeDAO.saveOrUpdate(attribute);
+	}
 
-    @Override
-    public void publish(Long id)
-    {
-        Attribute po = attributeDAO.get(Attribute.class, id);
-        po.setStatus(po.getStatus() == Status.OFF ? Status.NO : Status.OFF);
-        attributeDAO.update(po);
-    }
+	@Override
+	public List<AttributeVO> findChilds(String key) {
+		return super.find("findChilds", AttributeVO.class, new AttributeVO(key));
+	}
 
-    @Override
-    public void delete(Long id)
-    {
-        Attribute po = attributeDAO.get(Attribute.class, id);
-        po.setStatus(Status.DELETED);
-        attributeDAO.update(po);
-    }
+	@Override
+	public List<PowerInfo> findParent(String applyKey) {
+		return BeanUtil.returnList(attributeDAO.findParent(applyKey), PowerInfo.class);
+	}
 
-    @Override
-    public BaseDAO getDAO()
-    {
-        return attributeDAO;
-    }
+	@Override
+	public List<PowerInfo> find(String parentKey, Paging paging) {
+		return BeanUtil.returnList(attributeDAO.findPaging(parentKey, paging), PowerInfo.class);
+	}
 
+	@Override
+	public void publish(Long id) {
+		Attribute po = attributeDAO.get(Attribute.class, id);
+		po.setStatus(po.getStatus() == Status.OFF ? Status.ON : Status.OFF);
+		attributeDAO.update(po);
+	}
+
+	@Override
+	public void delete(Long id) {
+		Attribute po = attributeDAO.get(Attribute.class, id);
+		po.setStatus(Status.DELETED);
+		attributeDAO.update(po);
+	}
+
+	@Override
+	public BaseDAO getDAO() {
+		return attributeDAO;
+	}
 
 }

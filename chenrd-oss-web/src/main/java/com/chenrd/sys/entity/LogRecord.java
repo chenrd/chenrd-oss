@@ -34,8 +34,7 @@ import com.chenrd.example.Domain;
 @Entity
 @Table(name = "OSS_LOGRECORD")
 @NamedQueries({@NamedQuery(name = "logList", query = "select new com.chenrd.sys.service.info.LogInfo(t.id,t.type,t.createDate,t.userName,t.applyKey,t.label) from com.chenrd.sys.entity.LogRecord as t where t.applyKey=:applyKey and t.type=:type order by t.createDate desc")})
-public class LogRecord extends Domain
-{
+public class LogRecord extends Domain {
 
     /**
      * 意义，目的和功能，以及被用到的地方<br>
@@ -91,8 +90,7 @@ public class LogRecord extends Domain
     /**
      * 
      */
-    public LogRecord()
-    {
+    public LogRecord() {
         
     }
 
@@ -102,144 +100,109 @@ public class LogRecord extends Domain
      * @param createDate 
      * @param userName 
      */
-    public LogRecord(int type, Date createDate, String userName)
-    {
+    public LogRecord(int type, Date createDate, String userName) {
         super();
         this.type = type;
         this.createDate = createDate;
         this.userName = userName;
     }
 
-    /**
-     * @return Returns the id.
-     */
-    public Long getId()
-    {
-        return id;
-    }
+	/**
+	 * @return Returns the id.
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * @param id The id to set.
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * @return Returns the type.
-     */
-    public int getType()
-    {
-        return type;
-    }
+	/**
+	 * @return Returns the applyKey.
+	 */
+	public String getApplyKey() {
+		return applyKey;
+	}
 
-    /**
-     * @param type The type to set.
-     */
-    public void setType(int type)
-    {
-        this.type = type;
-    }
+	/**
+	 * @param applyKey The applyKey to set.
+	 */
+	public void setApplyKey(String applyKey) {
+		this.applyKey = applyKey;
+	}
 
-    /**
-     * @return Returns the createDate.
-     */
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
+	/**
+	 * @return Returns the label.
+	 */
+	public String getLabel() {
+		return label;
+	}
 
-    /**
-     * @param createDate The createDate to set.
-     */
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
+	/**
+	 * @param label The label to set.
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    /**
-     * @return Returns the userName.
-     */
-    public String getUserName()
-    {
-        return userName;
-    }
+	/**
+	 * @return Returns the type.
+	 */
+	public int getType() {
+		return type;
+	}
 
-    /**
-     * @param userName The userName to set.
-     */
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
+	/**
+	 * @param type The type to set.
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    /**
-     * @return Returns the content.
-     */
-    public String getContent()
-    {
-        return content;
-    }
+	/**
+	 * @return Returns the createDate.
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    /**
-     * @param content The content to set.
-     */
-    public void setContent(String content)
-    {
-        this.content = content;
-    }
+	/**
+	 * @param createDate The createDate to set.
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    /**
-     * @return Returns the serialversionuid.
-     */
-    public static long getSerialversionuid()
-    {
-        return serialVersionUID;
-    }
+	/**
+	 * @return Returns the userName.
+	 */
+	public String getUserName() {
+		return userName;
+	}
 
-    /**
-     * @return Returns the applyKey.
-     */
-    public String getApplyKey()
-    {
-        return applyKey;
-    }
+	/**
+	 * @param userName The userName to set.
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    /**
-     * @param applyKey The applyKey to set.
-     */
-    public void setApplyKey(String applyKey)
-    {
-        this.applyKey = applyKey;
-    }
+	/**
+	 * @return Returns the content.
+	 */
+	public String getContent() {
+		return content;
+	}
 
-    /**
-     * @return Returns the label.
-     */
-    public String getLabel()
-    {
-        return label;
-    }
+	/**
+	 * @param content The content to set.
+	 */
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    /**
-     * @param label The label to set.
-     */
-    public void setLabel(String label)
-    {
-        this.label = label;
-    }
-
-    @Override
-    public int getStatus()
-    {
-        return 0;
-    }
-
-    @Override
-    public void setStatus(int status)
-    {
-        
-    }
-    
 }

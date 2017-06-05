@@ -16,15 +16,16 @@ import com.chenrd.sys.vo.OrganizationVO;
 /**
  * 
  * 组织机构
+ * 
  * @author chenrd
  * @version 2015年5月15日
  * @see OrganizationManager
  * @since
  */
 public interface OrganizationManager extends PowerBusiness {
-    
+
 	Long DEFUALT_ORG_ID = 1l;
 	String DEFUALT_ORG_NAME = "ROOT";
-	
+
 	void saveOrUpdate(OrganizationVO vo);
 }

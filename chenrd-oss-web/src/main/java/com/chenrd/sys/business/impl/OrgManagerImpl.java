@@ -29,8 +29,8 @@ import com.chenrd.sys.vo.OrganizationVO;
 
 /**
  * 
- * 〈一句话功能简述〉
- * 〈功能详细描述〉
+ * 〈一句话功能简述〉 〈功能详细描述〉
+ * 
  * @author chenrd
  * @version 2015年5月21日
  * @see OrgManagerImpl
@@ -38,14 +38,13 @@ import com.chenrd.sys.vo.OrganizationVO;
  */
 @Transactional
 @Service("orgManager")
-public class OrgManagerImpl extends AbstractPowerBusiness implements OrganizationManager
-{
+public class OrgManagerImpl extends AbstractPowerBusiness implements OrganizationManager {
 
-    /**
-     * 
-     */
-    @Resource(name = "orgDAO")
-    private OrganizationDAO orgDAO;
+	/**
+	 * 
+	 */
+	@Resource(name = "orgDAO")
+	private OrganizationDAO orgDAO;
 
 	@Override
 	public BaseDAO getDAO() {
@@ -68,13 +67,14 @@ public class OrgManagerImpl extends AbstractPowerBusiness implements Organizatio
 		po.setUpdateUser(vo.getCreator());
 		orgDAO.saveOrUpdate(po);
 	}
-    
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends VO> T get(Serializable id, Class<T> clazz) {
 		OrganizationVO vo = (OrganizationVO) super.get(id, clazz);
 		int lastIndex = vo.getKey().lastIndexOf("/");
-		if (lastIndex != -1) vo.setKey(vo.getKey().substring(lastIndex + 1));
+		if (lastIndex != -1)
+			vo.setKey(vo.getKey().substring(lastIndex + 1));
 		vo.setParentName(((Organization) orgDAO.get(vo.getParentId())).getName());
 		return (T) vo;
 	}

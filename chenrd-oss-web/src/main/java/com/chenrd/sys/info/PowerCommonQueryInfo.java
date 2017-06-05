@@ -15,68 +15,80 @@ import com.chenrd.dao.info.QueryInfo;
 import com.chenrd.example.Example;
 import com.chenrd.example.Status;
 
-public class PowerCommonQueryInfo extends Example implements QueryInfo
-{
+public class PowerCommonQueryInfo extends Example implements QueryInfo {
 
-    /**
-     * 意义，目的和功能，以及被用到的地方<br>
-     */
-    private static final long serialVersionUID = 1254551773772652118L;
-    
-    private String parentKey;
-    
-    private int status = Status.OFF;
-    
-    /**
-     * @param status
-     */
-    public PowerCommonQueryInfo(int status)
-    {
-        super();
-        this.status = status;
-    }
+	/**
+	 * 意义，目的和功能，以及被用到的地方<br>
+	 */
+	private static final long serialVersionUID = 1254551773772652118L;
 
-    /**
-     * @param parentKey
-     * @param status
-     */
-    public PowerCommonQueryInfo(String parentKey, int status)
-    {
-        super();
-        this.parentKey = parentKey;
-        this.status = status;
-    }
+	private String parentKey;
+	
+	private int type;
 
-    /**
-     * @return Returns the parentKey.
-     */
-    public String getParentKey()
-    {
-        return parentKey;
-    }
+	private int status = Status.OFF;
 
-    /**
-     * @param parentKey The parentKey to set.
-     */
-    public void setParentKey(String parentKey)
-    {
-        this.parentKey = parentKey;
-    }
+	/**
+	 * @param status
+	 */
+	public PowerCommonQueryInfo(int status) {
+		super();
+		this.status = status;
+	}
 
-    /**
-     * @return Returns the status.
-     */
-    public int getStatus()
-    {
-        return status;
-    }
+	/**
+	 * @param parentKey
+	 * @param status
+	 */
+	public PowerCommonQueryInfo(String parentKey, int status, int type) {
+		super();
+		this.parentKey = parentKey;
+		this.status = status;
+		this.type = type;
+	}
 
-    /**
-     * @param status The status to set.
-     */
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
-    
+	/**
+	 * @return Returns the parentKey.
+	 */
+	public String getParentKey() {
+		return parentKey;
+	}
+
+	/**
+	 * @param parentKey
+	 *            The parentKey to set.
+	 */
+	public void setParentKey(String parentKey) {
+		this.parentKey = parentKey;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            The status to set.
+	 */
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return Returns the type.
+	 */
+	public int getType() {
+		return type;
+	}
+
+	/**
+	 * @param type The type to set.
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
+
 }

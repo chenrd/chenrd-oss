@@ -32,13 +32,11 @@ import com.chenrd.sys.service.Status;
  * @since
  */
 @Repository("roleDAO")
-public class RoleDAOImpl extends AbstractBaseDAO<Role> implements RoleDAO
-{
+public class RoleDAOImpl extends AbstractBaseDAO<Role> implements RoleDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Role> findPaging(String name, Paging paging)
-    {
+    public List<Role> findPaging(String name, Paging paging) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = new StringBuilder().append("from ").append(Role.class.getSimpleName()).append(" as po where").append(" po.status>=:status");
         params.put("status", Status.OFF);
@@ -53,11 +51,10 @@ public class RoleDAOImpl extends AbstractBaseDAO<Role> implements RoleDAO
 
     @SuppressWarnings("unchecked")
     @Override
-    public Role getByKey(String key)
-    {
+    public Role getByKey(String key) {
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         StringBuilder hql = new StringBuilder("from ").append(Role.class.getSimpleName()).append(" as po where ").append(" po.status>=:status and po.key=:key");
-        params.put("status", Status.NO);
+        params.put("status", Status.ON);
         params.put("key", key);
         List<Role> list = (List<Role>) super.find(hql.toString(), params);
         return list == null || list.size() == 0 ? null : list.get(0);

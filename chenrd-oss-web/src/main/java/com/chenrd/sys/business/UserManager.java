@@ -20,66 +20,67 @@ import com.chenrd.sys.vo.UserVO;
  * @see UserManager
  * @since
  */
-public interface UserManager extends PowerBusiness
-{
+public interface UserManager extends PowerBusiness {
 
-    
-    /**
-     * 
-     * 保存用户
-     * @param userInfo 用户信息
-     * @see
-     */
-    String saveOrUpdate(UserVO userInfo);
-    
-    
-    /**
-     * 获取用户全部关联属性
-     * 
-     * @param id
-     * @return 
-     * @see
-     */
-    UserVO getUserAndPower(String id);
-    
-    
-    /**
-     * 
-     * 授权
-     * @param id 
-     * @param roles 
-     * @param powers  
-     * @see
-     */
-    void allot(String id, String[] roles, String[] powers, String[] applys);
-    
-    
-    /**
-     * 修改密码
-     * 
-     * @param username 用户名
-     * @param oldPassword 久密码
-     * @param newPassword 新密码
-     * @see
-     */
-    void updatePassword(String username, String oldPassword, String newPassword);
-    
-    /**
-     * 重置密码
-     * 
-     * @param id 
-     * @see
-     */
-    void resetPassword(String id, String username);
-    
-    /**
+	/**
+	 * 
+	 * 保存用户
+	 * 
+	 * @param userInfo
+	 *            用户信息
+	 * @see
+	 */
+	String saveOrUpdate(UserVO userInfo);
+
+	/**
+	 * 获取用户全部关联属性
+	 * 
+	 * @param id
+	 * @return
+	 * @see
+	 */
+	UserVO getUserAndPower(String id);
+
+	/**
+	 * 
+	 * 授权
+	 * 
+	 * @param id
+	 * @param roles
+	 * @param powers
+	 * @see
+	 */
+	void allot(String id, String[] roles, String[] powers, String[] applys);
+
+	/**
+	 * 修改密码
+	 * 
+	 * @param username
+	 *            用户名
+	 * @param oldPassword
+	 *            久密码
+	 * @param newPassword
+	 *            新密码
+	 * @see
+	 */
+	void updatePassword(String username, String oldPassword, String newPassword);
+
+	/**
+	 * 重置密码
+	 * 
+	 * @param id
+	 * @see
+	 */
+	void resetPassword(String id, String username);
+
+	/**
      * 分配字段权限
      * 
      * @param userId
      * @param fieldId 
      * @see
      */
-    void allotField(String userId, Long fieldId);
+    void allotField(Long fieldId, String... userId);
     
-    void deleteField(String userId, Long fieldId);
+    void deleteField(Long fieldId, String... userId);
 }

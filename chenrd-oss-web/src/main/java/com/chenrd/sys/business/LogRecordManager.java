@@ -22,21 +22,21 @@ import com.chenrd.sys.service.info.LogInfo;
  * @see LogRecordManager
  * @since
  */
-public interface LogRecordManager
-{
-    /**
-     * 
-     * @param applyKey 
-     * @param type 
-     * @param paging 分页条件
-     * @return List<LogInfo>
-     * @see
-     */
-    List<LogInfo> findPaging(String applyKey, int type, Paging paging);
-    
-    /**
-     * @param id 
-     * @return 返回内容
-     */
-    String getContent(Long id);
+public interface LogRecordManager {
+	/**
+	 * 
+	 * @param applyKey
+	 * @param type
+	 * @param paging
+	 *            分页条件
+	 * @return List<LogInfo>
+	 * @see
+	 */
+	List<LogInfo> findPaging(String applyKey, int type, Paging paging);
+
+	/**
+	 * @param id
+	 * @return 返回内容
+	 */
+	String getContent(Long id);
 }

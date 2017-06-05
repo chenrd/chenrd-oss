@@ -32,31 +32,27 @@ import com.chenrd.sys.vo.ApplyVO;
  */
 @Transactional
 @Service("applyManager")
-public class ApplyManagerImpl extends AbstractPowerBusiness implements ApplyManager
-{
-    /**
-     * 
-     */
-    @Resource(name = "applyDAO")
-    private ApplyDAO applyDAO;
-    
-    @Override
-    public void saveOrUpdate(ApplyVO apply)
-    {
-        Apply po = null;
-        if (apply.getId() != null) 
-            po = applyDAO.get(Apply.class, apply.getId());
-        else
-            po = new Apply();
-        
-        BeanCopyUtils.copy(apply, po, true);
-        applyDAO.saveOrUpdate(po);
-    }
+public class ApplyManagerImpl extends AbstractPowerBusiness implements ApplyManager {
+	/**
+	 * 
+	 */
+	@Resource(name = "applyDAO")
+	private ApplyDAO applyDAO;
 
-    @Override
-    public BaseDAO getDAO()
-    {
-        return applyDAO;
-    }
-    
+	@Override
+	public void saveOrUpdate(ApplyVO apply) {
+		Apply po = null;
+		if (apply.getId() != null)
+			po = applyDAO.get(Apply.class, apply.getId());
+		else
+			po = new Apply();
+		BeanCopyUtils.copy(apply, po, true);
+		applyDAO.saveOrUpdate(po);
+	}
+
+	@Override
+	public BaseDAO getDAO() {
+		return applyDAO;
+	}
+
 }

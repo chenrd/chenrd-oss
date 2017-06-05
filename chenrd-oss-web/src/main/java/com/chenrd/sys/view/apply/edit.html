@@ -48,7 +48,8 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                 	<input type="hidden" value="<#if bean??>${bean.id}</#if>" name="id"/>
-                    <button type="submit" class="btn btn-blue"> 提交 </button>
+                    <button type="submit" class="btn btn-blue"> 提交 </button>&nbsp;
+                    <a href="javascript:void(0);" onclick="Home.callback();" class="btn btn-danger"> 取消 </a>
                 </div>
             </div>
         </form>

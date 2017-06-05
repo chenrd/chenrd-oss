@@ -38,41 +38,39 @@ import com.chenrd.sys.service.info.LogInfo;
  */
 @Transactional
 @Service("logRecordService")
-public class LogRecordServiceImpl implements LogRecordManager, LogRecordService
-{
+public class LogRecordServiceImpl implements LogRecordManager, LogRecordService {
 
-    /**
-     * 
-     */
-    @Resource(name = "logRevordDAO")
-    private BaseDAO logRevordDAO;
-    
-    /*
-     * (non-Javadoc)
-     * @see com.chenrd.ex.service.LogRecordService#findPaging(com.chenrd.common.Paging)
-     */
-    @Override
-    public List<LogInfo> findPaging(String applyKey, int type, Paging paging)
-    {
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put("applyKey", applyKey);
-        params.put("type", type);
-        return logRevordDAO.findQueryNamePaging("logList", params, paging);
-    }
+	/**
+	 * 
+	 */
+	@Resource(name = "logRevordDAO")
+	private BaseDAO logRevordDAO;
 
-    @Override
-    public String getContent(Long id)
-    {
-        return logRevordDAO.get(LogRecord.class, id).getContent();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.chenrd.ex.service.LogRecordService#findPaging(com.chenrd.common.
+	 * Paging)
+	 */
+	@Override
+	public List<LogInfo> findPaging(String applyKey, int type, Paging paging) {
+		Map<String, Serializable> params = new HashMap<String, Serializable>();
+		params.put("applyKey", applyKey);
+		params.put("type", type);
+		return logRevordDAO.findQueryNamePaging("logList", params, paging);
+	}
 
-    @Override
-    public void newLogRecord(LogInfo info)
-    {
-        LogRecord record = new LogRecord();
-        BeanUtil.copyProperties(info, record);
-        record.setCreateDate(new Date());
-        logRevordDAO.saveOrUpdate(record);
-    }
+	@Override
+	public String getContent(Long id) {
+		return logRevordDAO.get(LogRecord.class, id).getContent();
+	}
+
+	@Override
+	public void newLogRecord(LogInfo info) {
+		LogRecord record = new LogRecord();
+		BeanUtil.copyProperties(info, record);
+		record.setCreateDate(new Date());
+		logRevordDAO.saveOrUpdate(record);
+	}
 
 }

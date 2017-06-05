@@ -82,18 +82,16 @@ public interface UserService
      * @param fieldId 
      * @see
      */
-    void allotField(String userId, Long fieldId);
+    void allotField(Long fieldId, String... userId);
     
-    void deleteField(String userId, Long fieldId);
+    void deleteField(Long fieldId, String... userId);
     
     /**
-     * 分配字段权限
+     * 清除这个字段权限下面的所有关联
      * 
-     * @param userId
      * @param fieldId 
      * @see
      */
-    void allotFields(String[] userIds, Long fieldId);
+    void clearFieldUserMapping(Long fieldId);
     
-    void deleteFields(String[] userIds, Long fieldId);
 }

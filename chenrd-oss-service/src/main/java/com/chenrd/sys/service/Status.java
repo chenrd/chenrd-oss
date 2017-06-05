@@ -32,6 +32,6 @@ public interface Status
     /**
      * 启用
      */
-    int NO = 1;
+    int ON = 1;
     
 }
