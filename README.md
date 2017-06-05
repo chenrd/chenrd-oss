@@ -1,7 +1,7 @@
 # 这份说明是对版本1.0.1SN...做的
 
 ## chenrd-oss-shrio 统一登录
-  chenrd-oss-web依赖当前这个包，添加cas及shrio的配置
+  chenrd-oss-web依赖当前这个包，添加cas及shrio的配置<br/>
   这个子模块的主要功能就是实现cas登录回调，及所有系统session注销，以及项目的UserInfo的缓存，shiro动态权限（每个springmvc接口的权限生成）
   几个重要的类说明：com.chenrd.shiro.SingleSignOutHttpSessionListener拦截器，session被项目群中的任意一个去CAS注销登录，项目群中的所有拦截器就会同时得到这个信息，删除缓存。
   com.chenrd.shiro.ShiroCheckFilter过滤器，这个过滤器的目的就是拦截所有的请求，验证用户的缓存是否被注销了，如果已经注销，那么session里面的用户信息需要同样注销掉。
