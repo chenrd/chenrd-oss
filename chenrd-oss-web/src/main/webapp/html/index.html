@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta content="Cleam Lee" name="author">
+    <meta name="description" content="021网址导航，汇集最优秀的网站及资源。及时收录影视、音乐、小说、游戏等分类的网址和内容，让您的网络生活更简单精彩。上网，从021网址导航开始。" />
+    <meta name="keywords" content="网址导航,上网导航,网址大全,网址导航,021上网导航,021网址,021导航,021网址大全"/>
+    <meta http-equiv="expires" content="31 Dec 2018">
+    <meta name="_globalsign-domain-verification" content="eN4dQoBV1e-hClFv_JUjimaZBuCaiQl5vRDf6-yX36" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="bookmark" href="img/favicon.ico" type="image/x-icon"　/>
+    <link rel="apple-touch-icon-precomposed" href="img/logo_icon.png">
+    <title>网址导航</title>
+    <script>!function(a,b){var c=a.documentElement,d="orientationchange"in window?"orientationchange":"resize",e=function(){var a=c.clientWidth;a&&(a>=720&&(a=720),c.style.fontSize=100*(a/720)+"px")};a.addEventListener&&(b.addEventListener(d,e,!1),e())}(document,window);</script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/swiper-3.3.0.min.css">
+    <link rel="stylesheet" href="css/page.css">
+    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/swiper-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/base64.js"></script>
+    <script type="text/javascript" src="js/channel.js"></script>
+    <script type="text/javascript" src="js/reci.js"></script>
+    <script type="text/javascript" src="js/mm.js"></script>
+    <base target="_self" />
+</head>
+<body>
+<div id="J_top" class="top">
+    <div class="header clearfix">
+        <h1 class="logo">未知网站导航</h1>
+        <a href=""  class="weather" id="J_weather_plugin">
+            <script>
+                // 考虑到统计问题，所以没有直接用iframe的形式，而是采用拼接的形式。
+                var weatherWrap = document.getElementById('J_weather_plugin'),
+                        iframe = document.createElement('iframe'),
+                        tq_qid = 'm021',
+                        tq_subqid = tt_news_mid,
+                        tq_iframe_src = 'https://tianqi.eastday.com/plugin/widget_m021.html?sc=3&z=2&t=1&v=0&d=3&bd=0&k=000000&f=ffffff&q=1&e=1&a=1&c=58362&w=188&h=45&align=right&cl=1&qid=m021&subqid='+tq_subqid;
+
+                iframe.setAttribute('allowtransparency', true);
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('width', '188');
+                iframe.setAttribute('height', '0');
+                iframe.setAttribute('scrolling', 'no');
+                iframe.setAttribute('src', tq_iframe_src);
+                weatherWrap.appendChild(iframe);
+                iframe.onload=function(){
+                    iframe.height="45";
+                }
+            </script>
+
+        </a>
+    </div>
+    <form class="pr" action="https://m.baidu.com/s" id="J_search_form_top">
+        <div class="form-wrap">
+            <div class="input-wrap">
+                <span class="search-logo"></span>
+                <input class="search-input" id="J_search_input" type="text" name="word" placeholder="" autocomplete="off"/>
+                <a id="J_search_clear" class="search-clear"></a>
+                <input type="hidden" value="utf-8" name="ie"/>
+                <input id="from" type="hidden" value="1012704x" name="from"/>
+            </div>
+            <input class="search-btn" type="submit" data-tjname="top,sousuo" data-tj="soso,null" value="百度一下"/>
+        </div>
+        <!-- 搜索结果列表 -->
+        <div id="J_search_result" class="search-result">
+            <ul class="search-result-list"></ul>
+            <div id="J_close_search_result" class="close-wrap"><a>关闭</a></div>
+        </div>
+    </form>
+    <div id="hot_word"></div>
+</div>
+<!--热站-->
+<div id="hot_list">
+    <ul>
+        <li>
+            <a class="J-qid-baidu" aid="4" sid="10" pz="1" href="http://mini.eastday.com/bd/index.html?qid=bdxxl004"  title="百度"><img src="img/icon/i_baidu.png" alt=""><span>百度</span></a>
+            <a class="J-qid-toutiao" aid="4" sid="13" pz="2" href="http://toutiao.eastday.com/?qid=m021dh"  title="头条"><img src="img/icon/i_tou.jpg" alt=""><span>头条</span></a>
+            <!--<a class="J-qid-jingdong" aid="4" sid="11" pz="3" href="http://cps.yaoqing.com/yqtrack.php?sid=131412&aid=3393&euid=weibo&t=http://m.jd.com/"  title="京东"><img src="img/icon/i_jingdong.png" alt=""><span>京东</span></a>-->
+            <a class="J-qid-jingdong" aid="4" sid="37" pz="3" href="https://union-click.jd.com/jdc?e=0&p=AyIHVCtaJQMiQwpDBUoyS0IQWhkeHAxbSkAOClBMW0srIWdncAUpelN1VmhGFBgGSFVUD1VgKxkOfARUG10JAxUbVhhKFQMZB1AQXxcyFgFRHFIcABECZRtaFAMTAFweUx0yIgdUKxB7AyIOUx5aEAcaBlIrWxAKGwZdHVwdABoDUytcJdqIroKGycydgtHKvYy4iSI3ZSs%3D&t=W1dCFFlQCxxOGA5OREdcThk%3D"  title="京东"><img src="img/icon/i_jingdong.png" alt=""><span>京东</span></a>
+            <a class="J-qid-xiaoshuo" aid="4" sid="60" pz="4" href="http://9973dh2.ikanshu.cn/"  title="小说"><img src="img/icon/i_shucheng.png" alt=""><span>小说</span></a>
+            <a class="J-qid-xiecheng sp" aid="4" sid="12" pz="5" href="http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&AllianceID=299402&sid=772977&ouid=&app=0101F00&jumpUrl=http://www.ctrip.com" title="携程"><img src="img/icon/i_xiecheng.png" alt=""><span>携程</span></a>
+            <!--<a class="J-qid-aiqiyi nobottom" aid="4" sid="61" pz="6" href="http://redir.oupeng.com/click.php?id=27105"  title="爱奇艺"><img src="img/icon/i_aiqiyi.png" alt=""><span>爱奇艺</span></a>-->
+            <!--<a class="J-qid-suning nobottom" aid="4" sid="64" pz="6" href="http://redir.oupeng.com/click.php?id=27140"  title="苏宁易购"><img src="img/icon/i_suning.png" alt=""><span>苏宁易购</span></a>-->
+            <a class="J-qid-mnzb nobottom" aid="4" sid="62" pz="7" href="http://m.v.6.cn/?src=ummeda5086"  title="美女直播"><img src="img/icon/i_mnzb.png" alt=""><span>美女直播</span></a>
+            <!--<a class="J-qid-cai nobottom" aid="4" sid="66" pz="7" href="http://5.9188.com/?agent=3026#type=index"  title="彩票"><img src="img/icon/i_cai.jpg" alt=""><span>彩票</span></a>-->
+            <!--<a class="J-qid-juan nobottom" aid="4" sid="73" pz="7" href="https://c.duomai.com/track.php?k=TJBNTJwRHdo1DdmEjMw0DZpVXZmUjNxMTPklWYmAzNygTOx0DZp9VZ0l2cmkWYt9WdkZkMlU2ZhBnRyUyZulGZuFGbGJTJt92YukGcuFWdq5SbGJTJGJ"  title="卷皮网"><img src="img/icon/i_juan.jpg" alt=""><span>卷皮网</span></a>-->
+            <a class="J-qid-liuliang nobottom" aid="4" sid="65" pz="6" href="https://water.oupeng.com/mobile/?cid=h5_9973"  title="流量包"><img src="img/icon/i_liuliang.jpg" alt=""><span>流量包</span></a>
+            <a class="J-qid-wuba nobottom" aid="4" sid="63" pz="8" href="http://jump.luna.58.com/i/Ll-Nrova1luDubj"  title="58同城"><img src="img/icon/i_wuba.png" alt=""><span>58同城</span></a>
+            <a class="J-qid-meinv nobottom" aid="4" sid="16" pz="9" href="http://mm.eastday.com/?qid=m021dh"  title="美女"><img src="img/icon/i_meinv.png" alt=""><span>美女</span></a>
+
+            <a class="J-qid-weipinhui nobottom sp" aid="4" sid="15" pz="10" href="https://c.duomai.com/track.php?site_id=215052&aid=3279&euid=m021&t=http%3A%2F%2Fm.vip.com%2Findex.php"  title="唯品会"><img src="img/icon/i_weipinhui.png" alt=""><span>唯品会</span></a>
+
+
+        </li>
+    </ul>
+    <!--<div class="nopiclist">-->
+    <!--<div><a href="http://toutiao.eastday.com/?qid=m021dh"  aid="5" sid="18" pz="1" title="新闻">新闻</a></div>-->
+    <!--<div><a href="http://m.v.6.cn/?src=ummeda5086"  aid="5" sid="19" pz="2" title="六间房">六间房</a></div>-->
+    <!--<div><a href="http://mm.eastday.com/?qid=m021dh"  aid="5" sid="20" pz="3" title="美图">美图</a></div>-->
+    <!--<div>-->
+    <!--<a href="http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&AllianceID=299402&sid=772977&ouid=&app=0101F00&jumpUrl=http://www.ctrip.com"  aid="5" sid="21" pz="4" title="购票">购票</a>-->
+    <!--</div>-->
+    <!--<div><a href="http://toutiao.eastday.com/?qid=m021dh"  aid="5" sid="22" pz="5" title="热搜">热搜</a></div>-->
+    <!--<div><a href="http://redir.oupeng.com/click.php?id=27105"  aid="5" sid="23" pz="6" title="视频">视频</a></div>-->
+    <!--<div><a href="http://9973dh2.ikanshu.cn/"  aid="5" sid="24" pz="7" title="小说">小说</a></div>-->
+    <!--<div><a href="http://mtianqi.eastday.com/shanghai/58362.html?qid=m021dh"  aid="5" sid="25" pz="8" title="天气">天气</a></div>-->
+    <!--<div>-->
+    <!--<a href="http://jump.luna.58.com/i/Ll-Nrova1luDubj"  aid="5" sid="26" pz="9" title="找工作">找工作</a>-->
+    <!--</div>-->
+    <!--<div><a href="http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&AllianceID=299402&sid=772977&ouid=&app=0101F00&jumpUrl=http://www.ctrip.com"  aid="5" sid="27" pz="10" title="出行">出行</a></div>-->
+    <!--</div>-->
+</div>
+<!--热门推荐-->
+<div id="tuijian" class="none">
+    <div class="nav samenav">
+        <div class="left">
+            <img src="img/tuijian.png" alt="">
+            <span>热门推荐</span>
+        </div>
+        <div class="right">
+            <div class="active"><a href="javascript:;">资讯</a></div>
+            <div><a href="javascript:;">娱乐</a></div>
+            <div><a href="javascript:;">购物</a></div>
+            <div class="sp"><a href="javascript:;">生活</a></div>
+        </div>
+    </div>
+    <div class="content">
+        <ul>
+            <li>
+                <span class="title"><a href="">1新闻</a></span>
+                <span><a href="">网易</a></span>
+                <span><a href="">凤凰</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">体育</a></span>
+                <span><a href="">NBA</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+                <span><a href="">直播吧</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">科技</a></span>
+                <span><a href="">ZOL</a></span>
+                <span><a href="">太平洋</a></span>
+                <span><a href="">泡泡</a></span>
+                <span><a href="">天极</a></span>
+            </li>
+            <li class="nobottom">
+                <span class="title"><a href="">财经</a></span>
+                <span><a href="">股吧</a></span>
+                <span><a href="">大智慧</a></span>
+                <span><a href="">第一财经</a></span>
+                <span><a href="">金融界</a></span>
+            </li>
+        </ul>
+        <ul class="none">
+            <li>
+                <span class="title"><a href="">2新闻</a></span>
+                <span><a href="">网易</a></span>
+                <span><a href="">凤凰</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">体育</a></span>
+                <span><a href="">NBA</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+                <span><a href="">直播吧</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">科技</a></span>
+                <span><a href="">ZOL</a></span>
+                <span><a href="">太平洋</a></span>
+                <span><a href="">泡泡</a></span>
+                <span><a href="">天极</a></span>
+            </li>
+            <li class="nobottom">
+                <span class="title"><a href="">财经</a></span>
+                <span><a href="">股吧</a></span>
+                <span><a href="">大智慧</a></span>
+                <span><a href="">第一财经</a></span>
+                <span><a href="">金融界</a></span>
+            </li>
+        </ul>
+        <ul class="none">
+            <li>
+                <span class="title"><a href="">3新闻</a></span>
+                <span><a href="">网易</a></span>
+                <span><a href="">凤凰</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">体育</a></span>
+                <span><a href="">NBA</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+                <span><a href="">直播吧</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">科技</a></span>
+                <span><a href="">ZOL</a></span>
+                <span><a href="">太平洋</a></span>
+                <span><a href="">泡泡</a></span>
+                <span><a href="">天极</a></span>
+            </li>
+            <li class="nobottom">
+                <span class="title"><a href="">财经</a></span>
+                <span><a href="">股吧</a></span>
+                <span><a href="">大智慧</a></span>
+                <span><a href="">第一财经</a></span>
+                <span><a href="">金融界</a></span>
+            </li>
+        </ul>
+        <ul class="none">
+            <li>
+                <span class="title"><a href="">4新闻</a></span>
+                <span><a href="">网易</a></span>
+                <span><a href="">凤凰</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">体育</a></span>
+                <span><a href="">NBA</a></span>
+                <span><a href="">新浪</a></span>
+                <span><a href="">搜狐</a></span>
+                <span><a href="">直播吧</a></span>
+            </li>
+            <li>
+                <span class="title"><a href="">科技</a></span>
+                <span><a href="">ZOL</a></span>
+                <span><a href="">太平洋</a></span>
+                <span><a href="">泡泡</a></span>
+                <span><a href="">天极</a></span>
+            </li>
+            <li class="nobottom">
+                <span class="title"><a href="">财经</a></span>
+                <span><a href="">股吧</a></span>
+                <span><a href="">大智慧</a></span>
+                <span><a href="">第一财经</a></span>
+                <span><a href="">金融界</a></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--新闻部分-->
+<div id="main">
+    <!--头部导航栏-->
+    <div class="tt-news-nav">
+        <a class="home" href="javascript:;"><img src="img/home.png" alt=""></a>
+        <div id="J_ttnews_nav_container" class="news-nav-list clearfix swiper-container">
+            <div id="J_ttnews_nav_list" class="swiper-wrapper">
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs active" data-type="toutiao" href="javascript:;" data-name="推荐" sid="40" pz="1" title="推荐">推荐</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="yule" href="javascript:;" data-name="娱乐" sid="41" pz="2" title="娱乐">娱乐</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="shehui" href="javascript:;" data-name="社会" sid="42" pz="3" title="社会">社会</a></div>
+                <div class="news-nav-item swiper-slide"><a id="J_location" class="ttnews-tabs" data-type="junshi" href="javascript:;" data-name="军事" sid="43" pz="4" title="军事">军事</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="youxi" href="javascript:;" data-name="游戏" sid="44" pz="5" title="游戏">游戏</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="weikandian" href="javascript:;" data-name="滚动" sid="45" pz="6" title="滚动">滚动</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="tiyu" href="javascript:;" data-name="体育" sid="46" pz="7" title="体育">体育</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="nba" href="javascript:;" data-name="NBA" sid="47" pz="8" title="NBA">NBA</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="guonei" href="javascript:;" data-name="国内" sid="48" pz="9" title="国内">国内</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="guoji" href="javascript:;" data-name="国际" sid="49" pz="10" title="国际">国际</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="jiankang" href="javascript:;" data-name="健康" sid="50" pz="11" title="健康">健康</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="jianshen" href="javascript:;" data-name="健身" sid="51" pz="12" title="健身">健身</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="shishang" href="javascript:;" data-name="时尚" sid="52" pz="13" title="时尚">时尚</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="xiaohua" href="javascript:;" data-name="笑话" sid="53" pz="14" title="笑话">笑话</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="hulianwang" href="javascript:;" data-name="互联网" sid="54" pz="15" title="互联网">互联网</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="keji" href="javascript:;" data-name="科技" sid="55" pz="16" title="科技">科技</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="kexue" href="javascript:;" data-name="科学" sid="56" pz="17" title="科学">科学</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="xingzuo" href="javascript:;" data-name="星座" sid="57" pz="18" title="星座">星座</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="qiche" href="javascript:;" data-name="汽车" sid="58" pz="19" title="汽车">汽车</a></div>
+                <div class="news-nav-item swiper-slide"><a class="ttnews-tabs" data-type="renwen" href="javascript:;" data-name="人文" sid="59" pz="20" title="人文">人文</a></div>
+            </div>
+        </div>
+    </div>
+    <!--新闻部分-->
+    <div id="Z_toutiao" class="sameinfo">
+        <div class="J_toutiao sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_yule" class="sameinfo none">
+        <div class="J_yule sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_shehui" class="sameinfo none">
+        <div class="J_shehui sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_junshi" class="sameinfo none">
+        <div class="J_junshi sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_youxi" class="sameinfo none">
+        <div class="J_youxi sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_weikandian" class="sameinfo none">
+        <div class="J_weikandian sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_tiyu" class="sameinfo none">
+        <div class="J_tiyu sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_nba" class="sameinfo none">
+        <div class="J_nba sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_guonei" class="sameinfo none">
+        <div class="J_guonei sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_guoji" class="sameinfo none">
+        <div class="J_guoji sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_jiankang" class="sameinfo none">
+        <div class="J_jiankang sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_jianshen" class="sameinfo none">
+        <div class="J_jianshen sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_shishang" class="sameinfo none">
+        <div class="J_shishang sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_xiaohua" class="sameinfo none">
+        <div class="J_xiaohua sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_hulianwang" class="sameinfo none">
+        <div class="J_hulianwang sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_keji" class="sameinfo none">
+        <div class="J_keji sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_kexue" class="sameinfo none">
+        <div class="J_kexue sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_xingzuo" class="sameinfo none">
+        <div class="J_xingzuo sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_qiche" class="sameinfo none">
+        <div class="J_qiche sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+    <div id="Z_renwen" class="sameinfo none">
+        <div class="J_renwen sametype">
+            <div class="swiper-wrapper">
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <ul class="tuwen">
+
+        </ul>
+    </div>
+
+    <div id="J_loading" class="loading">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <p class="txt">数据加载中</p>
+    </div>
+</div>
+<!--加载  开始-->
+<div id="J_bg_loading" class="bg-loading none">
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+    <p class="txt">加载中...</p>
+</div>
+<div class="flow-fixed">
+</div>
+<div style="display: none;">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?c53d0a1eb798a25c03e49d4df6cd4b4f";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</div>
+<script type="text/javascript" src="js/xinwen.js"></script>
+<script type="text/javascript" src="js/changeUrl.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/changeReCi.js"></script>
+<script type="text/javascript" src="js/tj.js"></script>
+</body>
+</html>

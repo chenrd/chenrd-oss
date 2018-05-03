@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="chenrd-oss-web:war">
+    <output-path>$PROJECT_DIR$/chenrd-oss-web/target</output-path>
+    <root id="archive" name="chenrd-oss-web-1.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="chenrd-oss-web:war exploded" />
+    </root>
+  </artifact>
+</component>

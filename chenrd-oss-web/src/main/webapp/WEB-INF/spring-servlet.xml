@@ -81,7 +81,6 @@
 	
 	<!-- 配置freeMarker视图解析器 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-	    <property name="prefix" value="/" />
 	    <property name="suffix" value=".html"/>
 	    <property name="allowSessionOverride" value="true" />
 	    <property name="exposeSpringMacroHelpers" value="true" />
@@ -91,13 +90,16 @@
 	    <property name="contentType" value="text/html;charset=UTF-8"/>
 	    <property name="redirectContextRelative" value="false" />
 	</bean>
-	
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="" />
+	</bean>
 	<!-- 设置文件上传解析 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
 
 	<mvc:resources mapping="/static/**" location="/static/" order="1" />
 	<mvc:resources mapping="jaxws/services/*" location="jaxws/services/" order="2" />
-	
+
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 	
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>

@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.chenrd.shiro.ehcache.UserEhcacheHandle;
 import com.chenrd.spring.SpringBeanUtil;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  * 
@@ -38,6 +39,7 @@ public final class SingleSignOutHttpSessionListener implements HttpSessionListen
     public void sessionCreated(final HttpSessionEvent event) {
         // nothing to do at the moment
         LOG.warn("satrt creating a session id={}", event.getSession().getId());
+        event.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, "");
     }
 
     public void sessionDestroyed(final HttpSessionEvent event) {
